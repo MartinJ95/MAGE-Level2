@@ -8,4 +8,3 @@ int main()
 	app->Run();
 	delete app;
 }
-

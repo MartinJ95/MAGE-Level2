@@ -13,4 +13,3 @@ public:
 	bool m_open;
 	TimeManager m_time;
 };
-
