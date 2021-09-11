@@ -154,12 +154,14 @@
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\EntryPoint.h" />
     <ClInclude Include="Core\TimeManager.h" />
+    <ClInclude Include="Maths\Matrix.h" />
     <ClInclude Include="Maths\Vector.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\TimeManager.cpp" />
+    <ClCompile Include="Maths\Matrix.cpp" />
     <ClCompile Include="Maths\Vector.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
