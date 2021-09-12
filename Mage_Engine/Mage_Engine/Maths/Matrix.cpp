@@ -48,9 +48,9 @@ void Matrix4x4::Scale(const float &scalar)
 }
 void Matrix4x4::Rotate(const Vector3 &euler)
 {
-	*this *= XRotateMatrix(euler.x);
 	*this *= YRotateMatrix(euler.y);
 	*this *= ZRotateMatrix(euler.z);
+	*this *= XRotateMatrix(euler.x);
 }
 Matrix4x4 Mage::Maths::IdentityMatrix()
 {

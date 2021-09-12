@@ -1,6 +1,12 @@
 #pragma once
 #include <math.h>
-class Vector3;
+namespace Mage
+{
+	namespace Maths
+	{
+		class Vector3;
+	}
+}
 namespace Mage
 {
 	namespace Maths

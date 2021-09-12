@@ -1,7 +1,7 @@
 #include "TimeManager.h"
 
 
-TimeManager::TimeManager() : m_currentTime(), m_previousTime();
+TimeManager::TimeManager() : m_currentTime(), m_previousTime()
 {
 }
 

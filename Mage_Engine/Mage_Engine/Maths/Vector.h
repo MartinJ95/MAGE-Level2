@@ -49,9 +49,9 @@ namespace Mage
 			Vector3 operator*(const Vector3 &other) { return Vector3(x * other.x, y*other.y, z*other.z); }
 			Vector3 operator+(const Vector3 &other) { return Vector3(x + other.x, y+other.y, z+other.z); }
 			Vector3 operator-(const Vector3 &other) { return Vector3(x - other.x, y-other.y, z-other.z); }
-			void operator*=(const Vector3 &other) { x = x * other.x; y = y * other.y; z = z * other.z); }
-			void operator+=(const Vector3 &other) { x = x + other.x; y = y + other.y; z = z + other.z); }
-			void operator-=(const Vector3 &other) { x = x - other.x; y = y - other.y; z = z - other.z); }
+			void operator*=(const Vector3 &other) { x = x * other.x; y = y * other.y; z = z * other.z; }
+			void operator+=(const Vector3 &other) { x = x + other.x; y = y + other.y; z = z + other.z; }
+			void operator-=(const Vector3 &other) { x = x - other.x; y = y - other.y; z = z - other.z; }
 			bool operator==(const Vector3 &other) { if (x == other.x &&y == other.y&&z == other.z) { return true; }return false; }
 		};
 		class Vector4
