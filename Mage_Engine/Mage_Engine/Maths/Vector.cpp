@@ -48,7 +48,7 @@ float Vector3::Dot(const Vector3 &other)
 {
 	return x * other.x + y * other.y + z * other.z;
 }
-Vector3 Vector3::Cross(const Vector3 &other)
+Vector3 Vector3::Cross(const Vector3 &other) const
 {
 	return Vector3(
 		y*other.z - z * other.y,

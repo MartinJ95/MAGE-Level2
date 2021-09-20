@@ -16,7 +16,7 @@ Quaternion Mage::Maths::AngleAxis(const float & theta, const Vector3 & axis)
 		cos(theta / 2));
 }
 
-Quaternion Mage::Maths::EulerToQuart(const Mage::Maths::Vector3 & e)
+Quaternion Mage::Maths::EulerToQuat(const Mage::Maths::Vector3 & e)
 {
 	//y == heading
 	//z == attitude
@@ -33,7 +33,7 @@ Quaternion Mage::Maths::EulerToQuart(const Mage::Maths::Vector3 & e)
 	);
 }
 
-Vector3 Mage::Maths::QuartToEuler(const Quaternion &q)
+Vector3 Mage::Maths::QuatToEuler(const Quaternion &q)
 {
 	float heading;
 	float attitude;
@@ -60,11 +60,35 @@ Vector3 Mage::Maths::QuartToEuler(const Quaternion &q)
 	return Vector3(bank, heading, attitude);
 }
 
-Matrix4x4 Mage::Maths::QuartToMatrix(const Quaternion &q)
+Matrix4x4 Mage::Maths::QuatToMatrix(const Quaternion &q)
 {
 	return Matrix4x4(
 		1 - 2 * (q.y * q.y) - 2 * (q.z * q.z), 2 * q.x * q.y - 2 * q.z * q.w, 2 * q.x * q.z + 2 * q.y * q.w, 0,
 		2 * q.x * q.y + 2 * q.z * q.w, 1 - 2 * (q.x * q.x) - 2 * (q.z * q.z), 2 * q.y * q.z - 2 * q.x * q.w, 0,
 		2 * q.x * q.z - 2 * q.y * q.w, 2 * q.y * q.z + 2 * q.x * q.w, 1 - 2 * (q.x * q.x) - 2 * (q.y * q.y), 0,
 		0, 0, 0, 1);
+}
+
+Quaternion Mage::Maths::MatToQuat(const Matrix4x4 & m)
+{
+	float W = sqrt((1 + m.m0[0] + m.m1[1] + m.m2[2]) / 2);
+	float QW = 4 * W;
+	return Quaternion(
+		(m.m2[1] - m.m1[2]) * QW,
+		(m.m0[2] - m.m2[0]) * QW,
+		(m.m1[0] - m.m0[1]) * QW,
+		W);
+}
+
+Quaternion Mage::Maths::LookTowards(const Vector3 & dir, const Vector3 & up)
+{
+	Vector3 S = dir.Cross(up);
+	Vector3 U = dir.Cross(S);
+
+	Matrix4x4 M(
+		dir.x, dir.y, dir.z, 0,
+		U.x, U.y, U.z, 0,
+		S.x, S.y, S.z, 0,
+		0, 0, 0, 1);
+	return MatToQuat(M);
 }
