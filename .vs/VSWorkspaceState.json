@@ -4,8 +4,9 @@
     "\\Mage_Engine",
     "\\Mage_Engine\\Mage_Engine",
     "\\Mage_Engine\\Mage_Engine\\Core",
-    "\\Mage_Engine\\Mage_Engine\\Maths"
+    "\\Mage_Engine\\Mage_Engine\\Maths",
+    "\\Mage_Engine\\Mage_Engine\\Physics"
   ],
-  "SelectedNode": "\\Mage_Engine\\Mage_Engine\\Maths\\Matrix.cpp",
+  "SelectedNode": "\\Mage_Engine\\Mage_Engine\\Core\\EntryPoint.h",
   "PreviewInSolutionExplorer": false
 }
