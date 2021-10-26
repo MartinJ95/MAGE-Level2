@@ -11,9 +11,10 @@ public:
 	void Run();
 	virtual void Initialization();
 	virtual void OnGUI();
-	virtual void OnUpdate(const float &dt);
+	virtual void OnUpdate();
 	virtual ~Application();
 	bool m_open;
+	float m_deltaTime;
 	TimeManager m_time;
 	Visualization *m_viz;
 	Physics *m_physics;

@@ -8,12 +8,11 @@ Application::Application() : m_open(true), m_time()
 void Application::Run()
 {
 	Initialization();
-	float deltaTime;
 	while (m_open)
 	{
-		deltaTime = m_time.TimeStep();
+		m_deltaTime = m_time.TimeStep();
 		OnGUI();
-		OnUpdate(deltaTime);
+		OnUpdate();
 	}
 }
 
@@ -25,7 +24,7 @@ void Application::OnGUI()
 {
 }
 
-void Application::OnUpdate(const float &dt)
+void Application::OnUpdate()
 {
 }
 

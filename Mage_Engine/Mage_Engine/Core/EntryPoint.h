@@ -1,5 +1,6 @@
 #pragma once
 #include "Application.h"
+
 extern Application* CreateApplication();
 
 int main()
