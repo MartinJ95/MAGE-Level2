@@ -2,6 +2,9 @@
 #include <unordered_map>
 #include <glad/glad.h>
 #include <glfw3.h>
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -25,6 +28,7 @@ class Visualization
 public:
 	Visualization(const int screenWidth, const int screenHeight, const std::string &windowName);
 	bool initialise();
+	bool InitialiseGUI();
 	void generateShader(const std::string &vertexShader, const std::string &fragmentShader, const std::string &shaderName);
 	bool isOpen() const;
 	GLFWwindow* getWindow() const;

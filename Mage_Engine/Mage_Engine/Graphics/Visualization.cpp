@@ -50,6 +50,13 @@ bool Visualization::initialise()
 	return true;
 }
 
+bool Visualization::InitialiseGUI()
+{
+	ImGui::CreateContext();
+	ImGui_ImplGlfw_InitForOpenGL(m_window, true);
+	ImGui::StyleColorsDark();
+}
+
 void Visualization::generateShader(const std::string &vertexShader, const std::string &fragmentShader, const std::string &shaderName)
 {
 	GLuint shaderProgramID;
@@ -101,6 +108,7 @@ void Visualization::clear()
 	{
 		glClearColor(0.f, 0.25f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		ImGui_ImplGlfw_NewFrame();
 		return;
 	}
 	return;
@@ -163,6 +171,8 @@ void Visualization::display()
 {
 	if (!glfwWindowShouldClose(m_window))
 	{
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		glfwSwapBuffers(m_window);
 		return;
 	}
@@ -668,6 +678,8 @@ Visualization::~Visualization()
 	{
 		delete i.second;
 	}
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui::DestroyContext();
 	glfwTerminate();
 }
 

@@ -172,6 +172,10 @@
     <ClInclude Include="Core\Mesh.h" />
     <ClInclude Include="Core\TimeManager.h" />
     <ClInclude Include="Core\Transform.h" />
+    <ClInclude Include="Dependencies\include\imconfig.h" />
+    <ClInclude Include="Dependencies\include\imgui.h" />
+    <ClInclude Include="Dependencies\include\imgui_impl_glfw.h" />
+    <ClInclude Include="Dependencies\include\imgui_internal.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Graphics\MeshGL.h" />
     <ClInclude Include="Graphics\PointLight.h" />
@@ -197,6 +201,12 @@
     <ClCompile Include="Core\TimeManager.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Dependencies\glad (1)\src\glad.c" />
+    <ClCompile Include="Dependencies\include\imgui.cpp" />
+    <ClCompile Include="Dependencies\include\imgui_demo.cpp" />
+    <ClCompile Include="Dependencies\include\imgui_draw.cpp" />
+    <ClCompile Include="Dependencies\include\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Dependencies\include\imgui_tables.cpp" />
+    <ClCompile Include="Dependencies\include\imgui_widgets.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\MeshGL.cpp" />
     <ClCompile Include="Graphics\PointLight.cpp" />
