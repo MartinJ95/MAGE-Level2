@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <iostream>
 #include "glad/glad.h"
-#include "glfw3.h"
+#include <GLFW/glfw3.h>
 #include "Maths/Vector.h"
 
 struct Input

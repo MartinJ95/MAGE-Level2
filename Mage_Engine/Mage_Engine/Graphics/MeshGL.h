@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <glad/glad.h>
-#include <glfw3.h>
+#include <GLFW/glfw3.h>
 #include "Maths/Vector.h"
 
 struct Vertex

@@ -8,7 +8,7 @@ public:
 	Editor();
 	void Initialization() override;
 	void OnGUI() override;
+	void OnUpdate() override;
 
 	~Editor();
 };
-

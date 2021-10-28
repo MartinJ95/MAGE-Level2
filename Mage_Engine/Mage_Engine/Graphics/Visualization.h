@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include <glad/glad.h>
-#include <glfw3.h>
+#include <GLFW/glfw3.h>
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -29,6 +29,13 @@ public:
 	Visualization(const int screenWidth, const int screenHeight, const std::string &windowName);
 	bool initialise();
 	bool InitialiseGUI();
+	void GUIBegin(const std::string &windowLabel);
+	void GUIText(const std::string &text);
+	void GUIButton(const std::string &label, void(*func)(void));
+	void GUICheckbox(const std::string &label, bool &value);
+	void GUISliderBox(const std::string &label, float &value, const float &min, const float &max);
+	void GUIVector3(const std::string &label, Mage::Maths::Vector3 &vec);
+	void GUIEnd();
 	void generateShader(const std::string &vertexShader, const std::string &fragmentShader, const std::string &shaderName);
 	bool isOpen() const;
 	GLFWwindow* getWindow() const;

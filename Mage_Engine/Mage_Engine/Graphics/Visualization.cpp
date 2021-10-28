@@ -54,7 +54,44 @@ bool Visualization::InitialiseGUI()
 {
 	ImGui::CreateContext();
 	ImGui_ImplGlfw_InitForOpenGL(m_window, true);
+	ImGui_ImplOpenGL3_Init("#version 130");
 	ImGui::StyleColorsDark();
+	return true;
+}
+
+void Visualization::GUIBegin(const std::string & windowLabel)
+{
+	ImGui::Begin(windowLabel.c_str());
+}
+
+void Visualization::GUIText(const std::string & text)
+{
+	ImGui::Text(text.c_str());
+}
+
+void Visualization::GUIButton(const std::string & label, void(*func)(void))
+{
+	if (ImGui::Button(label.c_str())) { func(); }
+}
+
+void Visualization::GUICheckbox(const std::string & label, bool & value)
+{
+	ImGui::Checkbox(label.c_str(), &value);
+}
+
+void Visualization::GUISliderBox(const std::string & label, float & value, const float & min, const float & max)
+{
+	ImGui::SliderFloat(label.c_str(), &value, min, max);
+}
+
+void Visualization::GUIVector3(const std::string & label, Mage::Maths::Vector3 &vec)
+{
+	ImGui::InputFloat3(label.c_str(), (float*)&vec);
+}
+
+void Visualization::GUIEnd()
+{
+	ImGui::End();
 }
 
 void Visualization::generateShader(const std::string &vertexShader, const std::string &fragmentShader, const std::string &shaderName)
@@ -108,7 +145,9 @@ void Visualization::clear()
 	{
 		glClearColor(0.f, 0.25f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
 		return;
 	}
 	return;
