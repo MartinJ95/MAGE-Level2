@@ -12,6 +12,8 @@ public:
 	virtual void Initialization();
 	virtual void OnGUI();
 	virtual void OnUpdate();
+	void AddEntity(const std::string &str);
+	void RemoveEntity(const int &index);
 	virtual ~Application();
 	bool m_open;
 	float m_deltaTime;

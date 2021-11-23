@@ -1,5 +1,5 @@
 #include "Physics/BoxCollider.h"
-
+#include "Core/Application.h"
 
 
 BoxCollider::BoxCollider(Entity &entity) :
@@ -13,6 +13,14 @@ void BoxCollider::Update(Application & app)
 
 void BoxCollider::FixedUpdate(Application & app)
 {
+}
+
+void BoxCollider::OnGUI(Application & app)
+{
+	app.m_viz->GUIText("Box Collider");
+	app.m_viz->GUIVector3("Center", m_center);
+	app.m_viz->GUIVector3("Min", m_minDimensions);
+	app.m_viz->GUIVector3("Max", m_maxDimensions);
 }
 
 BoxCollider::~BoxCollider()

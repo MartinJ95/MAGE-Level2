@@ -1,6 +1,7 @@
 #include "Physics/PlaneCollider.h"
 #include "RigidBody.h"
 #include "SphereCollider.h"
+#include "Core/Application.h"
 
 
 
@@ -13,10 +14,18 @@ PlaneCollider::PlaneCollider(Entity &entity) :
 
 void PlaneCollider::Update(Application & app)
 {
+	m_normal.NormalizeInPlace();
 }
 
 void PlaneCollider::FixedUpdate(Application & app)
 {
+}
+
+void PlaneCollider::OnGUI(Application & app)
+{
+	app.m_viz->GUIText("PlaneCollider");
+	app.m_viz->GUIVector3("Normal", m_normal);
+	app.m_viz->GUIVector3("Position", m_position);
 }
 
 

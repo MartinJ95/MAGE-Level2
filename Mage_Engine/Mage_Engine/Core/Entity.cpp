@@ -1,5 +1,5 @@
 #include "Entity.h"
-#include "Application.h"
+#include "Core/Application.h"
 
 
 Entity::Entity(bool active) :
@@ -48,6 +48,67 @@ void Entity::fixedUpdate(Application &app)
 	}
 }
 
+void Entity::OnRender(Application & app)
+{
+	for (auto &c : m_components)
+	{
+		c->OnRender(app);
+	}
+}
+
+void Entity::OnGUI(Application & app)
+{
+	app.m_viz->GUIEditText("Entity Name", m_name);
+	app.m_viz->GUICheckbox("Active", m_active);
+	app.m_viz->GUIText("Children");
+	int GUIIDIteration = 0;
+	for (auto c : m_children)
+	{
+		GUIIDIteration++;
+		app.m_viz->GUIText(c.m_name + "##" + std::to_string(GUIIDIteration));
+	}
+	GUIIDIteration = 0;
+	if (app.m_viz->GUIButton("Add Child")) { createChild(true); }
+	for (auto c : m_components)
+	{
+		GUIIDIteration++;
+		c->OnGUI(app);
+		if (app.m_viz->GUIButton("Remove Component" + std::string("##") + std::to_string(GUIIDIteration)));
+		{
+			DeleteComponent(c);
+			break;
+		}
+	}
+	GUIIDIteration = 0;
+	/*if (app.m_viz->GUIButton("Remove Entity"))
+	{
+		if (m_parent != nullptr)
+		{
+			for (std::vector<Entity>::iterator it = m_parent->m_children.begin(); it != m_parent->m_children.end(); it++)
+			{
+				if (&*it == this)
+				{
+					m_parent->m_children.erase(it);
+					break;
+				}
+			}
+		}
+		else
+		{
+			for (std::vector<Entity*>::iterator it = app.m_currentLevel->m_entities.begin(); it != app.m_currentLevel->m_entities.end(); it++)
+			{
+				if (*it == this)
+				{
+					delete *it;
+					app.m_currentLevel->m_entities.erase(it);
+					break;
+				}
+			}
+		}
+	}*/
+	//if (app.m_viz->GUIButton("Add Component")) {}
+}
+
 void Entity::onCollisionEnter(Application & app, collisionData & data)
 {
 	for (int i = 0; i < m_components.size(); i++)
@@ -67,6 +128,19 @@ void Entity::createChild(bool active)
 {
 	Entity newChild(active, *this);
 	m_children.push_back(newChild);
+}
+
+void Entity::DeleteComponent(Component * c)
+{
+	for (std::vector<Component*>::iterator it = m_components.begin(); it != m_components.end(); it++)
+	{
+		if (*it == c)
+		{
+			delete c;
+			m_components.erase(it);
+			break;
+		}
+	}
 }
 
 colliderTypes Entity::getCollider()

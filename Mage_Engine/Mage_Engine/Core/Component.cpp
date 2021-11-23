@@ -1,5 +1,5 @@
 #include "Component.h"
-#include "Application.h"
+#include "Core/Application.h"
 #include "Entity.h"
 
 
@@ -13,6 +13,14 @@ void Component::Update(Application &app)
 }
 
 void Component::FixedUpdate(Application &app)
+{
+}
+
+void Component::OnRender(Application & app)
+{
+}
+
+void Component::OnGUI(Application & app)
 {
 }
 

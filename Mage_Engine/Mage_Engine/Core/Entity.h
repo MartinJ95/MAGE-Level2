@@ -135,8 +135,11 @@ public:
 	}*/
 	void Update(Application &app);
 	void fixedUpdate(Application &app);
+	void OnRender(Application &app);
+	void OnGUI(Application &app);
 	void onCollisionEnter(Application &app, collisionData &data);
 	void createChild(bool active);
+	void DeleteComponent(Component *c);
 	colliderTypes getCollider();
 	glm::mat4 getTransformMatrix2D(Application &app);
 	glm::mat4 getTransformMatrix3D(Application &app);
@@ -144,6 +147,7 @@ public:
 	bool m_active;
 	Entity *m_parent;
 	std::vector<Entity> m_children;
+	std::string m_name;
 private:
 	std::vector<Component*> m_components;
 };

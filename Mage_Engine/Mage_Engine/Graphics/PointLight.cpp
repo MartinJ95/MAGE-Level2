@@ -1,4 +1,5 @@
 #include "PointLight.h"
+#include "Core/Application.h"
 
 
 PointLight::PointLight(Entity & entity) :
@@ -7,6 +8,14 @@ PointLight::PointLight(Entity & entity) :
 	m_position(),
 	m_radius()
 {
+}
+
+void PointLight::OnGUI(Application & app)
+{
+	app.m_viz->GUIText("Point Light");
+	app.m_viz->GUIVector3("light intensity", m_intensity);
+	app.m_viz->GUIVector3("position", m_position);
+	app.m_viz->GUIEditFloat("radius", m_radius);
 }
 
 PointLight::~PointLight()

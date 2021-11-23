@@ -15,6 +15,16 @@ Mesh::Mesh(Entity &entity) :
 
 void Mesh::Update(Application &app)
 {
+	
+}
+
+void Mesh::FixedUpdate(Application &app)
+{
+
+}
+
+void Mesh::OnRender(Application & app)
+{
 	if (!m_is3D)
 	{
 		app.m_viz->render2D(m_meshName, m_textureName, m_shaderName, m_entity.getTransformMatrix2D(app));
@@ -25,9 +35,12 @@ void Mesh::Update(Application &app)
 	}
 }
 
-void Mesh::FixedUpdate(Application &app)
+void Mesh::OnGUI(Application & app)
 {
-
+	app.m_viz->GUICheckbox("is 3d", m_is3D);
+	app.m_viz->GUIEditText("mesh name", m_meshName);
+	app.m_viz->GUIEditText("texture name", m_textureName);
+	app.m_viz->GUIEditText("shaderName", m_shaderName);
 }
 
 

@@ -7,6 +7,7 @@ class SpotLight :
 {
 public:
 	SpotLight(Entity &entity);
+	void OnGUI(Application &app) override;
 	Mage::Maths::Vector3 m_intensity;
 	Mage::Maths::Vector3 m_position;
 	float m_fieldOfView;

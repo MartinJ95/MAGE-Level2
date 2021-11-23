@@ -12,6 +12,7 @@ public:
 	Transform(Entity &entity);
 	void Update(Application &app) override;
 	void FixedUpdate(Application &app) override;
+	void OnGUI(Application &app) override;
 	void updateDirection();
 	void updateRotation(Application &app);
 	void snapRotation(Mage::Maths::Vector3 &rotation);

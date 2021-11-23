@@ -7,6 +7,7 @@ public:
 	Camera(Entity &entity);
 	void Update(Application &app) override;
 	void FixedUpdate(Application &app) override;
+	void OnGUI(Application &app) override;
 	~Camera();
 	float m_fieldOfView;
 };

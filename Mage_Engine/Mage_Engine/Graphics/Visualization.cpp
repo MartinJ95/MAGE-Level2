@@ -69,9 +69,29 @@ void Visualization::GUIText(const std::string & text)
 	ImGui::Text(text.c_str());
 }
 
-void Visualization::GUIButton(const std::string & label, void(*func)(void))
+void Visualization::GUIEditText(const std::string &label, std::string &str)
 {
-	if (ImGui::Button(label.c_str())) { func(); }
+	ImGui::InputText(label.c_str(), &str);
+}
+
+bool Visualization::GUIButton(const std::string & label)
+{
+	return ImGui::Button(label.c_str());
+}
+
+void Visualization::GUIButton(const std::string & label, VoidFunctionCallback callback, Application *app)
+{
+	if (ImGui::Button(label.c_str())) { (app->*callback)();}
+}
+
+void Visualization::GUIButton(const std::string & label, VoidFunctionCallbackString callback, std::string &str, Application *app)
+{
+	if (ImGui::Button(label.c_str())) { (app->*callback)(str); }
+}
+
+void Visualization::GUIButton(const std::string & label, VoidFunctionCallbackInt callback, int &value, Application *app)
+{
+	if (ImGui::Button(label.c_str())) { (app->*callback)(value); }
 }
 
 void Visualization::GUICheckbox(const std::string & label, bool & value)
@@ -82,6 +102,11 @@ void Visualization::GUICheckbox(const std::string & label, bool & value)
 void Visualization::GUISliderBox(const std::string & label, float & value, const float & min, const float & max)
 {
 	ImGui::SliderFloat(label.c_str(), &value, min, max);
+}
+
+void Visualization::GUIEditFloat(const std::string & label, float & value)
+{
+	ImGui::InputFloat(label.c_str(), &value);
 }
 
 void Visualization::GUIVector3(const std::string & label, Mage::Maths::Vector3 &vec)
@@ -158,6 +183,7 @@ void Visualization::render2D(const std::string & meshName, const std::string & t
 	useShader(shaderName);
 	setShaderUniformMatrix4f(shaderName, "model_xform", transformMatrix);
 	setShaderTexture("Texture", textureName, shaderName, 1);
+	if (m_meshes.find(meshName) == m_meshes.end()) { return; }
 	m_meshes.find(meshName)->second->render();
 }
 
@@ -203,6 +229,7 @@ void Visualization::render3D(const std::string & meshName, const std::string & t
 	glm::mat4 view = glm::lookAt(camPos, camPos + camDir, up);
 	setShaderUniformMatrix4f(shaderName, "view", view);
 	setShaderTexture("Texture", textureName, shaderName, 1);
+	if (m_meshes.find(meshName) == m_meshes.end()) { return; }
 	m_meshes.find(meshName)->second->render();
 }
 

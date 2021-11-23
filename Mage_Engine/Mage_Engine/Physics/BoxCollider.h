@@ -9,6 +9,7 @@ public:
 	BoxCollider(Entity &entity);
 	void Update(Application &app) override;
 	void FixedUpdate(Application &app) override;
+	void OnGUI(Application &app) override;
 	~BoxCollider();
 	Mage::Maths::Vector3 m_center;
 	Mage::Maths::Vector3 m_minDimensions;
