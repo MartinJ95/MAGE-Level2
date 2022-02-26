@@ -1,1 +1,215 @@
-﻿
+﻿  pch.cpp
+  Application.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Component.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Entity.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\entity.cpp(23): warning C4018: '<': signed/unsigned mismatch
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\entity.cpp(38): warning C4018: '<': signed/unsigned mismatch
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\entity.cpp(114): warning C4018: '<': signed/unsigned mismatch
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\entity.h(67): warning C4018: '<': signed/unsigned mismatch
+  c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\entity.cpp(148): note: see reference to function template instantiation 'T *Entity::getComponent<SphereCollider>(void)' being compiled
+          with
+          [
+              T=SphereCollider
+          ]
+  InputManager.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\inputmanager.cpp(45): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\inputmanager.cpp(47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\inputmanager.cpp(49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\inputmanager.cpp(51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\inputmanager.cpp(75): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\inputmanager.cpp(87): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\inputmanager.cpp(91): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
+  Level.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Mesh.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  TimeManager.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\timemanager.cpp(11): warning C4244: 'initializing': conversion from 'time_t' to 'float', possible loss of data
+  Transform.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\entity.h(67): warning C4018: '<': signed/unsigned mismatch
+  c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\transform.cpp(80): note: see reference to function template instantiation 'T *Entity::getComponent<Transform>(void)' being compiled
+          with
+          [
+              T=Transform
+          ]
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_glfw.cpp
+  imgui_impl_opengl3.cpp
+  imgui_stdlib.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  Camera.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  MeshGL.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  PointLight.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  SpotLight.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  Compiling...
+  Visualization.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(196): warning C4018: '<': signed/unsigned mismatch
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(207): warning C4018: '<': signed/unsigned mismatch
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(343): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(355): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(356): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(360): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(361): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(365): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(366): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(370): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(371): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(375): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(376): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(380): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(381): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(425): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(437): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(448): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(449): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\entity.h(67): warning C4018: '<': signed/unsigned mismatch
+  c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\graphics\visualization.cpp(193): note: see reference to function template instantiation 'T *Entity::getComponent<Transform>(void)' being compiled
+          with
+          [
+              T=Transform
+          ]
+  Matrix.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Quaternion.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\quaternion.cpp(45): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\quaternion.cpp(51): warning C4305: '=': truncation from 'double' to 'float'
+  Vector.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  BoxCollider.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Physics.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\physics\physics.cpp(11): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\physics\physics.cpp(43): warning C4018: '<': signed/unsigned mismatch
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\core\entity.h(67): warning C4018: '<': signed/unsigned mismatch
+  c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\physics\physics.cpp(19): note: see reference to function template instantiation 'T *Entity::getComponent<Transform>(void)' being compiled
+          with
+          [
+              T=Transform
+          ]
+  PlaneCollider.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  RigidBody.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\physics\rigidbody.cpp(11): warning C4305: 'initializing': truncation from 'double' to 'float'
+  SphereCollider.cpp
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(87): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(90): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marti\documents\github\mage-level2\mage_engine\mage_engine\maths\vector.h(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  glad.c
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Mage_Engine.vcxproj -> C:\Users\marti\Documents\GitHub\MAGE-Level2\Mage_Engine\Debug\Mage_Engine.dll

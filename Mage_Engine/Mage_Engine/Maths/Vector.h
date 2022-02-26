@@ -1,5 +1,7 @@
 #pragma once
 #include <math.h>
+#include <iostream>
+#include <fstream>
 #include "Matrix.h"
 
 namespace Mage
@@ -15,6 +17,8 @@ namespace Mage
 			Vector2 Normalized();
 			void NormalizeInPlace();
 			float Dot(const Vector2 &other);
+			void Save(std::ofstream &stream) const;
+			void Load(std::ifstream &stream);
 			float x, y;
 			Vector2 operator*(const float &scalar) const { return Vector2(x*scalar, y*scalar); }
 			Vector2 operator+(const float &scalar) const { return Vector2(x + scalar, y + scalar); }
@@ -47,6 +51,8 @@ namespace Mage
 			float AngleBetween(const Vector3 &other) const;
 			Vector3 Cross(const Vector3 &other) const;
 			Vector3 Reflect(const Vector3 &normal) const;
+			void Save(std::ofstream &stream) const;
+			void Load(std::ifstream &stream);
 			float x, y, z;
 			Vector3 operator*(const float &scalar) const { return Vector3(x*scalar, y*scalar, z*scalar); }
 			Vector3 operator+(const float &scalar) const { return Vector3(x + scalar, y + scalar, z + scalar); }

@@ -73,7 +73,7 @@ void Entity::OnGUI(Application & app)
 	{
 		GUIIDIteration++;
 		c->OnGUI(app);
-		if (app.m_viz->GUIButton("Remove Component" + std::string("##") + std::to_string(GUIIDIteration)));
+		if (app.m_viz->GUIButton("Remove Component" + std::string("##") + std::to_string(GUIIDIteration)))
 		{
 			DeleteComponent(c);
 			break;
@@ -107,6 +107,25 @@ void Entity::OnGUI(Application & app)
 		}
 	}*/
 	//if (app.m_viz->GUIButton("Add Component")) {}
+}
+
+void Entity::OnSave(const Application &app, std::ofstream &stream)
+{
+	stream << "entity" << "/n";
+	for (int i = 0; i < m_components.size(); i++)
+	{
+		m_components[i]->OnSave(app, stream);
+	}
+	for (int i = 0; i < m_children.size(); i++)
+	{
+		m_children[i].OnSave(app, stream);
+	}
+	stream << "end" << "/n";
+}
+
+void Entity::OnLoad(Application &app, std::ifstream &stream)
+{
+
 }
 
 void Entity::onCollisionEnter(Application & app, collisionData & data)

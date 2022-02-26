@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include "Entity.h"
 
 class Entity;
@@ -9,14 +10,15 @@ class Visualization;
 class PointLight;
 class SpotLight;
 class Camera;
+class Application;
 
 class Level
 {
 public:
 	Level();
-	Level(std::string &fileName);
-	void LoadLevel(const std::string &fileName);
-	void SaveLevel();
+	Level(std::string &fileName, Application &app);
+	void LoadLevel(const std::string &fileName, Application &app);
+	void SaveLevel(const Application &app);
 	void AddEntity(const std::string &name) { m_entities.emplace_back(new Entity(true)); m_entities.back()->m_name = name; }
 	void RemoveEntity(const int &index) { m_entities.erase(m_entities.begin() + index); }
 	~Level();

@@ -21,6 +21,7 @@ public:
 	void AddComponent<PointLight>(const int &index);
 	~Editor();
 	std::string m_newEntityName;
+	std::string m_newLevelName;
 	Entity *SelectedEntity;
 	bool m_showComponentAddMenu{ false };
 };

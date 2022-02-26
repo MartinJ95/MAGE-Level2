@@ -137,6 +137,8 @@ public:
 	void fixedUpdate(Application &app);
 	void OnRender(Application &app);
 	void OnGUI(Application &app);
+	void OnSave(const Application &app, std::ofstream &stream);
+	void OnLoad(Application &app, std::ifstream &stream);
 	void onCollisionEnter(Application &app, collisionData &data);
 	void createChild(bool active);
 	void DeleteComponent(Component *c);

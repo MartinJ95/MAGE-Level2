@@ -24,6 +24,15 @@ float Vector2::Dot(const Vector2 &other)
 {
 	return x * other.x + y * other.y;
 }
+void Mage::Maths::Vector2::Save(std::ofstream & stream) const
+{
+	stream << x << "\n";
+	stream << y << "\n";
+}
+void Mage::Maths::Vector2::Load(std::ifstream & stream)
+{
+	stream >> x; stream >> y;
+}
 Vector3::Vector3() : x(0), y(0), z(0)
 {}
 Vector3::Vector3(float x, float y, float z) : x(x), y(y), z(z)
@@ -65,6 +74,16 @@ Vector3 Mage::Maths::Vector3::Reflect(const Vector3 & normal) const
 {
 	Vector3 reflection = *this - normal * (2 * this->Dot(normal));
 	return Vector3();
+}
+void Mage::Maths::Vector3::Save(std::ofstream & stream) const
+{
+	stream << x << "\n";
+	stream << y << "\n";
+	stream << z << "\n";
+}
+void Mage::Maths::Vector3::Load(std::ifstream & stream)
+{
+	stream >> x; stream >> y; stream >> z;
 }
 Vector4::Vector4() : x(0), y(0), z(0), w(0)
 {}
