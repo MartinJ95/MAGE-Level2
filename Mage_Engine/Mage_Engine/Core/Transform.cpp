@@ -59,14 +59,14 @@ void Transform::snapRotation(Mage::Maths::Vector3 & rotation)
 void Transform::applyEulerToForward(const Mage::Maths::Vector3 & rotation, Mage::Maths::Vector3 & forward)
 {
 	forward.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
-	forward.y = sin(glm::radians(rotation.x));
 	forward.z = sin(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+	forward.y = sin(glm::radians(rotation.x));
 	forward.NormalizeInPlace();
 }
 
 Mage::Maths::Vector3 Transform::worldForward()
 {
-	Mage::Maths::Vector3 forward;
+	Mage::Maths::Vector3 forward(Mage::Maths::Vector3(0, 0, 1));
 	Mage::Maths::Vector3 rotation = worldRotation();
 	snapRotation(rotation);
 	applyEulerToForward(rotation, forward);

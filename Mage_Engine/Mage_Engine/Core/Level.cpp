@@ -21,7 +21,7 @@ void Level::LoadLevel(const std::string &fileName, Application &app)
 		app.m_ambientLighting.Load(levelFile);
 		app.m_worldUp.Load(levelFile);
 		app.m_worldForward.Load(levelFile);
-		Entity *e;
+		Entity* e{nullptr};
 		std::string command;
 		levelFile >> command;
 		std::stack<int> entityChildIteration;
@@ -48,7 +48,7 @@ void Level::LoadLevel(const std::string &fileName, Application &app)
 			else if (command == "child")
 			{
 				e->createChild(true);
-				e = e->m_children.end;
+				e = &e->m_children.back();
 			}
 			levelFile >> command;
 		}
