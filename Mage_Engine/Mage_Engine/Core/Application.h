@@ -3,6 +3,7 @@
 #include "Graphics/Visualization.h"
 #include "Core/Level.h"
 #include "Physics/Physics.h"
+#include "StackDebugging.h"
 
 class Application
 {
@@ -15,7 +16,7 @@ public:
 	void AddEntity(const std::string &str);
 	void RemoveEntity(const int &index);
 	virtual ~Application();
-	bool m_open;
+	StackDebugging m_debugger;
 	float m_deltaTime;
 	TimeManager m_time;
 	Visualization *m_viz;
@@ -24,4 +25,5 @@ public:
 	Mage::Maths::Vector3 m_ambientLighting;
 	Mage::Maths::Vector3 m_worldUp;
 	Mage::Maths::Vector3 m_worldForward;
+	bool m_open;
 };
