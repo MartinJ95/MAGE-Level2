@@ -16,7 +16,6 @@ public:
 	void AddEntity(const std::string &str);
 	void RemoveEntity(const int &index);
 	virtual ~Application();
-	StackDebugging m_debugger;
 	float m_deltaTime;
 	TimeManager m_time;
 	Visualization *m_viz;

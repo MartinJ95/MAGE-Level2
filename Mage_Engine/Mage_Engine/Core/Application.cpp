@@ -7,7 +7,7 @@ Application::Application() : m_time(), m_open(true)
 
 void Application::Run()
 {
-	m_debugger.LogFunction("Application::Initialization");
+	StackDebugging::GetInstance()->LogFunction("Application::Initialization");
 	m_viz = new Visualization(1280, 720, "MAGE");
 	m_viz->initialise();
 	m_viz->InitialiseGUI();
@@ -15,17 +15,17 @@ void Application::Run()
 	m_currentLevel = new Level();
 	m_viz->generateShader("Resources\\default2DShader.vs", "Resources\\default2DShader.fs", "default2DShader");
 	m_viz->generateShader("Resources\\default3DShader.vs", "Resources\\default3DShader.fs", "default3DShader");
-	m_debugger.LogFunction("vizualization::generateBox");
+	StackDebugging::GetInstance()->LogFunction("vizualization::generateBox");
 	m_viz->generateBoxMesh(-1, 1, 0, 1, "box");
-	m_debugger.PopFunction();
-	m_debugger.LogFunction("vizualization::genrateSquare");
+	StackDebugging::GetInstance()->PopFunction();
+	StackDebugging::GetInstance()->LogFunction("vizualization::genrateSquare");
 	m_viz->generateSquareMesh(-1, 1, 0, 1, "square");
-	m_debugger.PopFunction();
-	m_debugger.LogFunction("vizualization::generateSphere");
+	StackDebugging::GetInstance()->PopFunction();
+	StackDebugging::GetInstance()->LogFunction("vizualization::generateSphere");
 	m_viz->generateSphereMesh(Mage::Maths::Vector3(0, 0, 0), 1, 50, "sphere");
-	m_debugger.PopFunction();
+	StackDebugging::GetInstance()->PopFunction();
 	Initialization();
-	m_debugger.PopFunction();
+	StackDebugging::GetInstance()->PopFunction();
 	while (m_viz->isOpen())
 	{
 		m_deltaTime = m_time.TimeStep();
@@ -61,4 +61,5 @@ Application::~Application()
 	delete m_viz;
 	delete m_currentLevel;
 	delete m_physics;
+	StackDebugging::DestroyInstance();
 }
