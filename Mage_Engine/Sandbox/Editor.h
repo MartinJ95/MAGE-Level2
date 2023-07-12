@@ -22,6 +22,7 @@ public:
 	~Editor();
 	std::string m_newEntityName;
 	std::string m_newLevelName;
+	Entity m_editorCam;
 	Entity *SelectedEntity;
 	bool m_showComponentAddMenu{ false };
 };

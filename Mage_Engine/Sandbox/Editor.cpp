@@ -9,6 +9,10 @@ Editor::Editor()
 
 void Editor::Initialization()
 {
+	m_editorCam.addComponent<Transform>();
+	m_editorCam.addComponent<Camera>();
+	m_currentLevel->m_mainCamera = m_editorCam.getComponent<Camera>();
+
 	for (auto &t : textureList)
 	{
 		m_viz->generateTexture(t.first, t.second);
@@ -200,7 +204,6 @@ void Editor::OnUpdate()
 		}
 		e->OnRender(*this);
 	}
-	std::cout << "new render from here" << std::endl;
 	m_viz->display();
 }
 
