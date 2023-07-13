@@ -25,6 +25,13 @@ enum colliderTypes
 	ePlane,
 	eBox
 };
+
+enum inputResult
+{
+	eNoInput,
+	ePending,
+	eResolved
+};
 /*
 typedef bool(*componentManager)(Component*, World*, int, collisionData*);
 
