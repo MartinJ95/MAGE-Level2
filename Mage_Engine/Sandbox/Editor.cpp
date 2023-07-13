@@ -3,7 +3,7 @@
 #include <queue>
 #include <stack>
 
-Editor::Editor()
+Editor::Editor() : m_newEntityName(), m_newLevelName(), m_editorCam(true), SelectedEntity(nullptr), m_showComponentAddMenu(false)
 {
 }
 
