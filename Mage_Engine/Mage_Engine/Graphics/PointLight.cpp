@@ -14,7 +14,7 @@ void PointLight::OnGUI(Application & app)
 {
 	app.m_viz->GUIText("Point Light");
 	app.m_viz->GUIVector3("light intensity", m_intensity);
-	app.m_viz->GUIVector3("position", m_position);
+	app.m_viz->GUIVector3("lightPosition", m_position);
 	app.m_viz->GUIEditFloat("radius", m_radius);
 }
 
