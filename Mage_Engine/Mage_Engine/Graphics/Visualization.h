@@ -60,9 +60,6 @@ public:
 	void generateSquareMesh(const int &minSize, const int &maxSize, const int &minTexCoord, const int &maxTexCoord, const std::string &meshName);
 	void generateBoxMesh(const int &minSize, const int &maxSize, const int &minTexCoord, const int &maxTexCoord, const std::string &meshName);
 	void generateSphereMesh(const Mage::Maths::Vector3 &center, const float &radius, const int &details, const std::string &meshName);
-	void generateSphereVertices(std::vector<Vertex>& vertices, const Mage::Maths::Vector3 &center, const int & details, Mage::Maths::Vector3 &newPos, float &theta, float &theta1, float &cs, float &sn, float &cs1, float &sn1);
-	void generateSphereColumn(std::vector<Vertex>& vertices, const Mage::Maths::Vector3 &center, const int & details, Mage::Maths::Vector3 &newPos, float &theta, float &theta1, float &cs, float &sn, float &cs1, float &sn1);
-	void generateSphereIndices(std::vector<unsigned int> &indices, const int &details);
 	void loadObject(const std::string &filePath, const std::string &fileName, const std::string &fileType = ".obj");
 	void useShader(const std::string &shaderName);
 	void setShaderTexture(const std::string &textureUniform, const std::string &textureName, const std::string &shaderName, const int textureIndex);
@@ -71,6 +68,7 @@ public:
 	void setShaderUniformBool(const std::string &shaderName, const std::string &uniformName, const bool value);
 	void setShaderUniformMatrix4f(const std::string &shaderName, const std::string &uniformName, const glm::mat4 &matrix);
 	void setShaderUniformVector3(const std::string &shaderName, const std::string &uniformName, const Mage::Maths::Vector3 &vector);
+	void LockCursor(bool toggle);
 	~Visualization();
 	int m_screenWidth, m_screenHeight;
 private:

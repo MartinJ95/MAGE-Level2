@@ -386,7 +386,117 @@ void Visualization::generateBoxMesh(const int & minSize, const int & maxSize, co
 
 void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, const float & radius, const int & details, const std::string &meshName)
 {
+
+	auto GenerateSphereIndices = [](std::vector<unsigned int>& indices, const int details)
+	{
+		int iOffset, iOffset1;
+		int jOffset, jOffset1;
+		//rows
+		for (int i = 0; i < details; i++)
+		{
+			//columns
+			for (int j = 0; j < details + 1; j++)
+			{
+				iOffset = i + 2; // current row
+				iOffset1 = i + 1; // row before
+
+				jOffset = j * details; // current column
+				jOffset1 = (j + 1) * details; // next column
+
+				// 0 = top , 1 = bottom
+
+				if (i != 0 && i != (details - 1)) // middle
+				{
+					indices.emplace_back(iOffset1 + jOffset);
+					indices.emplace_back(iOffset1 + jOffset1);
+					indices.emplace_back(iOffset + jOffset);
+
+					indices.emplace_back(iOffset + jOffset);
+					indices.emplace_back(iOffset1 + jOffset1);
+					indices.emplace_back(iOffset + jOffset1);
+				}
+				else if (i == 0) // top
+				{
+					indices.emplace_back(0);
+					indices.emplace_back(iOffset + jOffset1);
+					indices.emplace_back(iOffset + jOffset);
+				}
+				else if (i == (details - 1)) // bottom
+				{
+					//last middle
+					indices.emplace_back(iOffset1 + jOffset);
+					indices.emplace_back(iOffset1 + jOffset1);
+					indices.emplace_back(iOffset + jOffset);
+
+					indices.emplace_back(iOffset + jOffset);
+					indices.emplace_back(iOffset1 + jOffset1);
+					indices.emplace_back(iOffset + jOffset1);
+
+					//bottom
+					indices.emplace_back(iOffset + jOffset);
+					indices.emplace_back(iOffset + jOffset1);
+					indices.emplace_back(1);
+				}
+			}
+		}
+	};
+
+	auto GenerateSphereVertices = [](std::vector<Vertex>& vertices, const Mage::Maths::Vector3& center, const int details, Mage::Maths::Vector3& newPos, float& theta, float& theta1, float& cs, float& sn)
+	{
+		auto GenerateSphereColumn = [](std::vector<Vertex>& vertices, const Mage::Maths::Vector3& center, const int details, Mage::Maths::Vector3& newPos, float theta, float theta1, float cs, float sn)
+		{
+			StackDebugging::GetInstance()->LogFunction("visualization::generateSphere::genVertices::genColumn");
+			float xTexCoord = (theta * (180 / PI) / 360);
+			for (int j = 1; j < details + 1; j++)
+			{
+				Vertex v;
+
+				float cs1 = cos(theta1 * j);
+				float sn1 = sin(theta1 * j);
+
+				//z rotation
+				v.position = Mage::Maths::Vector3(vertices[0].position.x * cs1 - vertices[0].position.y * sn1, vertices[0].position.x * sn1 + vertices[0].position.y * cs1, 0);
+
+				//y rotation
+				newPos = Mage::Maths::Vector3(v.position.x * cs + v.position.z * sn, v.position.y, -(v.position.x * sn) + v.position.z * cs);
+				v.position = newPos;
+				v.color = Mage::Maths::Vector3(0, 0, 0);
+				v.normal = (v.position - center).Normalized();
+				v.texCoords = Mage::Maths::Vector2(xTexCoord, (Mage::Maths::Vector3(0, 1, 0).Dot(v.position.Normalized()) + 1) / 2);
+				std::cout << v.texCoords.x << std::endl;
+				vertices.emplace_back(std::move(v));
+			}
+			StackDebugging::GetInstance()->PopFunction();
+		};
+
+		StackDebugging::GetInstance()->LogFunction("visualization::generateSphere::genVertices");
+		float thetaChange = (360 / (details + 1)) * (PI / 180);
+		theta1 = (180 / (details + 1)) * (PI / 180);
+		for (int i = 0; i < details; i++)
+		{
+			theta = thetaChange * i;
+
+			cs = cos(theta);
+			sn = sin(theta);
+
+			GenerateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn);
+
+			if (i == details - 1)
+			{
+				theta = 360 * (PI / 180);
+				cs = cos(theta);
+				sn = sin(theta);
+
+				GenerateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn);
+				//generateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn);
+			}
+		};
+		StackDebugging::GetInstance()->PopFunction();
+		return;
+	};
+
 	std::vector<Vertex> vertices;
+	vertices.reserve(2 + (details * details));
 	std::vector<unsigned int> indices;
 
 	vertices.emplace_back();
@@ -413,116 +523,11 @@ void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, cons
 	Mage::Maths::Vector3 newPos;
 
 	//vertex generation
-	generateSphereVertices(vertices, center, details, newPos, theta, theta1, cs, sn, cs1, sn1);
+	GenerateSphereVertices(vertices, center, details, newPos, theta, theta1, cs, sn);
 
-	generateSphereIndices(indices, details);
+	GenerateSphereIndices(indices, details);
 
 	generateMesh(vertices, indices, meshName);
-}
-
-void Visualization::generateSphereVertices(std::vector<Vertex>& vertices, const Mage::Maths::Vector3 &center, const int & details, Mage::Maths::Vector3 &newPos, float &theta, float &theta1, float &cs, float &sn, float &cs1, float &sn1)
-{
-	float thetaChange = (360 / (details + 1)) * (PI / 180);
-	for (int i = 0; i < details; i++)
-	{
-		theta = thetaChange * i;
-
-		cs = cos(theta);
-		sn = sin(theta);
-
-		generateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn, cs1, sn1);
-
-		if (i == details - 1)
-		{
-			theta = 360 * (PI / 180);
-			cs = cos(theta);
-			sn = sin(theta);
-
-			generateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn, cs1, sn1);
-		}
-	}
-}
-
-void Visualization::generateSphereColumn(std::vector<Vertex>& vertices, const Mage::Maths::Vector3 &center, const int & details, Mage::Maths::Vector3 &newPos, float &theta, float &theta1, float &cs, float &sn, float &cs1, float &sn1)
-{
-	theta1 = (180 / (details + 1)) * (PI / 180);
-	float xTexCoord = (theta * (180 / PI) / 360);
-	for (int j = 0; j < details + 1; j++)
-	{
-		if (j != 0)
-		{
-			vertices.emplace_back();
-			Vertex &v = vertices.back();
-
-			cs1 = cos(theta1 * j);
-			sn1 = sin(theta1 * j);
-
-			//z rotation
-			v.position = Mage::Maths::Vector3(vertices[0].position.x * cs1 - vertices[0].position.y * sn1, vertices[0].position.x * sn1 + vertices[0].position.y * cs1, 0);
-			v.color = Mage::Maths::Vector3(0, 0, 0);
-
-			//y rotation
-			newPos = Mage::Maths::Vector3(v.position.x * cs + v.position.z * sn, v.position.y, -(v.position.x * sn) + v.position.z * cs);
-			v.position = newPos;
-			v.texCoords = Mage::Maths::Vector2(xTexCoord, (Mage::Maths::Vector3(0, 1, 0).Dot(v.position.Normalized()) + 1) / 2);
-			std::cout << v.texCoords.x << std::endl;
-			v.normal = (v.position - center).Normalized();
-		}
-	}
-}
-
-void Visualization::generateSphereIndices(std::vector<unsigned int>& indices, const int & details)
-{
-	int iOffset, iOffset1;
-	int jOffset, jOffset1;
-	//rows
-	for (int i = 0; i < details; i++)
-	{
-		//columns
-		for (int j = 0; j < details + 1; j++)
-		{
-			iOffset = i + 2; // current row
-			iOffset1 = i + 1; // row before
-
-			jOffset = j * details; // current column
-			jOffset1 = (j + 1) * details; // next column
-
-			// 0 = top , 1 = bottom
-
-			if (i != 0 && i != (details - 1)) // middle
-			{
-				indices.emplace_back(iOffset1 + jOffset);
-				indices.emplace_back(iOffset1 + jOffset1);
-				indices.emplace_back(iOffset + jOffset);
-
-				indices.emplace_back(iOffset + jOffset);
-				indices.emplace_back(iOffset1 + jOffset1);
-				indices.emplace_back(iOffset + jOffset1);
-			}
-			else if (i == 0) // top
-			{
-				indices.emplace_back(0);
-				indices.emplace_back(iOffset + jOffset1);
-				indices.emplace_back(iOffset + jOffset);
-			}
-			else if (i == (details - 1)) // bottom
-			{
-				//last middle
-				indices.emplace_back(iOffset1 + jOffset);
-				indices.emplace_back(iOffset1 + jOffset1);
-				indices.emplace_back(iOffset + jOffset);
-
-				indices.emplace_back(iOffset + jOffset);
-				indices.emplace_back(iOffset1 + jOffset1);
-				indices.emplace_back(iOffset + jOffset1);
-
-				//bottom
-				indices.emplace_back(iOffset + jOffset);
-				indices.emplace_back(iOffset + jOffset1);
-				indices.emplace_back(1);
-			}
-		}
-	}
 }
 
 void Visualization::loadObject(const std::string &filePath, const std::string & fileName, const std::string &fileType)
@@ -732,6 +737,17 @@ void Visualization::setShaderUniformVector3(const std::string &shaderName, const
 		}
 		glUniform3fv(glGetUniformLocation(m_shaderPrograms.find(shaderName)->second, uniformName.c_str()), 1, &vector.x);
 	}
+}
+
+void Visualization::LockCursor(bool toggle)
+{
+	if (toggle)
+	{
+		GLFW_CURSOR_DISABLED;
+		return;
+	}
+	GLFW_CURSOR_NORMAL;
+	return;
 }
 
 Visualization::~Visualization()
