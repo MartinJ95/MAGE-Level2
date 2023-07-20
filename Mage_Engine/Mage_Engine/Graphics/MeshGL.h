@@ -7,6 +7,14 @@
 
 struct Vertex
 {
+public:
+	Vertex() : position(), color(), normal(), texCoords()
+	{}
+	Vertex(Vertex& other) : position(other.position), color(other.color), normal(other.normal), texCoords(other.texCoords)
+	{}
+	Vertex(Vertex&& other) : position(other.position), color(other.color), normal(other.normal), texCoords(other.texCoords)
+	{}
+public:
 	Mage::Maths::Vector3 position;
 	Mage::Maths::Vector3 color;
 	Mage::Maths::Vector3 normal;
