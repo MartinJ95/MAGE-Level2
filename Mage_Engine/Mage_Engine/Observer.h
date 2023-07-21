@@ -57,7 +57,10 @@ class Subject : ISubject
 
 class InputSubject : ISubject, IInputSubject
 {
+public:
 	virtual void Notify() override;
 	virtual void Notify(Mage::Maths::Vector3& vector) override;
 	virtual void Notify(bool Pressed) override;
+private:
+	inline bool IsInputObserver(const int i, InputObserver* o);
 };

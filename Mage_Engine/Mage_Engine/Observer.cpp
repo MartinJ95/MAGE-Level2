@@ -67,11 +67,15 @@ void InputSubject::Notify(Mage::Maths::Vector3& vector)
 {
 	for (int i = 0; i < m_Observers.size(); i++)
 	{
-		InputObserver *o = dynamic_cast<InputObserver*>(m_Observers[i]);
+		/*InputObserver* o = dynamic_cast<InputObserver*>(m_Observers[i]);
 		if (o == nullptr)
 			continue;
 
 		o->OnNotify(vector);
+		*/
+		InputObserver* o{ nullptr };
+		IsInputObserver(i, o) ? [](InputObserver* o, Mage::Maths::Vector3 vector) {o->OnNotify(vector); }(o, vector) : []() {}();
+
 	}
 }
 
@@ -79,10 +83,19 @@ void InputSubject::Notify(bool Pressed)
 {
 	for (int i = 0; i < m_Observers.size(); i++)
 	{
-		InputObserver* o = dynamic_cast<InputObserver*>(m_Observers[i]);
+		/*InputObserver* o = dynamic_cast<InputObserver*>(m_Observers[i]);
 		if (o == nullptr)
 			continue;
 
 		o->OnNotify(Pressed);
+		*/
+		InputObserver* o{ nullptr };
+		IsInputObserver(i, o) ? [](InputObserver* o, bool Pressed) {o->OnNotify(Pressed); }(o, Pressed) : []() {}();
 	}
+}
+
+inline bool InputSubject::IsInputObserver(const int i, InputObserver* o)
+{
+	o = dynamic_cast<InputObserver*>(m_Observers[i]);
+	return o == nullptr ? false : true;
 }
