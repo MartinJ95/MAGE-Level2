@@ -11,12 +11,12 @@ private:
     Mage::Maths::Vector3 m_lastMousePos;
 };
 
-class MouseButtonInput : InputSubject
+class ButtonInput : public InputSubject
 {
 public:
-    MouseButtonInput(int mouseButton);
+    ButtonInput(int buttonID);
 private:
-    int m_mouseButton;
+    int m_buttonID;
 };
 
 class InputComponent :

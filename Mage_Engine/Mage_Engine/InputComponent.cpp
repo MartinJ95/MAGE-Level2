@@ -14,10 +14,11 @@ void MouseMoveInput::Notify(const Mage::Maths::Vector3& vector)
 	InputSubject::Notify(vector);
 }
 
+ButtonInput::ButtonInput(int buttonID) : m_buttonID(buttonID)
+{
+}
+
 void InputComponent::Update(Application& app)
 {
 }
 
-MouseButtonInput::MouseButtonInput(int mouseButton) : m_mouseButton(mouseButton)
-{
-}
