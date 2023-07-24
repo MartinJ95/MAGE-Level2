@@ -15,6 +15,7 @@ class ButtonInput : public InputSubject
 {
 public:
     ButtonInput(int buttonID);
+    const int GetButton() const;
 private:
     int m_buttonID;
 };
@@ -26,5 +27,7 @@ public:
     virtual void Update(Application& app) override;
 private:
     MouseMoveInput m_mouseMoveDetection;
+    std::vector<ButtonInput> m_mouseButtonInputs;
+    std::vector<ButtonInput> m_keyboardButtonInputs;
 };
 
