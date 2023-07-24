@@ -34,7 +34,6 @@ void Editor::OnGUI()
 	m_viz->GUIButton("Add New Entity", func, m_newEntityName, this);
 	int entityDepth = 0;
 	int entityIndex = 0;
-	//std::queue<std::pair<Entity*, int>> entityQueue;
 	std::vector<std::pair<Entity*, int>> sortedEntities;
 	std::stack<int> previousIndex;
 	int GUIIDIteration = 0;
@@ -48,7 +47,6 @@ void Editor::OnGUI()
 			{
 				if (entityDepth > 0)
 				{
-					//entityQueue.push(std::pair<Entity*, int>(e, entityDepth));
 					e = e->m_parent;
 					entityDepth--;
 					entityIndex = previousIndex.top();
@@ -56,7 +54,6 @@ void Editor::OnGUI()
 				}
 				else
 				{
-					//entityQueue.push(std::pair<Entity*, int>(e, entityDepth));
 					e = nullptr;
 				}
 			}
@@ -70,32 +67,6 @@ void Editor::OnGUI()
 			}
 		}
 	}
-	/*while (!entityQueue.empty())
-	{
-		sortedEntities.push_back(entityQueue.front());
-		entityQueue.pop();
-		std::vector<std::pair<Entity*, int>>::reverse_iterator it = sortedEntities.rbegin();
-		std::vector<std::pair<Entity*, int>>::reverse_iterator next;
-		bool isDescendant = false;
-		while (it != sortedEntities.rend()-1)
-		{
-			next = it + 1;
-			Entity* e = next->first;
-			while (e != nullptr)
-			{
-				if (e->m_parent == it->first) { isDescendant = true; break; }
-				e = e->m_parent;
-			}
-			if (next->first->m_parent == it->first->m_parent && it->first->m_parent != nullptr || isDescendant)
-			{
-				std::swap(*it, *next);
-				//next->swap(*it);
-				it++;
-				isDescendant = false;
-			}
-			else { break; }
-		}
-	}*/
 	for (auto se : sortedEntities)
 	{
 		GUIIDIteration++;
@@ -107,23 +78,6 @@ void Editor::OnGUI()
 		if (m_viz->GUIButton(s + se.first->m_name + "##" + std::to_string(GUIIDIteration))) { SelectedEntity = se.first; }
 	}
 	GUIIDIteration = 0;
-	/*while (!entityQueue.empty())
-	{
-		std::pair<Entity&, int> p = entityQueue.front();
-		entityQueue.pop();
-		std::string s = "";
-		for (int i = 0; i < p.second; i++)
-		{
-			s += "->";
-		}
-		if (m_viz->GUIButton(s + p.first.m_name)) { SelectedEntity = &p.first; }
-	}*/
-
-	//for (int i = 0; i < m_currentLevel->m_entities.size(); i++)
-	//{
-	//	if (m_viz->GUIButton(m_currentLevel->m_entities[i]->m_name))
-	//	{ SelectedEntity = m_currentLevel->m_entities[i]; }
-	//}
 	m_viz->GUIEnd();
 	if (SelectedEntity != NULL)
 	{
@@ -147,24 +101,14 @@ void Editor::OnGUI()
 				{
 					if (*it == SelectedEntity)
 					{
-						delete *it;
 						m_currentLevel->m_entities.erase(it);
+						delete *it;
 						break;
 					}
 				}
 			}
 			SelectedEntity = nullptr;
 			m_viz->GUIEnd();
-			/*for (int i = 0; i < m_currentLevel->m_entities.size(); i++)
-			{
-				if (m_currentLevel->m_entities[i] == SelectedEntity)
-				{
-					delete m_currentLevel->m_entities[i];
-					m_currentLevel->m_entities.erase(m_currentLevel->m_entities.begin() + i);
-					m_viz->GUIEnd();
-					SelectedEntity = NULL;
-				}
-			}*/
 		}
 		else
 		{
