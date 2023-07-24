@@ -5,10 +5,6 @@ void Observer::OnNotify()
 
 }
 
-void InputObserver::OnNotify()
-{
-}
-
 void InputObserver::OnNotify(Mage::Maths::Vector3& vector)
 {
 }
@@ -17,7 +13,7 @@ void InputObserver::OnNotify(bool Pressed)
 {
 }
 
-void Subject::Subscribe(IObserver* newListener)
+void Subject::Subscribe(const IObserver* newListener)
 {
 	for (int i = 0; i < m_Observers.size(); i++)
 	{
@@ -30,7 +26,7 @@ void Subject::Subscribe(IObserver* newListener)
 	m_Observers.emplace_back(newListener);
 }
 
-void Subject::UnSubscribe(IObserver* listener)
+void Subject::UnSubscribe(const IObserver* listener)
 {
 	for (int i = 0; i < m_Observers.size(); i++)
 	{
@@ -55,16 +51,9 @@ void Subject::Notify()
 	}
 }
 
-void InputSubject::Notify()
+void InputSubject::Notify(const Mage::Maths::Vector3& vector)
 {
-	for (int i = 0; i < m_Observers.size(); i++)
-	{
-		m_Observers[i]->OnNotify();
-	}
-}
-
-void InputSubject::Notify(Mage::Maths::Vector3& vector)
-{
+	std::vector<IObserver*> observers;
 	for (int i = 0; i < m_Observers.size(); i++)
 	{
 		/*InputObserver* o = dynamic_cast<InputObserver*>(m_Observers[i]);
@@ -79,7 +68,7 @@ void InputSubject::Notify(Mage::Maths::Vector3& vector)
 	}
 }
 
-void InputSubject::Notify(bool Pressed)
+void InputSubject::Notify(const bool Pressed)
 {
 	for (int i = 0; i < m_Observers.size(); i++)
 	{
