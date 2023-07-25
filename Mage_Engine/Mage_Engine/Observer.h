@@ -19,8 +19,8 @@ public:
 class ISubject
 {
 public:
-	virtual void Subscribe(const IObserver* newListener) = 0;
-	virtual void UnSubscribe(const IObserver* listener) = 0;
+	virtual void Subscribe(IObserver* newListener) = 0;
+	virtual void UnSubscribe(IObserver* listener) = 0;
 	virtual void UnSubscribeAll() = 0;
 	virtual void Notify() = 0;
 protected:
@@ -47,8 +47,9 @@ public:
 
 class Subject :public ISubject
 {
-	virtual void Subscribe(const IObserver* newListener) override;
-	virtual void UnSubscribe(const IObserver* listener) override;
+public:
+	virtual void Subscribe(IObserver* newListener) override;
+	virtual void UnSubscribe(IObserver* listener) override;
 	virtual void UnSubscribeAll() override;
 	virtual void Notify() override;
 };
@@ -59,5 +60,5 @@ public:
 	virtual void Notify(const Mage::Maths::Vector3& vector) override;
 	virtual void Notify(const bool Pressed) override;
 private:
-	inline bool IsInputObserver(const int i, InputObserver* o);
+	inline bool IsInputObserver(const int i, InputObserver*& o);
 };

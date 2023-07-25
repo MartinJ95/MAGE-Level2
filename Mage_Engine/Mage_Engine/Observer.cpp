@@ -11,9 +11,10 @@ void InputObserver::OnNotify(Mage::Maths::Vector3& vector)
 
 void InputObserver::OnNotify(bool Pressed)
 {
+	
 }
 
-void Subject::Subscribe(const IObserver* newListener)
+void Subject::Subscribe(IObserver* newListener)
 {
 	for (int i = 0; i < m_Observers.size(); i++)
 	{
@@ -26,7 +27,7 @@ void Subject::Subscribe(const IObserver* newListener)
 	m_Observers.emplace_back(newListener);
 }
 
-void Subject::UnSubscribe(const IObserver* listener)
+void Subject::UnSubscribe(IObserver* listener)
 {
 	for (int i = 0; i < m_Observers.size(); i++)
 	{
@@ -63,7 +64,7 @@ void InputSubject::Notify(const Mage::Maths::Vector3& vector)
 		o->OnNotify(vector);
 		*/
 		InputObserver* o{ nullptr };
-		IsInputObserver(i, o) ? [](InputObserver* o, Mage::Maths::Vector3 vector) {o->OnNotify(vector); }(o, vector) : []() {}();
+		IsInputObserver(i, o) ? [](InputObserver*& o, Mage::Maths::Vector3 vector) {o->OnNotify(vector); }(o, vector) : []() {}();
 
 	}
 }
@@ -79,12 +80,15 @@ void InputSubject::Notify(const bool Pressed)
 		o->OnNotify(Pressed);
 		*/
 		InputObserver* o{ nullptr };
-		IsInputObserver(i, o) ? [](InputObserver* o, bool Pressed) {o->OnNotify(Pressed); }(o, Pressed) : []() {}();
+		IsInputObserver(i, o) ? [](InputObserver*& o, bool Pressed) {o->OnNotify(Pressed); }(o, Pressed) : []() {}();
 	}
 }
 
-inline bool InputSubject::IsInputObserver(const int i, InputObserver* o)
+inline bool InputSubject::IsInputObserver(const int i, InputObserver*& o)
 {
+	if (dynamic_cast<InputObserver*>(m_Observers[i]) == nullptr)
+		return false;
+
 	o = dynamic_cast<InputObserver*>(m_Observers[i]);
-	return o == nullptr ? false : true;
+	return true;
 }
