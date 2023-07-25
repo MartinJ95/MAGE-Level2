@@ -66,6 +66,7 @@ namespace Mage
 			Vector3 operator*(const Vector3 &other) const { return Vector3(x * other.x, y*other.y, z*other.z); }
 			Vector3 operator+(const Vector3 &other) const { return Vector3(x + other.x, y+other.y, z+other.z); }
 			Vector3 operator-(const Vector3 &other) const { return Vector3(x - other.x, y-other.y, z-other.z); }
+			Vector3 operator-() { return Vector3(-x, -y, -z); }
 			void operator=(const Vector3 &other) { x = other.x; y = other.y; z = other.z; }
 			void operator*=(const Vector3 &other) { x = x * other.x; y = y * other.y; z = z * other.z; }
 			void operator+=(const Vector3 &other) { x = x + other.x; y = y + other.y; z = z + other.z; }
