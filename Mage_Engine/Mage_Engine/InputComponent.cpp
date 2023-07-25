@@ -10,7 +10,9 @@ void MouseMoveInput::Notify(const Mage::Maths::Vector3& vector)
 	if (m_lastMousePos == vector)
 		return;
 
-	InputSubject::Notify(vector - m_lastMousePos);
+	Mage::Maths::Vector3 v = vector - m_lastMousePos;
+
+	InputSubject::Notify(Mage::Maths::Vector3(-v.x, v.y, v.z));
 	m_lastMousePos = vector;
 }
 
@@ -28,6 +30,12 @@ InputComponent::InputComponent(Entity& entity)
 	m_mouseButtonInputs(),m_keyboardButtonInputs(), m_axisInputs(),
 	m_MovementVector(0.f, 0.f, 0.f), m_locked(false)
 {
+}
+
+void InputComponent::OnGUI(Application& app)
+{
+	app.m_viz->GUIVector3("movementVector", m_MovementVector);
+	app.m_viz->GUICheckbox("isCamLocked", m_locked);
 }
 
 InputComponent::~InputComponent()
@@ -50,9 +58,6 @@ void InputComponent::Update(Application& app)
 	if (window == nullptr)
 		return;
 
-	glfwGetCursorPos(window, &x, &y);
-	m_mouseMoveDetection.Notify(Mage::Maths::Vector3(y, x, 0));
-
 	auto checkButtons = [](std::vector<ButtonInput>& buttons, GLFWwindow* w, int(*getInput)(GLFWwindow*, int))
 	{
 		for (int i = 0; i < buttons.size(); i++)
@@ -74,13 +79,19 @@ void InputComponent::Update(Application& app)
 
 	checkButtons(m_mouseButtonInputs, window, glfwGetMouseButton);
 	checkButtons(m_keyboardButtonInputs, window, glfwGetKey);
+	
+	if (!m_locked)
+		return;
+	
+	glfwGetCursorPos(window, &x, &y);
+	m_mouseMoveDetection.Notify(Mage::Maths::Vector3(y, x, 0));
 
 	Transform* t = m_entity.getComponent<Transform>();
 
 	if (t == nullptr)
 		return;
 
-	t->m_position += t->m_forward * m_MovementVector.z + t->m_forward.Cross(app.m_worldUp) * m_MovementVector.z + app.m_worldUp * m_MovementVector.y;
+	t->m_position += t->m_forward * m_MovementVector.z + t->m_forward.Cross(app.m_worldUp) * m_MovementVector.x + app.m_worldUp * m_MovementVector.y;
 
 	/*
 	auto checkButton = [](ButtonInput& i, GLFWwindow* w, const int button, int(*getInput)(GLFWwindow*, int))
@@ -156,6 +167,8 @@ void InputComponent::Initialize(Application& app)
 		{GLFW_KEY_D, Mage::Maths::Vector3(1.f, 0.f, 0.f)},
 		{GLFW_KEY_A, Mage::Maths::Vector3(-1.f, 0.f, 0.f)},
 	};
+	m_keyboardButtonInputs.reserve(5);
+	m_axisInputs.reserve(5);
 	for (int i = 0; i < 4; i++)
 	{
 		m_keyboardButtonInputs.emplace_back(axisKeys[i].first);
@@ -179,16 +192,17 @@ InputResult::InputResult(Application& app, InputComponent& owner) : m_app(&app),
 
 }
 
-AxisInput::AxisInput(Application& app, InputComponent& owner, Mage::Maths::Vector3& axis) : InputResult(app, owner), m_axis(axis)
+AxisInput::AxisInput(Application& app, InputComponent& owner, Mage::Maths::Vector3& axis) : InputResult(app, owner), m_axis(axis), m_toggle(false)
 {
 
 }
 
 void AxisInput::OnNotify(bool Pressed)
 {
-	if (m_app == nullptr || m_owner == nullptr)
+	if (m_app == nullptr || m_owner == nullptr || m_toggle == Pressed)
 		return;
 
+	m_toggle = Pressed;
 	m_owner->m_MovementVector += Pressed ? m_axis : -m_axis;
 }
 
@@ -222,5 +236,6 @@ void EditorCamLockCursorResult::OnNotify(bool Pressed)
 	if (m_app == nullptr || m_owner == nullptr)
 		return;
 
+	m_owner->m_locked = Pressed;
 	glfwSetInputMode(m_app->m_viz->getWindow(), GLFW_CURSOR, Pressed ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL);
 }

@@ -54,6 +54,7 @@ public:
     virtual void OnNotify(bool Pressed) override;
 private:
     Mage::Maths::Vector3 m_axis;
+    bool m_toggle;
 };
 
 //todo
@@ -63,8 +64,10 @@ class InputComponent :
 {
 public:
     friend class AxisInput;
+    friend class EditorCamLockCursorResult;
     InputComponent(Entity& entity);
     virtual void Update(Application& app) override;
+    virtual void OnGUI(Application& app) override;
     virtual void Initialize(Application& app);
     ~InputComponent();
 protected:
