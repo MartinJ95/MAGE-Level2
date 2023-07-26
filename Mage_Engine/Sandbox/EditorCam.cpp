@@ -8,4 +8,5 @@ void EditorCam::OnNotify(Mage::Maths::Vector3& vector)
 	if (t == nullptr)
 		return;
 	t->m_rotation = t->m_rotation + vector;
+	//t->updateRotation();
 }

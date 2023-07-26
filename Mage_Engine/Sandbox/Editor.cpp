@@ -2,6 +2,7 @@
 #include "Editor.h"
 #include <queue>
 #include <stack>
+#include "InputComponent.h"
 
 Editor::Editor() : m_newEntityName(), m_newLevelName(), m_editorCam(true), SelectedEntity(nullptr), m_showComponentAddMenu(false)
 {
@@ -11,6 +12,8 @@ void Editor::Initialization()
 {
 	m_editorCam.addComponent<Transform>();
 	m_editorCam.addComponent<Camera>();
+	m_editorCam.addComponent<InputComponent>();
+	m_editorCam.getComponent<InputComponent>()->Initialize(*this);
 	m_currentLevel->m_mainCamera = m_editorCam.getComponent<Camera>();
 
 	for (auto &t : textureList)
@@ -21,6 +24,10 @@ void Editor::Initialization()
 
 void Editor::OnGUI()
 {
+	m_viz->GUIBegin("editorCam");
+	m_editorCam.OnGUI(*this);
+	m_viz->GUIEnd();
+
 	m_viz->GUIBegin("Hiearchy");
 	m_viz->GUIVector3("world up", m_worldUp);
 	m_viz->GUIVector3("world forward", m_worldForward);
@@ -135,6 +142,9 @@ void Editor::OnUpdate()
 	m_viz->clear();
 	glfwPollEvents();
 	OnGUI();
+
+	m_editorCam.Update(*this);
+
 	for (auto &e : m_currentLevel->m_entities)
 	{
 		Transform *t = e->getComponent<Transform>();
