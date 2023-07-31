@@ -7,7 +7,8 @@ class MouseMoveInput : public InputSubject
 public:
     MouseMoveInput();
     virtual void Notify(const Mage::Maths::Vector3& vector) override;
-private:
+    void SetLastMousePosition(const Mage::Maths::Vector3& newLastMousePosition) { m_lastMousePos = newLastMousePosition; };
+protected:
     Mage::Maths::Vector3 m_lastMousePos;
 };
 

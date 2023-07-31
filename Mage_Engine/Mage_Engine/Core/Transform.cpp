@@ -31,8 +31,12 @@ void Transform::OnGUI(Application & app)
 
 void Transform::updateDirection()
 {
+	Mage::Maths::Vector3 forward(Mage::Maths::Vector3(0, 0, 1));
+	Mage::Maths::Vector3 rotation = worldRotation();
+	snapRotation(rotation);
 	snapRotation(m_rotation);
-	applyEulerToForward(m_rotation, m_forward);
+	//applyEulerToForward(m_rotation, m_forward);
+	m_forward = (m_quatRotation * forward).Normalized();
 }
 
 void Transform::updateRotation(Application &app)
@@ -58,9 +62,18 @@ void Transform::snapRotation(Mage::Maths::Vector3 & rotation)
 
 void Transform::applyEulerToForward(const Mage::Maths::Vector3 & rotation, Mage::Maths::Vector3 & forward)
 {
-	forward.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
-	forward.z = sin(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+	//forward.z = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
+	//forward.y = sin(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
+	//forward.x = sin(glm::radians(rotation.y));
+	//forward.x = sin(glm::radians(rotation.y));
+	//forward.y = cos(glm::radians(rotation.x));
+	//forward.z = sin(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
+	
+	//adjusts rotation so theta of 0 points to minus 1 z instead of positive x
+	Mage::Maths::Vector3 adjustedRotation = rotation + Mage::Maths::Vector3(0, -90, 0);
+	forward.x = cos(glm::radians(rotation.y) * cos(glm::radians(rotation.x)));
 	forward.y = sin(glm::radians(rotation.x));
+	forward.z = sin(glm::radians(rotation.y) * cos(glm::radians(rotation.x)));
 	forward.NormalizeInPlace();
 }
 
@@ -69,8 +82,9 @@ Mage::Maths::Vector3 Transform::worldForward()
 	Mage::Maths::Vector3 forward(Mage::Maths::Vector3(0, 0, 1));
 	Mage::Maths::Vector3 rotation = worldRotation();
 	snapRotation(rotation);
-	applyEulerToForward(rotation, forward);
-	return forward;
+	//applyEulerToForward(rotation, forward);
+	return (m_quatRotation * forward).Normalized();
+	//return forward;
 }
 
 Mage::Maths::Vector3 Transform::worldPosition()

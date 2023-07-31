@@ -40,14 +40,6 @@ void InputComponent::OnGUI(Application& app)
 
 InputComponent::~InputComponent()
 {
-	/*for (auto i : m_mouseButtonInputs)
-	{
-		delete i;
-	}
-	for (auto i : m_keyboardButtonInputs)
-	{
-		delete i;
-	}*/
 }
 
 void InputComponent::Update(Application& app)
@@ -204,6 +196,13 @@ void AxisInput::OnNotify(bool Pressed)
 
 	m_toggle = Pressed;
 	m_owner->m_MovementVector += Pressed ? m_axis : -m_axis;
+
+	double xPos;
+	double yPos;
+
+	glfwGetCursorPos(m_app->m_viz->getWindow(), &xPos, &yPos);
+
+	m_owner->m_mouseMoveDetection.SetLastMousePosition(Mage::Maths::Vector3(xPos, yPos, 0));
 }
 
 void InputResult::AssignApplication(Application& app)
@@ -226,6 +225,9 @@ void MouseMoveInputRotation::OnNotify(Mage::Maths::Vector3& vector)
 	
 	if (t == nullptr || m_app == nullptr)
 		return;
+
+	t->m_quatRotation = t->m_quatRotation * Mage::Maths::Quaternion(-vector.x, m_app->m_worldUp);
+	t->m_quatRotation = t->m_quatRotation * Mage::Maths::Quaternion(-vector.y, m_app->m_worldForward.Cross(m_app->m_worldUp));
 
 	t->m_rotation += vector;
 	t->updateDirection();

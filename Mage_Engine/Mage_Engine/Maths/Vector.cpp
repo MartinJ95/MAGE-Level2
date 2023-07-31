@@ -49,7 +49,7 @@ Vector3 Vector3::Normalized() const
 void Vector3::NormalizeInPlace()
 {
 	float l = Length();
-	x = y / l;
+	x = x / l;
 	y = y / l;
 	z = z / l;
 }

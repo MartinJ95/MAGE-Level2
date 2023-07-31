@@ -1,19 +1,65 @@
-#include "Quaternion.h"
-#include "Vector.h"
-#include "Matrix.h"
+#include "Maths/Quaternion.h"
+#include "Maths/Matrix.h"
 
 using namespace Mage::Maths;
 
-Quaternion::Quaternion(float x, float y, float z, float w) : x(x), y(y), z(z), w(w)
+Mage::Maths::Quaternion::Quaternion() : v(0.f, 0.f, 0.f), w(1.f)
+{
+}
+
+Mage::Maths::Quaternion::Quaternion(float x, float y, float z, float w) : v(x, y, z), w(w)
 {}
+
+Mage::Maths::Quaternion::Quaternion(const Mage::Maths::Vector3& vector, float w) : v(vector), w(w)
+{
+}
+
+Mage::Maths::Quaternion::Quaternion(float theta, const Vector3 & axis)
+{
+	*this = AngleAxis(theta, axis);
+}
+
+
+const Quaternion Mage::Maths::Quaternion::operator*(const Quaternion& q)
+{
+	/*Quaternion p(
+		v * q.w + q.v * w + v.Cross(q.v),
+		w*q.w + v.Dot(q.v)
+	);*/
+	Quaternion p(
+		Mage::Maths::Vector3(
+			v.x * q.w + v.y * q.v.z - v.z * q.v.y + w * q.v.x,
+			-v.x * q.v.z + v.y * q.w + v.z * q.v.x + w * q.v.y,
+			v.x * q.v.y - v.y * q.v.x + v.z * q.w + w * q.v.z
+		),
+		-v.x * q.v.x - v.y * q.v.y - v.z * q.v.z + w * q.w
+	);
+	return p;
+}
+
+const Vector3 Mage::Maths::Quaternion::operator*(const Vector3& V)
+{
+	Quaternion p(V, 0);
+
+	Vector3 vcV = v.Cross(V);
+	return V + vcV * (2 * w) + v.Cross(vcV) * 2;
+}
+
+void Mage::Maths::Quaternion::operator=(const Quaternion& other)
+{
+	v = other.v;
+	w = other.w;
+}
 
 Quaternion Mage::Maths::AngleAxis(const float & theta, const Vector3 & axis)
 {
+	float radians = theta / 360 * (float)M_PI * 2;
+
 	return Quaternion(
-		axis.x * sin(theta / 2),
-		axis.y * sin(theta / 2),
-		axis.z * sin(theta / 2),
-		cos(theta / 2));
+		axis.x * sin(radians / 2),
+		axis.y * sin(radians / 2),
+		axis.z * sin(radians / 2),
+		cos(radians / 2));
 }
 
 Quaternion Mage::Maths::EulerToQuat(const Mage::Maths::Vector3 & e)
@@ -38,24 +84,24 @@ Vector3 Mage::Maths::QuatToEuler(const Quaternion &q)
 	float heading;
 	float attitude;
 	float bank;
-	float testNum = q.x * q.y + q.z * q.w;
+	float testNum = q.v.x * q.v.y + q.v.z * q.w;
 	if (testNum > 0.499)
 	{
-		heading = 2 * atan2(q.x, q.w);
+		heading = 2 * atan2(q.v.x, q.w);
 		attitude = M_PI / 2;
 		bank = 0;
 	}
 	else if (testNum < -0.499)
 	{
-		heading = -2 * atan2(q.x, q.w);
+		heading = -2 * atan2(q.v.x, q.w);
 		attitude = M_PI / 2;
 		bank = 0;
 	}
 	else
 	{
-		heading = atan2(2 * q.y * q.w - 2 * q.x * q.z, 1 - 2 * (q.y * q.y) - 2 * (q.z * q.z));
-		attitude = asin(2 * q.x * q.y + 2 * q.z * q.w);
-		bank = atan2(2 * q.x * q.w - 2 * q.y * q.z, 1 - 2 * (q.x * q.x) - 2 * (q.z * q.z));
+		heading = atan2(2 * q.v.y * q.w - 2 * q.v.x * q.v.z, 1 - 2 * (q.v.y * q.v.y) - 2 * (q.v.z * q.v.z));
+		attitude = asin(2 * q.v.x * q.v.y + 2 * q.v.z * q.w);
+		bank = atan2(2 * q.v.x * q.w - 2 * q.v.y * q.v.z, 1 - 2 * (q.v.x * q.v.x) - 2 * (q.v.z * q.v.z));
 	}
 	return Vector3(bank, heading, attitude);
 }
@@ -63,9 +109,9 @@ Vector3 Mage::Maths::QuatToEuler(const Quaternion &q)
 Matrix4x4 Mage::Maths::QuatToMatrix(const Quaternion &q)
 {
 	return Matrix4x4(
-		1 - 2 * (q.y * q.y) - 2 * (q.z * q.z), 2 * q.x * q.y - 2 * q.z * q.w, 2 * q.x * q.z + 2 * q.y * q.w, 0,
-		2 * q.x * q.y + 2 * q.z * q.w, 1 - 2 * (q.x * q.x) - 2 * (q.z * q.z), 2 * q.y * q.z - 2 * q.x * q.w, 0,
-		2 * q.x * q.z - 2 * q.y * q.w, 2 * q.y * q.z + 2 * q.x * q.w, 1 - 2 * (q.x * q.x) - 2 * (q.y * q.y), 0,
+		1 - 2 * (q.v.y * q.v.y) - 2 * (q.v.z * q.v.z), 2 * q.v.x * q.v.y - 2 * q.v.z * q.w, 2 * q.v.x * q.v.z + 2 * q.v.y * q.w, 0,
+		2 * q.v.x * q.v.y + 2 * q.v.z * q.w, 1 - 2 * (q.v.x * q.v.x) - 2 * (q.v.z * q.v.z), 2 * q.v.y * q.v.z - 2 * q.v.x * q.w, 0,
+		2 * q.v.x * q.v.z - 2 * q.v.y * q.w, 2 * q.v.y * q.v.z + 2 * q.v.x * q.w, 1 - 2 * (q.v.x * q.v.x) - 2 * (q.v.y * q.v.y), 0,
 		0, 0, 0, 1);
 }
 

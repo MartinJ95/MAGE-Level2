@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Component.h"
 #include "Maths/Vector.h"
+#include "Maths/Quaternion.h"
 
 class Entity;
 class World;
@@ -26,5 +27,6 @@ public:
 	Mage::Maths::Vector3 m_position;
 	Mage::Maths::Vector3 m_scale;
 	Mage::Maths::Vector3 m_rotation; //(vec3(pitch, yaw, roll))
+	Mage::Maths::Quaternion m_quatRotation;
 };
 
