@@ -77,14 +77,42 @@ void Transform::applyEulerToForward(const Mage::Maths::Vector3 & rotation, Mage:
 	forward.NormalizeInPlace();
 }
 
+void Transform::Rotate(const Mage::Maths::Vector3& euler)
+{
+	Mage::Maths::Vector3 newEuler = euler + m_rotation;
+	snapRotation(newEuler);
+	SetRotation(newEuler);
+}
+
+void Transform::SetRotation(const Mage::Maths::Vector3& euler)
+{
+	m_rotation = euler;
+	m_quatRotation = Mage::Maths::EulerToQuat(m_rotation);
+	applyEulerToForward(m_rotation, m_forward);
+}
+
+void Transform::Rotate(const Mage::Maths::Quaternion& quat)
+{
+	Mage::Maths::Quaternion newQuaternion = quat;
+	newQuaternion = newQuaternion * m_quatRotation;
+	SetRotation(newQuaternion);
+}
+
+void Transform::SetRotation(const Mage::Maths::Quaternion& quat)
+{
+	m_quatRotation = quat;
+	m_rotation = Mage::Maths::QuatToEuler(m_quatRotation);
+	updateDirection();
+}
+
 Mage::Maths::Vector3 Transform::worldForward()
 {
 	Mage::Maths::Vector3 forward(Mage::Maths::Vector3(0, 0, 1));
 	Mage::Maths::Vector3 rotation = worldRotation();
 	snapRotation(rotation);
-	//applyEulerToForward(rotation, forward);
-	return (m_quatRotation * forward).Normalized();
-	//return forward;
+	applyEulerToForward(rotation, forward);
+	//return (m_quatRotation * forward).Normalized();
+	return forward;
 }
 
 Mage::Maths::Vector3 Transform::worldPosition()
@@ -120,6 +148,18 @@ Mage::Maths::Vector3 Transform::worldRotation()
 	else
 	{
 		return m_rotation;
+	}
+}
+
+Mage::Maths::Quaternion Transform::worldRotationQuat()
+{
+	if (m_entity.m_parent != nullptr)
+	{
+		return m_quatRotation * m_entity.m_parent->getComponent<Transform>()->worldRotationQuat();
+	}
+	else
+	{
+		return m_quatRotation;
 	}
 }
 

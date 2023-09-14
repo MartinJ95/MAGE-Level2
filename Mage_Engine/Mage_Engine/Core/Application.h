@@ -24,5 +24,6 @@ public:
 	Mage::Maths::Vector3 m_ambientLighting;
 	Mage::Maths::Vector3 m_worldUp;
 	Mage::Maths::Vector3 m_worldForward;
+	static Application* Instance;
 	bool m_open;
 };
