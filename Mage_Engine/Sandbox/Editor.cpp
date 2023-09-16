@@ -29,6 +29,7 @@ void Editor::OnGUI()
 	m_viz->GUIEnd();
 
 	m_viz->GUIBegin("Hiearchy");
+	m_viz->GUIVector3("ambient lighting", m_ambientLighting);
 	m_viz->GUIVector3("world up", m_worldUp);
 	m_viz->GUIVector3("world forward", m_worldForward);
 	m_viz->GUIText("Current Level");
