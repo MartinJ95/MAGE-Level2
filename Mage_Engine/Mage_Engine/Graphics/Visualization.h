@@ -61,6 +61,10 @@ public:
 	void generateBoxMesh(const int &minSize, const int &maxSize, const int &minTexCoord, const int &maxTexCoord, const std::string &meshName);
 	void generateSphereMesh(const Mage::Maths::Vector3 &center, const float &radius, const int &details, const std::string &meshName);
 	void loadObject(const std::string &filePath, const std::string &fileName, const std::string &fileType = ".obj");
+	void LockCursor(bool toggle);
+	~Visualization();
+	int m_screenWidth, m_screenHeight;
+private:
 	void useShader(const std::string &shaderName);
 	void setShaderTexture(const std::string &textureUniform, const std::string &textureName, const std::string &shaderName, const int textureIndex);
 	void setShaderUniformFloat(const std::string &shaderName, const std::string &uniformName, const float value);
@@ -68,10 +72,6 @@ public:
 	void setShaderUniformBool(const std::string &shaderName, const std::string &uniformName, const bool value);
 	void setShaderUniformMatrix4f(const std::string &shaderName, const std::string &uniformName, const glm::mat4 &matrix);
 	void setShaderUniformVector3(const std::string &shaderName, const std::string &uniformName, const Mage::Maths::Vector3 &vector);
-	void LockCursor(bool toggle);
-	~Visualization();
-	int m_screenWidth, m_screenHeight;
-private:
 	GLuint compileShader(const std::string &shaderType, const std::string &shaderFileName);
 	GLFWwindow* m_window;
 	std::string m_windowName;

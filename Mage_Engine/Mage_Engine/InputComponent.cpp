@@ -10,9 +10,16 @@ void MouseMoveInput::Notify(const Mage::Maths::Vector3& vector)
 	if (m_lastMousePos == vector)
 		return;
 
+
 	Mage::Maths::Vector3 v = vector - m_lastMousePos;
 
-	InputSubject::Notify(Mage::Maths::Vector3(-v.x, v.y, v.z));
+	if ((vector - m_lastMousePos).Length() > 50)
+	{
+		m_lastMousePos = vector;
+		v = Mage::Maths::Vector3(0.f, 0.f, 0.f);
+	}
+	
+		InputSubject::Notify(Mage::Maths::Vector3(-v.x, v.y, v.z));
 	m_lastMousePos = vector;
 }
 
@@ -226,11 +233,26 @@ void MouseMoveInputRotation::OnNotify(Mage::Maths::Vector3& vector)
 	if (t == nullptr || m_app == nullptr)
 		return;
 
-	t->m_quatRotation = t->m_quatRotation * Mage::Maths::Quaternion(-vector.x, m_app->m_worldUp);
-	t->m_quatRotation = t->m_quatRotation * Mage::Maths::Quaternion(-vector.y, m_app->m_worldForward.Cross(m_app->m_worldUp));
+	float pitchChange = -vector.y;
 
-	t->m_rotation += vector;
-	t->updateDirection();
+	if (t->m_forward.Dot(m_app->m_worldUp) > 0.7 && pitchChange < 0)
+		pitchChange = 0;
+
+	else if (t->m_forward.Dot(m_app->m_worldUp) < 0.3 && pitchChange > 0)
+		pitchChange = 0;
+
+	//rotating by euler
+	t->Rotate(Mage::Maths::Vector3(-vector.x, pitchChange, 0));
+
+	//rotating by quaternion
+	//t->Rotate(Mage::Maths::Quaternion(-vector.x, m_app->m_worldUp));
+	//t->Rotate(Mage::Maths::Quaternion(pitchChange, m_app->m_worldForward.Cross(m_app->m_worldUp)));
+
+	//t->m_quatRotation = t->m_quatRotation * Mage::Maths::Quaternion(-vector.x, m_app->m_worldUp);
+	//t->m_quatRotation = t->m_quatRotation * Mage::Maths::Quaternion(pitchChange, m_app->m_worldForward.Cross(m_app->m_worldUp));
+
+	//t->m_rotation += vector;
+	//t->updateDirection();
 }
 
 void EditorCamLockCursorResult::OnNotify(bool Pressed)
