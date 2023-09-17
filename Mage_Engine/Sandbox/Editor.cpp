@@ -109,8 +109,8 @@ void Editor::OnGUI()
 				{
 					if (*it == SelectedEntity)
 					{
-						m_currentLevel->m_entities.erase(it);
 						delete *it;
+						m_currentLevel->m_entities.erase(it);
 						break;
 					}
 				}
