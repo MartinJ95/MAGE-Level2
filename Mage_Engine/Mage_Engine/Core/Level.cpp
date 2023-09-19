@@ -14,6 +14,7 @@ m_spotLights(), m_mainCamera()
 
 void Level::LoadLevel(const std::string &fileName, Application &app)
 {
+	UnloadLevel();
 	m_levelName = fileName;
 	std::ifstream levelFile("Resources/" + m_levelName);
 	if (levelFile.is_open())
@@ -25,7 +26,7 @@ void Level::LoadLevel(const std::string &fileName, Application &app)
 		std::string command;
 		levelFile >> command;
 		std::stack<int> entityChildIteration;
-		while (levelFile.peek() != levelFile.eof())
+		while (true)
 		{
 			if (command == "end")
 			{
@@ -68,7 +69,7 @@ void Level::SaveLevel(const Application &app)
 		{
 			m_entities[i]->OnSave(app, levelFile);
 		}
-		levelFile << "end/n";
+		levelFile << "end\n";
 	}
 }
 

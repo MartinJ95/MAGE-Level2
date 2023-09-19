@@ -111,7 +111,7 @@ void Entity::OnGUI(Application & app)
 
 void Entity::OnSave(const Application &app, std::ofstream &stream)
 {
-	stream << "entity" << "/n";
+	stream << "entity" << "\n";
 	for (int i = 0; i < m_components.size(); i++)
 	{
 		m_components[i]->OnSave(app, stream);
@@ -120,7 +120,7 @@ void Entity::OnSave(const Application &app, std::ofstream &stream)
 	{
 		m_children[i].OnSave(app, stream);
 	}
-	stream << "end" << "/n";
+	stream << "end" << "\n";
 }
 
 void Entity::OnLoad(Application &app, std::ifstream &stream)
