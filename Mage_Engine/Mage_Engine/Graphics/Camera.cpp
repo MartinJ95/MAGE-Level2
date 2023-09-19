@@ -2,7 +2,7 @@
 #include "Camera.h"
 
 Camera::Camera(Entity &entity) :
-	Component(entity),
+	Component(entity, 1),
 	m_fieldOfView(90)
 {
 }

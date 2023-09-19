@@ -3,8 +3,8 @@
 #include "Entity.h"
 
 
-Component::Component(Entity &entity) :
-	m_entity(entity)
+Component::Component(Entity &entity, unsigned int ID) :
+	m_entity(entity), compID(ID)
 {
 }
 

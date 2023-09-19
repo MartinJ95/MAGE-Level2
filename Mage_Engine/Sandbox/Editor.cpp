@@ -2,7 +2,7 @@
 #include "Editor.h"
 #include <queue>
 #include <stack>
-#include "InputComponent.h"
+#include "EditorCam.h"
 
 Editor::Editor() : m_newEntityName(), m_newLevelName(), m_editorCam(true), SelectedEntity(nullptr), m_showComponentAddMenu(false)
 {
@@ -12,8 +12,8 @@ void Editor::Initialization()
 {
 	m_editorCam.addComponent<Transform>();
 	m_editorCam.addComponent<Camera>();
-	m_editorCam.addComponent<InputComponent>();
-	m_editorCam.getComponent<InputComponent>()->Initialize(*this);
+	m_editorCam.addComponent<EditorCam>();
+	m_editorCam.getComponent<EditorCam>()->Initialize(*this);
 	m_currentLevel->m_mainCamera = m_editorCam.getComponent<Camera>();
 
 	for (auto &t : textureList)

@@ -36,18 +36,6 @@ protected:
     InputComponent* m_owner;
 };
 
-class MouseMoveInputRotation : public InputResult
-{
-public:
-    virtual void OnNotify(Mage::Maths::Vector3 &vector) override;
-};
-
-class EditorCamLockCursorResult : public InputResult
-{
-public:
-    virtual void OnNotify(bool Pressed) override;
-};
-
 class AxisInput : public InputResult
 {
 public:
@@ -60,6 +48,7 @@ private:
 
 //todo
 //split up editor cam specific to derived class (when it all works)
+
 class InputComponent :
     public Component, public InputObserver
 {
@@ -73,8 +62,6 @@ public:
     ~InputComponent();
 protected:
     MouseMoveInput m_mouseMoveDetection;
-    MouseMoveInputRotation m_mouseMoveResult;
-    EditorCamLockCursorResult m_cursorLock;
     std::vector<ButtonInput> m_mouseButtonInputs;
     std::vector<ButtonInput> m_keyboardButtonInputs;
     std::vector<AxisInput>  m_axisInputs;
