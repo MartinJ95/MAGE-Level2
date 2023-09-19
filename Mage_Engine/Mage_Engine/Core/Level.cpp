@@ -25,7 +25,7 @@ void Level::LoadLevel(const std::string &fileName, Application &app)
 		std::string command;
 		levelFile >> command;
 		std::stack<int> entityChildIteration;
-		while (true)
+		while (levelFile.peek() != levelFile.eof())
 		{
 			if (command == "end")
 			{
