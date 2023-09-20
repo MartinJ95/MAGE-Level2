@@ -12,9 +12,11 @@ m_spotLights(), m_mainCamera()
 	LoadLevel(fileName, app);
 }
 
-void Level::LoadLevel(const std::string &fileName, Application &app)
+void Level::LoadLevel(const std::string &fileName, Application &app, Entity** selectedEntity)
 {
 	UnloadLevel();
+	if (*selectedEntity != nullptr)
+		*selectedEntity = nullptr;
 	m_levelName = fileName;
 	std::ifstream levelFile("Resources/" + m_levelName);
 	if (levelFile.is_open())
@@ -50,6 +52,11 @@ void Level::LoadLevel(const std::string &fileName, Application &app)
 			{
 				e->createChild(true);
 				e = &e->m_children.back();
+			}
+			else if (command == "entity")
+			{
+				m_entities.emplace_back(new Entity(true));
+				m_entities.back()->OnLoad(app, levelFile);
 			}
 			levelFile >> command;
 		}

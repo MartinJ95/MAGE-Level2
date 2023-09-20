@@ -17,7 +17,7 @@ class Level
 public:
 	Level();
 	Level(std::string &fileName, Application &app);
-	void LoadLevel(const std::string &fileName, Application &app);
+	void LoadLevel(const std::string &fileName, Application &app, Entity** selectedEntity = nullptr);
 	void SaveLevel(const Application &app);
 	void AddEntity(const std::string &name) { m_entities.emplace_back(new Entity(true)); m_entities.back()->m_name = name; }
 	void RemoveEntity(const int &index) { m_entities.erase(m_entities.begin() + index); }

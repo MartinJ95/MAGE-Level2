@@ -24,8 +24,10 @@ void Component::OnGUI(Application & app)
 {
 }
 
-void Component::OnSave(const Application & app, std::ofstream & stream)
+void Component::OnSave(const Application & app, std::ofstream & stream) const
 {
+	stream << "component" << "\n";
+	stream << compID << "\n";
 }
 
 void Component::OnLoad(Application & app, std::ifstream & stream)

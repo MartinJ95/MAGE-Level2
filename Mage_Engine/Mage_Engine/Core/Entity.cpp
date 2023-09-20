@@ -112,6 +112,7 @@ void Entity::OnGUI(Application & app)
 void Entity::OnSave(const Application &app, std::ofstream &stream)
 {
 	stream << "entity" << "\n";
+	stream << m_name << "\n";
 	for (int i = 0; i < m_components.size(); i++)
 	{
 		m_components[i]->OnSave(app, stream);
@@ -125,7 +126,25 @@ void Entity::OnSave(const Application &app, std::ofstream &stream)
 
 void Entity::OnLoad(Application &app, std::ifstream &stream)
 {
-
+	stream >> m_name;
+	std::string command;
+	stream >> command;
+	while (true)
+	{
+		if (command == "end") { return; }
+		else if (command == "component")
+		{
+			unsigned int componentID;
+			stream >> componentID;
+			if (componentsAddable.find(componentID) != componentsAddable.end())
+			{
+				ComponentAddition func = componentsAddable.find(componentID)->second;
+				(this->*func)();
+				m_components.back()->OnLoad(app, stream);
+			}
+		}
+		stream >> command;
+	}
 }
 
 void Entity::onCollisionEnter(Application & app, collisionData & data)

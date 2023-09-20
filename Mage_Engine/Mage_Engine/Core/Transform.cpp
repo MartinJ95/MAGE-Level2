@@ -3,7 +3,7 @@
 #include "Core/Application.h"
 
 Transform::Transform(Entity& entity) :
-	Component(entity),
+	Component(entity, 2),
 	m_forward(0, 0, 1),
 	m_position(0, 0, 0),
 	m_scale(1, 1, 1),
@@ -27,6 +27,24 @@ void Transform::OnGUI(Application & app)
 	app.m_viz->GUIVector3("rotation", m_rotation);
 	app.m_viz->GUIVector3("scale", m_scale);
 	app.m_viz->GUIVector3("forward", m_forward);
+}
+
+void Transform::OnSave(const Application& app, std::ofstream& stream) const
+{
+	Component::OnSave(app, stream);
+	m_forward.Save(stream);
+	m_position.Save(stream);
+	m_scale.Save(stream);
+	m_rotation.Save(stream);
+	stream << "end" << "\n";
+}
+
+void Transform::OnLoad(Application& app, std::ifstream& stream)
+{
+	m_forward.Load(stream);
+	m_position.Load(stream);
+	m_scale.Load(stream);
+	m_rotation.Load(stream);
 }
 
 void Transform::updateDirection()

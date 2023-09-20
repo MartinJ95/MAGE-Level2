@@ -15,6 +15,7 @@
 #include "Maths/Vector.h"
 #include "Maths/Quaternion.h"
 #include "glm/glm.hpp"
+#include <map>
 
 class Application;
 
@@ -162,5 +163,18 @@ private:
 };
 
 
+typedef void(Entity::* ComponentAddition)();
+
+static std::map<unsigned int, ComponentAddition> componentsAddable{
+	std::pair<unsigned int, ComponentAddition>(0, &Entity::addComponent<Camera>),
+	std::pair<unsigned int, ComponentAddition>(1, &Entity::addComponent<RigidBody>),
+	std::pair<unsigned int, ComponentAddition>(2, &Entity::addComponent<Transform>),
+	std::pair<unsigned int, ComponentAddition>(3, &Entity::addComponent<Mesh>),
+	std::pair<unsigned int, ComponentAddition>(4, &Entity::addComponent<PointLight>),
+	std::pair<unsigned int, ComponentAddition>(5, &Entity::addComponent<SpotLight>),
+	std::pair<unsigned int, ComponentAddition>(6, &Entity::addComponent<PlaneCollider>),
+	std::pair<unsigned int, ComponentAddition>(7, &Entity::addComponent<BoxCollider>),
+	std::pair<unsigned int, ComponentAddition>(8, &Entity::addComponent<SphereCollider>),
+	std::pair<unsigned int, ComponentAddition>(9, &Entity::addComponent<Camera>)};
 
 

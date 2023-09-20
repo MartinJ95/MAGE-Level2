@@ -36,7 +36,7 @@ void Editor::OnGUI()
 	m_viz->GUIText(m_currentLevel->m_levelName);
 	m_viz->GUIEditText("level edit name", m_newLevelName);
 	if (m_viz->GUIButton("Save Level")) { m_currentLevel->SaveLevel(*this); }
-	if (m_viz->GUIButton("Load Level")) { m_currentLevel->LoadLevel(m_newLevelName, *this); }
+	if (m_viz->GUIButton("Load Level")) { m_currentLevel->LoadLevel(m_newLevelName, *this, &SelectedEntity); }
 	m_viz->GUIEditText("name for new entity", m_newEntityName);
 	VoidFunctionCallbackString func = &Application::AddEntity;
 	m_viz->GUIButton("Add New Entity", func, m_newEntityName, this);

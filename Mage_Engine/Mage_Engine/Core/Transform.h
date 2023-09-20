@@ -14,6 +14,8 @@ public:
 	void Update(Application &app) override;
 	void FixedUpdate(Application &app) override;
 	void OnGUI(Application &app) override;
+	virtual void OnSave(const Application& app, std::ofstream& stream) const override;
+	virtual void OnLoad(Application& app, std::ifstream& stream) override;
 	void Rotate(const Mage::Maths::Vector3& euler);
 	void SetRotation(const Mage::Maths::Vector3& euler);
 	void Rotate(const Mage::Maths::Quaternion& quat);
