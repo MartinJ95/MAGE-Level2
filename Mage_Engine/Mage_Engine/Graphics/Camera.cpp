@@ -2,7 +2,7 @@
 #include "Camera.h"
 
 Camera::Camera(Entity &entity) :
-	Component(entity, 1),
+	Component(entity, 9),
 	m_fieldOfView(90)
 {
 }
@@ -22,6 +22,18 @@ void Camera::OnGUI(Application & app)
 	app.m_viz->GUIText("Camera");
 	app.m_viz->GUIEditFloat("field of view", m_fieldOfView);
 	if (app.m_viz->GUIButton("set as main cam")) { app.m_currentLevel->m_mainCamera = this; }
+}
+
+void Camera::OnSave(const Application& app, std::ofstream& stream) const
+{
+	Component::OnSave(app, stream);
+	stream << m_fieldOfView;
+	stream << "end" << "\n";
+}
+
+void Camera::OnLoad(Application& app, std::ifstream& stream)
+{
+	stream >> m_fieldOfView;
 }
 
 Camera::~Camera()

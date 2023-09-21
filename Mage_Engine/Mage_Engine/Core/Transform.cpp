@@ -36,7 +36,7 @@ void Transform::OnSave(const Application& app, std::ofstream& stream) const
 	m_position.Save(stream);
 	m_scale.Save(stream);
 	m_rotation.Save(stream);
-	stream << "end" << "\n";
+	m_quatRotation.Save(stream);
 }
 
 void Transform::OnLoad(Application& app, std::ifstream& stream)
@@ -45,6 +45,7 @@ void Transform::OnLoad(Application& app, std::ifstream& stream)
 	m_position.Load(stream);
 	m_scale.Load(stream);
 	m_rotation.Load(stream);
+	m_quatRotation.Load(stream);
 }
 
 void Transform::updateDirection()

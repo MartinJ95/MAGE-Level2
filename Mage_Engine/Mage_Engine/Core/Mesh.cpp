@@ -5,7 +5,7 @@
 
 
 Mesh::Mesh(Entity &entity) :
-	Component(entity),
+	Component(entity, 3),
 	m_is3D(true),
 	m_meshName(),
 	m_textureName(),
@@ -41,6 +41,23 @@ void Mesh::OnGUI(Application & app)
 	app.m_viz->GUIEditText("mesh name", m_meshName);
 	app.m_viz->GUIEditText("texture name", m_textureName);
 	app.m_viz->GUIEditText("shaderName", m_shaderName);
+}
+
+void Mesh::OnSave(const Application& app, std::ofstream& stream) const
+{
+	Component::OnSave(app, stream);
+	stream << m_is3D << "\n";
+	stream << m_meshName << "\n";
+	stream << m_textureName << "\n";
+	stream << m_shaderName << "\n";
+}
+
+void Mesh::OnLoad(Application& app, std::ifstream& stream)
+{
+	stream >> m_is3D;
+	stream >> m_meshName;
+	stream >> m_textureName;
+	stream >> m_shaderName;
 }
 
 

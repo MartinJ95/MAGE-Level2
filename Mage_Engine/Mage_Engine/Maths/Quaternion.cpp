@@ -19,6 +19,18 @@ Mage::Maths::Quaternion::Quaternion(float theta, const Vector3 & axis)
 	*this = AngleAxis(theta, axis);
 }
 
+void Mage::Maths::Quaternion::Save(std::ofstream& stream) const
+{
+	v.Save(stream);
+	stream << w << "\n";
+}
+
+void Mage::Maths::Quaternion::Load(std::ifstream& stream)
+{
+	v.Load(stream);
+	stream >> w;
+}
+
 
 const Quaternion Mage::Maths::Quaternion::operator*(const Quaternion& q)
 {

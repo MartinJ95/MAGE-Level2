@@ -3,7 +3,7 @@
 
 
 SpotLight::SpotLight(Entity &entity) :
-	Component(entity),
+	Component(entity, 5),
 	m_intensity(),
 	m_position(),
 	m_fieldOfView(),

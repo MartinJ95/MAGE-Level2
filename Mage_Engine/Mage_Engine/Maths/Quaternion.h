@@ -23,6 +23,8 @@ namespace Mage
 			Quaternion(float x, float y, float z, float w);
 			Quaternion(const Maths::Vector3 &vector, float w);
 			Quaternion(float theta, const Vector3& axis);
+			void Save(std::ofstream& stream) const;
+			void Load(std::ifstream& stream);
 			Mage::Maths::Vector3 v;
 			float w;
 			const Quaternion operator *(const Quaternion& q);
