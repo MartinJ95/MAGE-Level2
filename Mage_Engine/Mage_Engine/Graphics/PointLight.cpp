@@ -3,7 +3,7 @@
 
 
 PointLight::PointLight(Entity & entity) :
-	Component(entity, 4),
+	Component(entity, 4, ComponentType::eGraphicsComponent),
 	m_intensity(),
 	m_position(),
 	m_radius()
@@ -23,8 +23,7 @@ void PointLight::OnSave(const Application& app, std::ofstream& stream) const
 	Component::OnSave(app, stream);
 	m_intensity.Save(stream);
 	m_position.Save(stream);
-	stream << m_radius;
-	stream << "end" << "\n";
+	stream << m_radius << "\n";
 }
 
 void PointLight::OnLoad(Application& app, std::ifstream& stream)

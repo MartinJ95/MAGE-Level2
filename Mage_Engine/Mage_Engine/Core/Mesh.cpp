@@ -5,7 +5,7 @@
 
 
 Mesh::Mesh(Entity &entity) :
-	Component(entity, 3),
+	Component(entity, 3, ComponentType::eGraphicsComponent),
 	m_is3D(true),
 	m_meshName(),
 	m_textureName(),

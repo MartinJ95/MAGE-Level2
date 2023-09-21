@@ -3,7 +3,7 @@
 
 
 BoxCollider::BoxCollider(Entity &entity) :
-	Component(entity, 7), m_center(Mage::Maths::Vector3(0, 0, 0)), m_minDimensions(Mage::Maths::Vector3(0, 0, 0)), m_maxDimensions(Mage::Maths::Vector3(0, 0, 0))
+	Component(entity, 7, ComponentType::ePhysicsComponent), m_center(Mage::Maths::Vector3(0, 0, 0)), m_minDimensions(Mage::Maths::Vector3(0, 0, 0)), m_maxDimensions(Mage::Maths::Vector3(0, 0, 0))
 {
 }
 

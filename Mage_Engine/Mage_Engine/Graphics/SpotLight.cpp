@@ -3,7 +3,7 @@
 
 
 SpotLight::SpotLight(Entity &entity) :
-	Component(entity, 5),
+	Component(entity, 5, ComponentType::eGraphicsComponent),
 	m_intensity(),
 	m_position(),
 	m_fieldOfView(),
@@ -16,6 +16,22 @@ void SpotLight::OnGUI(Application & app)
 	app.m_viz->GUIText("Spot Light");
 	app.m_viz->GUIEditFloat("Field Of View", m_fieldOfView);
 	app.m_viz->GUIEditFloat("Range", m_range);
+}
+
+void SpotLight::OnSave(const Application& app, std::ofstream& stream) const
+{
+	m_intensity.Save(stream);
+	m_position.Save(stream);
+	stream << m_fieldOfView << "\n";
+	stream << m_range << "\n";
+}
+
+void SpotLight::OnLoad(Application& app, std::ifstream& stream)
+{
+	m_intensity.Load(stream);
+	m_position.Load(stream);
+	stream >> m_fieldOfView;
+	stream >> m_range;
 }
 
 

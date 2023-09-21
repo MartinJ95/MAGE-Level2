@@ -2,7 +2,7 @@
 #include "Camera.h"
 
 Camera::Camera(Entity &entity) :
-	Component(entity, 9),
+	Component(entity, 9, ComponentType::eGraphicsComponent),
 	m_fieldOfView(90)
 {
 }
@@ -28,7 +28,6 @@ void Camera::OnSave(const Application& app, std::ofstream& stream) const
 {
 	Component::OnSave(app, stream);
 	stream << m_fieldOfView;
-	stream << "end" << "\n";
 }
 
 void Camera::OnLoad(Application& app, std::ifstream& stream)
