@@ -16,7 +16,7 @@ void Component::FixedUpdate(Application &app)
 {
 }
 
-void Component::OnRender(Application & app)
+void Component::OnRender(Application & app) const
 {
 }
 

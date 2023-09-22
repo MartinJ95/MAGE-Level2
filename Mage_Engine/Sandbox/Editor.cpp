@@ -162,6 +162,14 @@ void Editor::OnUpdate()
 	m_viz->display();
 }
 
+void Editor::OnPhysicsStep()
+{
+	for (auto& e : m_currentLevel->m_entities)
+	{
+		e->OnPhysicsStep(*this);
+	}
+}
+
 
 Editor::~Editor()
 {

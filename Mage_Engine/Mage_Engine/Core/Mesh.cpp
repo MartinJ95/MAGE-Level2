@@ -23,7 +23,7 @@ void Mesh::FixedUpdate(Application &app)
 
 }
 
-void Mesh::OnRender(Application & app)
+void Mesh::OnRender(Application & app) const
 {
 	if (!m_is3D)
 	{

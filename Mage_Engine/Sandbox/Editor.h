@@ -4,7 +4,8 @@
 
 static const std::pair<std::string, std::string> textureList[] = {
 	std::pair<std::string, std::string>("Resources\\box.png", "box"),
-	std::pair<std::string, std::string>("Resources\\floor.png", "floor")
+	std::pair<std::string, std::string>("Resources\\floor.png", "floor"),
+	std::pair<std::string, std::string>("Resources\\world.png", "world")
 };
 
 class Editor :
@@ -13,8 +14,9 @@ class Editor :
 public:
 	Editor();
 	void Initialization() override;
-	void OnGUI() override;
-	void OnUpdate() override;
+	virtual void OnGUI() override;
+	virtual void OnUpdate() override;
+	virtual void OnPhysicsStep() override;
 	template<typename T>
 	void AddComponent(const int &index);
 	template<>

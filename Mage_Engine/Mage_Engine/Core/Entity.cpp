@@ -29,6 +29,7 @@ void Entity::Update(Application &app)
 				break;
 			}
 		}*/
+		if (m_components[i]->compType != ComponentType::eDefaultComponent) { continue; }
 		m_components[i]->Update(app);
 	}
 }
@@ -48,10 +49,11 @@ void Entity::fixedUpdate(Application &app)
 	}
 }
 
-void Entity::OnRender(Application & app)
+void Entity::OnRender(Application & app) const
 {
 	for (auto &c : m_components)
 	{
+		if (c->compType != ComponentType::eGraphicsComponent) { continue; }
 		c->OnRender(app);
 	}
 }
@@ -159,6 +161,22 @@ void Entity::onCollisionEnter(Application & app, collisionData & data)
 			}
 		}*/
 		m_components[i]->onCollisionEnter(app, data);
+	}
+}
+
+void Entity::OnPhysicsStep(Application& app)
+{
+	for (int i = 0; i < m_components.size(); i++)
+	{
+		/*for (auto f : componentManagerTypes)
+		{
+			if (f(m_components[i], &world, 0, nullptr) == true)
+			{
+				break;
+			}
+		}*/
+		if (m_components[i]->compType != ComponentType::ePhysicsComponent) { continue; }
+		m_components[i]->Update(app);
 	}
 }
 

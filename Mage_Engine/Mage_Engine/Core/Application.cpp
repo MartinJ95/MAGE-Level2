@@ -45,6 +45,10 @@ void Application::OnUpdate()
 {
 }
 
+void Application::OnPhysicsStep()
+{
+}
+
 void Application::AddEntity(const std::string &str)
 {
 	m_currentLevel->AddEntity(str);
