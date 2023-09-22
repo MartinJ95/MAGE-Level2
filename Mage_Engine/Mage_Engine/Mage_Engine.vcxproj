@@ -23,32 +23,32 @@
     <ProjectGuid>{E75CB2BE-3CF1-46EE-9AF6-49ABA3A149ED}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MageEngine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -167,6 +167,7 @@
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\Entity.h" />
     <ClInclude Include="Core\EntryPoint.h" />
+    <ClInclude Include="Core\InputComponent.h" />
     <ClInclude Include="Core\InputManager.h" />
     <ClInclude Include="Core\Level.h" />
     <ClInclude Include="Core\Mesh.h" />
@@ -193,17 +194,22 @@
     <ClInclude Include="Maths\Matrix.h" />
     <ClInclude Include="Maths\Quaternion.h" />
     <ClInclude Include="Maths\Vector.h" />
+    <ClInclude Include="Network\NetworkClient.h" />
+    <ClInclude Include="Network\RemoteClient.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physics\BoxCollider.h" />
     <ClInclude Include="Physics\Physics.h" />
     <ClInclude Include="Physics\PlaneCollider.h" />
     <ClInclude Include="Physics\RigidBody.h" />
     <ClInclude Include="Physics\SphereCollider.h" />
+    <ClInclude Include="StackDebugging.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\Entity.cpp" />
+    <ClCompile Include="Core\InputComponent.cpp" />
     <ClCompile Include="Core\InputManager.cpp" />
     <ClCompile Include="Core\Level.cpp" />
     <ClCompile Include="Core\Mesh.cpp" />
@@ -226,6 +232,9 @@
     <ClCompile Include="Maths\Matrix.cpp" />
     <ClCompile Include="Maths\Quaternion.cpp" />
     <ClCompile Include="Maths\Vector.cpp" />
+    <ClCompile Include="Network\NetworkClient.cpp" />
+    <ClCompile Include="Network\RemoteClient.cpp" />
+    <ClCompile Include="Observer.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -237,6 +246,7 @@
     <ClCompile Include="Physics\PlaneCollider.cpp" />
     <ClCompile Include="Physics\RigidBody.cpp" />
     <ClCompile Include="Physics\SphereCollider.cpp" />
+    <ClCompile Include="StackDebugging.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\default2DShader.fs" />

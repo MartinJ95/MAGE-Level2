@@ -1,5 +1,5 @@
 #include "NetworkClient.h"
-#include "World.h"
+//#include "World.h"
 
 NetworkClient::NetworkClient(World &world) :
 	m_socket(),
@@ -34,7 +34,7 @@ void NetworkClient::Initialize()
 
 void NetworkClient::RecieveMessage()
 {
-	while (m_connected)
+	/*while (m_connected)
 	{
 		if (m_socket.receive(m_buffer, m_bufferSize, m_bufferRecieved) == sf::Socket::Done)
 		{
@@ -97,10 +97,10 @@ void NetworkClient::RecieveMessage()
 				}
 			}
 		}
-	}
+	}*/
 }
 
-void NetworkClient::SendMessage(Message *message)
+/*void NetworkClient::SendMessage(Message* message)
 {
 	m_lock.lock();
 	if (message->type == MessageType::PositionUpdate)
@@ -117,16 +117,16 @@ void NetworkClient::SendMessage(Message *message)
 		m_socket.send(message, sizeof(Message));
 	}
 	m_lock.unlock();
-}
+}*/
 
 NetworkClient::~NetworkClient()
 {
-	Message m;
+	/*Message m;
 	m.type = MessageType::Disconnect;
 	m.ID = m_ID;
 	m_socket.send(&m, sizeof(Message), m_bufferSize);
 	m_socket.setBlocking(false);
 	m_socket.disconnect();
 	m_connected = false;
-	m_readerThread.join();
+	m_readerThread.join();*/
 }

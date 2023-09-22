@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Network.hpp>
-#include "Network/NetworkMessages.h"
+//#include "Network/NetworkMessages.h"
 #include <iostream>
 #include <thread>
 #include <mutex>
@@ -24,7 +24,7 @@ public:
 	NetworkClient(World &world);
 	void Initialize();
 	void RecieveMessage();
-	void SendMessage(Message *message);
+	//void SendMessage(Message *message);
 	~NetworkClient();
 };
 
