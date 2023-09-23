@@ -8,7 +8,7 @@ Entity::Entity(bool active) :
 	m_children(),
 	m_components()
 {
-	m_children.reserve(100);
+	m_children.reserve(10);
 }
 
 Entity::Entity(bool active, Entity &parent) :
@@ -17,7 +17,7 @@ Entity::Entity(bool active, Entity &parent) :
 	m_children(),
 	m_components()
 {
-	m_children.reserve(100);
+	m_children.reserve(10);
 }
 
 void Entity::Update(Application &app)
