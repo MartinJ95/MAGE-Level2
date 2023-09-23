@@ -20,6 +20,32 @@ Entity::Entity(bool active, Entity &parent) :
 	m_children.reserve(10);
 }
 
+Entity::Entity(const Entity& other) :
+	m_active(other.m_active),
+	m_parent(other.m_parent),
+	m_children(other.m_children),
+	m_name(other.m_name)
+{
+	for (auto& e : m_children)
+	{
+		e.m_parent = this;
+	}
+}
+
+Entity::Entity(Entity&& other) :
+	m_active(other.m_active),
+	m_parent(other.m_parent),
+	m_children(other.m_children),
+	m_name(other.m_name)
+{
+	for (auto& e : m_children)
+	{
+		e.m_parent = this;
+	}
+	other.m_parent = nullptr;
+	other.m_children.clear();
+}
+
 void Entity::Update(Application &app)
 {
 	for (int i = 0; i < m_components.size(); i++)

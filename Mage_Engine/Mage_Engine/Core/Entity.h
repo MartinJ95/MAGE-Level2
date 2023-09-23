@@ -70,6 +70,8 @@ class Entity
 public:
 	Entity(bool active);
 	Entity(bool active, Entity &parent);
+	Entity(const Entity& other);
+	Entity(Entity&& other);
 	template<typename T> T* getComponent()
 	{
 		for (int i = 0; i < m_components.size(); i++)
@@ -151,6 +153,31 @@ public:
 	void OnPhysicsStep(Application& app);
 	void createChild(bool active);
 	void DeleteComponent(Component *c);
+	void operator=(const Entity& rhs)
+	{
+		m_active = rhs.m_active;
+		m_parent = rhs.m_parent;
+		m_children = rhs.m_children;
+		m_name = rhs.m_name;
+		for (auto& e : m_children)
+		{
+			e.m_parent = this;
+		}
+	}
+	void operator=(Entity&& rhs)
+	{
+		m_active = rhs.m_active;
+		m_parent = rhs.m_parent;
+		m_children = rhs.m_children;
+		m_name = rhs.m_name;
+
+		for (auto& e : m_children)
+		{
+			e.m_parent = this;
+		}
+		rhs.m_parent = nullptr;
+		rhs.m_children.clear();
+	}
 	colliderTypes getCollider();
 	glm::mat4 getTransformMatrix2D(Application &app);
 	glm::mat4 getTransformMatrix3D(Application &app);
