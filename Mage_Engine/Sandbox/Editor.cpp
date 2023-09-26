@@ -14,12 +14,27 @@ void Editor::Initialization()
 	m_editorCam.addComponent<Camera>();
 	m_editorCam.addComponent<EditorCam>();
 	m_editorCam.getComponent<EditorCam>()->Initialize(*this);
-	m_currentLevel->m_mainCamera = m_editorCam.getComponent<Camera>();
+	m_currentLevel->m_data.m_mainCamera = m_editorCam.getComponent<Camera>();
 
 	for (auto &t : textureList)
 	{
 		m_viz->generateTexture(t.first, t.second);
 	}
+}
+
+void Editor::MainLoopStart()
+{
+	if (m_isRunning)
+	{
+		m_runningThreads.emplace(&Application::OnUpdate, this);
+		m_runningThreads.emplace(&Application::OnPhysicsStep, this);
+		//OnUpdate();
+		//OnPhysicsStep();
+	}
+	m_runningThreads.emplace(&Editor::OnGUI, this);
+	m_runningThreads.emplace(&Application::OnRender, this);
+	//OnGUI();
+	//OnRender();
 }
 
 void Editor::OnGUI()
@@ -45,9 +60,9 @@ void Editor::OnGUI()
 	std::vector<std::pair<Entity*, int>> sortedEntities;
 	std::stack<int> previousIndex;
 	int GUIIDIteration = 0;
-	for (int i = 0; i < m_currentLevel->m_entities.size(); i++) 
+	for (int i = 0; i < m_currentLevel->m_data.m_entities.size(); i++) 
 	{
-		Entity *e = m_currentLevel->m_entities[i];
+		Entity *e = m_currentLevel->m_data.m_entities[i];
 		sortedEntities.push_back(std::pair<Entity*, int>(e, 0));
 		while (e != nullptr)
 		{
@@ -105,12 +120,12 @@ void Editor::OnGUI()
 			}
 			else
 			{
-				for (std::vector<Entity*>::iterator it = m_currentLevel->m_entities.begin(); it != m_currentLevel->m_entities.end(); it++)
+				for (std::vector<Entity*>::iterator it = m_currentLevel->m_data.m_entities.begin(); it != m_currentLevel->m_data.m_entities.end(); it++)
 				{
 					if (*it == SelectedEntity)
 					{
 						delete *it;
-						m_currentLevel->m_entities.erase(it);
+						m_currentLevel->m_data.m_entities.erase(it);
 						break;
 					}
 				}
@@ -126,9 +141,9 @@ void Editor::OnGUI()
 			{
 				if (m_viz->GUIButton("Add Component-" + it.first)) {
 					EntityComponentAddition func = it.second;
-					for (int i = 0; i < m_currentLevel->m_entities.size(); i++)
+					for (int i = 0; i < m_currentLevel->m_data.m_entities.size(); i++)
 					{
-						if (m_currentLevel->m_entities[i] == SelectedEntity) { index = i; break; }
+						if (m_currentLevel->m_data.m_entities[i] == SelectedEntity) { index = i; break; }
 					}
 					(this->*func)(index);
 				}
@@ -139,37 +154,6 @@ void Editor::OnGUI()
 
 	m_editorCam.Update(*this);
 }
-
-void Editor::OnUpdate()
-{
-	m_viz->clear();
-	glfwPollEvents();
-	OnGUI();
-
-	for (auto &e : m_currentLevel->m_entities)
-	{
-		Transform *t = e->getComponent<Transform>();
-		if (t != NULL)
-		{
-			if (t->m_forward == Mage::Maths::Vector3(0, 0, 0))
-			{
-				t->m_forward = m_worldForward;
-			}; 
-			t->updateDirection();
-		}
-		e->OnRender(*this);
-	}
-	m_viz->display();
-}
-
-void Editor::OnPhysicsStep()
-{
-	for (auto& e : m_currentLevel->m_entities)
-	{
-		e->OnPhysicsStep(*this);
-	}
-}
-
 
 Editor::~Editor()
 {

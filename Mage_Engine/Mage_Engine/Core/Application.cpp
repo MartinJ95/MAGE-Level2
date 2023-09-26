@@ -1,7 +1,7 @@
 #include "Application.h"
 
 
-Application::Application(bool isEditor) : m_time(), m_open(true), m_isEditor(isEditor)
+Application::Application(bool isEditor) : m_time(), m_open(true), m_isEditor(isEditor), m_isRunning(false)
 {
 }
 
@@ -33,10 +33,10 @@ void Application::Run()
 		m_viz->clear();
 		glfwPollEvents();
 		m_deltaTime = m_time.TimeStep();
-		OnUpdate();
-		OnGUI();
-		OnPhysicsStep();
-		OnRender();
+		
+		MainLoopStart();
+		MainLoopEnd();
+
 		m_viz->display();
 
 		m_currentLevel->ApplyLoad();
@@ -45,6 +45,30 @@ void Application::Run()
 
 void Application::Initialization()
 {
+}
+
+void Application::MainLoopStart()
+{
+	if (m_isRunning)
+	{
+		m_runningThreads.emplace(&Application::OnUpdate, this);
+		m_runningThreads.emplace(&Application::OnPhysicsStep, this);
+		//OnUpdate();
+		//OnPhysicsStep();
+	}
+	m_runningThreads.emplace(&Application::OnGUI, this);
+	m_runningThreads.emplace(&Application::OnRender, this);
+	//OnGUI();
+	//OnRender();
+}
+
+void Application::MainLoopEnd()
+{
+	while (!m_runningThreads.empty())
+	{
+		m_runningThreads.top().join();
+		m_runningThreads.pop();
+	}
 }
 
 void Application::OnGUI()

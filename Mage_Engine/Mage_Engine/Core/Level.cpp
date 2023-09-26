@@ -31,11 +31,11 @@ Level::Level(std::string &fileName, Application &app) : m_data(), m_levelName(),
 
 void Level::LoadLevel(const std::string &fileName, Application &app, Entity** selectedEntity)
 {
-	UnloadLevel();
 	if (*selectedEntity != nullptr)
 		*selectedEntity = nullptr;
+	m_levelName = fileName;
 	m_newData.m_levelName = fileName;
-	std::ifstream levelFile("Resources/" + m_levelName);
+	std::ifstream levelFile("Resources/" + m_newData.m_levelName);
 	if (levelFile.is_open())
 	{
 		app.m_ambientLighting.Load(levelFile);
@@ -101,6 +101,7 @@ void Level::SaveLevel(const Application &app)
 void Level::ApplyLoad()
 {
 	if (m_newData.m_levelName.empty()) { return; }
+	UnloadLevel();
 	m_data = m_newData;
 }
 

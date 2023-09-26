@@ -15,9 +15,8 @@ class Editor :
 public:
 	Editor();
 	void Initialization() override;
+	virtual void MainLoopStart() override;
 	virtual void OnGUI() override;
-	virtual void OnUpdate() override;
-	virtual void OnPhysicsStep() override;
 	template<typename T>
 	void AddComponent(const int &index);
 	template<>
@@ -33,19 +32,19 @@ public:
 template<typename T>
 inline void Editor::AddComponent(const int & index)
 {
-	if (m_currentLevel->m_entities[index]->getComponent<T>() == nullptr)
+	if (m_currentLevel->m_data.m_entities[index]->getComponent<T>() == nullptr)
 	{
-		m_currentLevel->m_entities[index]->addComponent<T>();
+		m_currentLevel->m_data.m_entities[index]->addComponent<T>();
 	}
 }
 
 template<>
 inline void Editor::AddComponent<PointLight>(const int & index)
 {
-	if (m_currentLevel->m_entities[index]->getComponent<PointLight>() == nullptr)
+	if (m_currentLevel->m_data.m_entities[index]->getComponent<PointLight>() == nullptr)
 	{
-		m_currentLevel->m_entities[index]->addComponent<PointLight>();
-		m_currentLevel->m_pointLights.push_back(m_currentLevel->m_entities[index]->getComponent<PointLight>());
+		m_currentLevel->m_data.m_entities[index]->addComponent<PointLight>();
+		m_currentLevel->m_data.m_pointLights.push_back(m_currentLevel->m_data.m_entities[index]->getComponent<PointLight>());
 	}
 }
 

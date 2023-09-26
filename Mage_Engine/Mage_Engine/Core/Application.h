@@ -29,6 +29,11 @@ public:
 	Mage::Maths::Vector3 m_worldUp;
 	Mage::Maths::Vector3 m_worldForward;
 	static Application* Instance;
+	std::stack<std::thread> m_runningThreads;
 	bool m_open;
 	bool m_isEditor;
+	bool m_isRunning;
+protected:
+	virtual void MainLoopStart();
+	void MainLoopEnd();
 };
