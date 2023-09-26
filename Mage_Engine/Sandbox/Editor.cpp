@@ -26,13 +26,14 @@ void Editor::MainLoopStart()
 {
 	if (m_isRunning)
 	{
-		m_runningThreads.emplace(&Application::OnUpdate, this);
-		m_runningThreads.emplace(&Application::OnPhysicsStep, this);
+		m_runningThreads.emplace(&Application::OnUpdate, &*this);
+		m_runningThreads.emplace(&Application::OnPhysicsStep, &*this);
 		//OnUpdate();
 		//OnPhysicsStep();
 	}
-	m_runningThreads.emplace(&Editor::OnGUI, this);
-	m_runningThreads.emplace(&Application::OnRender, this);
+	m_runningThreads.emplace(&Editor::OnGUI, &*this);
+	//m_runningThreads.emplace(&Application::OnRender, &*this);
+	OnRender();
 	//OnGUI();
 	//OnRender();
 }
@@ -62,6 +63,7 @@ void Editor::OnGUI()
 	int GUIIDIteration = 0;
 	for (int i = 0; i < m_currentLevel->m_data.m_entities.size(); i++) 
 	{
+		GetLock(i).lock();
 		Entity *e = m_currentLevel->m_data.m_entities[i];
 		sortedEntities.push_back(std::pair<Entity*, int>(e, 0));
 		while (e != nullptr)
@@ -89,6 +91,7 @@ void Editor::OnGUI()
 				sortedEntities.push_back(std::pair<Entity*, int>(e, entityDepth));
 			}
 		}
+		GetLock(i).unlock();
 	}
 	for (auto se : sortedEntities)
 	{

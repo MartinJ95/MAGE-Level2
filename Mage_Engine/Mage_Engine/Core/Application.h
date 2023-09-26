@@ -30,10 +30,12 @@ public:
 	Mage::Maths::Vector3 m_worldForward;
 	static Application* Instance;
 	std::stack<std::thread> m_runningThreads;
+	std::mutex m_locks[10];
 	bool m_open;
 	bool m_isEditor;
 	bool m_isRunning;
 protected:
+	inline std::mutex& GetLock(int i) { return m_locks[i % 10]; }
 	virtual void MainLoopStart();
 	void MainLoopEnd();
 };

@@ -51,15 +51,15 @@ void Application::MainLoopStart()
 {
 	if (m_isRunning)
 	{
-		m_runningThreads.emplace(&Application::OnUpdate, this);
-		m_runningThreads.emplace(&Application::OnPhysicsStep, this);
+		m_runningThreads.emplace(&Application::OnUpdate, &*this);
+		m_runningThreads.emplace(&Application::OnPhysicsStep, &*this);
 		//OnUpdate();
 		//OnPhysicsStep();
 	}
-	m_runningThreads.emplace(&Application::OnGUI, this);
-	m_runningThreads.emplace(&Application::OnRender, this);
+	m_runningThreads.emplace(&Application::OnGUI, &*this);
+	//m_runningThreads.emplace(&Application::OnRender, &*this);
+	OnRender();
 	//OnGUI();
-	//OnRender();
 }
 
 void Application::MainLoopEnd()
@@ -77,13 +77,21 @@ void Application::OnGUI()
 
 void Application::OnUpdate()
 {	
-	
+	for (int i = 0; i < m_currentLevel->m_data.m_entities.size(); i++)
+	{
+		GetLock(i).lock();
+		auto& e = m_currentLevel->m_data.m_entities[i];
+		e->Update(*this);
+		GetLock(i).unlock();
+	}
 }
 
 void Application::OnRender()
 {
-	for (auto& e : m_currentLevel->m_data.m_entities)
+	for (int i = 0; i < m_currentLevel->m_data.m_entities.size(); i++)
 	{
+		GetLock(i).lock();
+		auto& e = m_currentLevel->m_data.m_entities[i];
 		Transform* t = e->getComponent<Transform>();
 		if (t != NULL)
 		{
@@ -94,14 +102,18 @@ void Application::OnRender()
 			t->updateDirection();
 		}
 		e->OnRender(*this);
+		GetLock(i).unlock();
 	}
 }
 
 void Application::OnPhysicsStep()
 {
-	for (auto& e : m_currentLevel->m_data.m_entities)
+	for (int i = 0; i < m_currentLevel->m_data.m_entities.size(); i++)
 	{
+		GetLock(i).lock();
+		auto& e = m_currentLevel->m_data.m_entities[i];
 		e->OnPhysicsStep(*this);
+		GetLock(i).unlock();
 	}
 }
 
