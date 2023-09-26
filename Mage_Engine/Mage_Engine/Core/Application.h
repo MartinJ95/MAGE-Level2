@@ -15,6 +15,7 @@ public:
 	virtual void Initialization();
 	virtual void OnGUI();
 	virtual void OnUpdate();
+	virtual void OnRender();
 	virtual void OnPhysicsStep();
 	void AddEntity(const std::string &str);
 	void RemoveEntity(const int &index);

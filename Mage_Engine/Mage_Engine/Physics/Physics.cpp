@@ -38,13 +38,13 @@ void Physics::handleCollisions(Entity & entity, Application & app)
 collisionData Physics::detectCollision(Entity & entity, Application &app)
 {
 	colliderTypes collider1 = entity.getCollider();
-	std::vector<Entity*> &entities = app.m_currentLevel->m_entities;
+	std::vector<Entity*> &entities = app.m_currentLevel->m_data.m_entities;
 	collisionData data(false, 0, Mage::Maths::Vector3(0,0,0));
 	for (int i = 0; i < entities.size(); i++)
 	{
 		if (entities[i]->getCollider() != colliderTypes::eNone && entities[i] != &entity && entities[i]->m_active == true)
 		{
-			colliderTypes collider2 = app.m_currentLevel->m_entities[i]->getCollider();
+			colliderTypes collider2 = app.m_currentLevel->m_data.m_entities[i]->getCollider();
 			if (collider2 != colliderTypes::eNone)
 			{
 				if (collider1 == colliderTypes::eSphere && collider2 == colliderTypes::eSphere)

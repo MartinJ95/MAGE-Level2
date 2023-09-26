@@ -31,7 +31,7 @@ void Mesh::OnRender(Application & app) const
 	}
 	else
 	{
-		app.m_viz->render3D(m_meshName, m_textureName, m_shaderName, m_entity.getTransformMatrix3D(app), *app.m_currentLevel->m_mainCamera, app.m_worldUp, app);
+		app.m_viz->render3D(m_meshName, m_textureName, m_shaderName, m_entity.getTransformMatrix3D(app), *app.m_currentLevel->m_data.m_mainCamera, app.m_worldUp, app);
 	}
 }
 

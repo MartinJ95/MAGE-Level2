@@ -190,29 +190,29 @@ void Visualization::render2D(const std::string & meshName, const std::string & t
 void Visualization::render3D(const std::string & meshName, const std::string & textureName, const std::string & shaderName, const glm::mat4 transformMatrix, Camera & camera, Mage::Maths::Vector3 &worldUp, Application &app)
 {
 	useShader(shaderName);
-	setShaderUniformVector3(shaderName, "cameraPosition", app.m_currentLevel->m_mainCamera->m_entity.getComponent<Transform>()->m_position);
+	setShaderUniformVector3(shaderName, "cameraPosition", app.m_currentLevel->m_data.m_mainCamera->m_entity.getComponent<Transform>()->m_position);
 	setShaderUniformVector3(shaderName, "ambientLighting", app.m_ambientLighting);
 	int numPointLights = 0;
-	for (int i = 0; i < app.m_currentLevel->m_pointLights.size(); i++)
+	for (int i = 0; i < app.m_currentLevel->m_data.m_pointLights.size(); i++)
 	{
-		if (app.m_currentLevel->m_pointLights[i]->m_entity.m_active == true)
+		if (app.m_currentLevel->m_data.m_pointLights[i]->m_entity.m_active == true)
 		{
-			setShaderUniformVector3(shaderName, "pointLights[" + std::to_string(numPointLights) + "].m_position", app.m_currentLevel->m_pointLights[i]->m_entity.getComponent<Transform>()->worldPosition());
-			setShaderUniformFloat(shaderName, "pointLights[" + std::to_string(numPointLights) + "].m_radius", app.m_currentLevel->m_pointLights[i]->m_radius);
-			setShaderUniformVector3(shaderName, "pointLights[" + std::to_string(numPointLights) + "].m_intensity", app.m_currentLevel->m_pointLights[i]->m_intensity);
+			setShaderUniformVector3(shaderName, "pointLights[" + std::to_string(numPointLights) + "].m_position", app.m_currentLevel->m_data.m_pointLights[i]->m_entity.getComponent<Transform>()->worldPosition());
+			setShaderUniformFloat(shaderName, "pointLights[" + std::to_string(numPointLights) + "].m_radius", app.m_currentLevel->m_data.m_pointLights[i]->m_radius);
+			setShaderUniformVector3(shaderName, "pointLights[" + std::to_string(numPointLights) + "].m_intensity", app.m_currentLevel->m_data.m_pointLights[i]->m_intensity);
 			numPointLights++;
 		}
 	}
 	int numSpotLights = 0;
-	for (int i = 0; i < app.m_currentLevel->m_spotLights.size(); i++)
+	for (int i = 0; i < app.m_currentLevel->m_data.m_spotLights.size(); i++)
 	{
-		if (app.m_currentLevel->m_spotLights[i]->m_entity.m_active == true)
+		if (app.m_currentLevel->m_data.m_spotLights[i]->m_entity.m_active == true)
 		{
-			setShaderUniformVector3(shaderName, "spotLights[" + std::to_string(numSpotLights) + "].m_position", app.m_currentLevel->m_spotLights[i]->m_entity.getComponent<Transform>()->worldPosition());
-			setShaderUniformVector3(shaderName, "spotLights[" + std::to_string(numSpotLights) + "].m_intensity", app.m_currentLevel->m_spotLights[i]->m_intensity);
-			setShaderUniformVector3(shaderName, "spotLights[" + std::to_string(numSpotLights) + "].m_direction", app.m_currentLevel->m_spotLights[i]->m_entity.getComponent<Transform>()->worldForward());
-			setShaderUniformFloat(shaderName, "spotlights[" + std::to_string(numSpotLights) + "].m_range", app.m_currentLevel->m_spotLights[i]->m_range);
-			setShaderUniformFloat(shaderName, "spotLights[" + std::to_string(numSpotLights) + "].m_fieldOfView", app.m_currentLevel->m_spotLights[i]->m_fieldOfView);
+			setShaderUniformVector3(shaderName, "spotLights[" + std::to_string(numSpotLights) + "].m_position", app.m_currentLevel->m_data.m_spotLights[i]->m_entity.getComponent<Transform>()->worldPosition());
+			setShaderUniformVector3(shaderName, "spotLights[" + std::to_string(numSpotLights) + "].m_intensity", app.m_currentLevel->m_data.m_spotLights[i]->m_intensity);
+			setShaderUniformVector3(shaderName, "spotLights[" + std::to_string(numSpotLights) + "].m_direction", app.m_currentLevel->m_data.m_spotLights[i]->m_entity.getComponent<Transform>()->worldForward());
+			setShaderUniformFloat(shaderName, "spotlights[" + std::to_string(numSpotLights) + "].m_range", app.m_currentLevel->m_data.m_spotLights[i]->m_range);
+			setShaderUniformFloat(shaderName, "spotLights[" + std::to_string(numSpotLights) + "].m_fieldOfView", app.m_currentLevel->m_data.m_spotLights[i]->m_fieldOfView);
 			numSpotLights++;
 		}
 	}

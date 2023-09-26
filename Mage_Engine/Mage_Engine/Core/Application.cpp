@@ -27,10 +27,19 @@ void Application::Run()
 	StackDebugging::GetInstance()->PopFunction();
 	Initialization();
 	StackDebugging::GetInstance()->PopFunction();
+
 	while (m_viz->isOpen())
 	{
+		m_viz->clear();
+		glfwPollEvents();
 		m_deltaTime = m_time.TimeStep();
 		OnUpdate();
+		OnGUI();
+		OnPhysicsStep();
+		OnRender();
+		m_viz->display();
+
+		m_currentLevel->ApplyLoad();
 	}
 }
 
@@ -43,12 +52,13 @@ void Application::OnGUI()
 }
 
 void Application::OnUpdate()
-{
-	m_viz->clear();
-	glfwPollEvents();
-	OnGUI();
+{	
+	
+}
 
-	for (auto& e : m_currentLevel->m_entities)
+void Application::OnRender()
+{
+	for (auto& e : m_currentLevel->m_data.m_entities)
 	{
 		Transform* t = e->getComponent<Transform>();
 		if (t != NULL)
@@ -61,12 +71,11 @@ void Application::OnUpdate()
 		}
 		e->OnRender(*this);
 	}
-	m_viz->display();
 }
 
 void Application::OnPhysicsStep()
 {
-	for (auto& e : m_currentLevel->m_entities)
+	for (auto& e : m_currentLevel->m_data.m_entities)
 	{
 		e->OnPhysicsStep(*this);
 	}
