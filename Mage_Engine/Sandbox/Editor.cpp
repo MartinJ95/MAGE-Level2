@@ -4,7 +4,7 @@
 #include <stack>
 #include "EditorCam.h"
 
-Editor::Editor() : m_newEntityName(), m_newLevelName(), m_editorCam(true), SelectedEntity(nullptr), m_showComponentAddMenu(false)
+Editor::Editor() : Application(true), m_newEntityName(), m_newLevelName(), m_editorCam(true), SelectedEntity(nullptr), m_showComponentAddMenu(false)
 {
 }
 
@@ -136,6 +136,8 @@ void Editor::OnGUI()
 			m_viz->GUIEnd();
 		}
 	}
+
+	m_editorCam.Update(*this);
 }
 
 void Editor::OnUpdate()
@@ -143,8 +145,6 @@ void Editor::OnUpdate()
 	m_viz->clear();
 	glfwPollEvents();
 	OnGUI();
-
-	m_editorCam.Update(*this);
 
 	for (auto &e : m_currentLevel->m_entities)
 	{

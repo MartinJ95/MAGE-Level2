@@ -5,7 +5,8 @@
 static const std::pair<std::string, std::string> textureList[] = {
 	std::pair<std::string, std::string>("Resources\\box.png", "box"),
 	std::pair<std::string, std::string>("Resources\\floor.png", "floor"),
-	std::pair<std::string, std::string>("Resources\\world.png", "world")
+	std::pair<std::string, std::string>("Resources\\world.png", "world"),
+	std::pair<std::string, std::string>("Resources\\queen.png", "queen")
 };
 
 class Editor :

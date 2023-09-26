@@ -4,11 +4,13 @@
 #include "Core/Level.h"
 #include "Physics/Physics.h"
 #include "StackDebugging.h"
+#include <thread>
+#include <mutex>
 
 class Application
 {
 public:
-	Application();
+	Application(bool isEditor = false);
 	void Run();
 	virtual void Initialization();
 	virtual void OnGUI();
@@ -27,4 +29,5 @@ public:
 	Mage::Maths::Vector3 m_worldForward;
 	static Application* Instance;
 	bool m_open;
+	bool m_isEditor;
 };

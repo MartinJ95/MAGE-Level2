@@ -1,7 +1,7 @@
 #include "Application.h"
 
 
-Application::Application() : m_time(), m_open(true)
+Application::Application(bool isEditor) : m_time(), m_open(true), m_isEditor(isEditor)
 {
 }
 
@@ -44,10 +44,32 @@ void Application::OnGUI()
 
 void Application::OnUpdate()
 {
+	m_viz->clear();
+	glfwPollEvents();
+	OnGUI();
+
+	for (auto& e : m_currentLevel->m_entities)
+	{
+		Transform* t = e->getComponent<Transform>();
+		if (t != NULL)
+		{
+			if (t->m_forward == Mage::Maths::Vector3(0, 0, 0))
+			{
+				t->m_forward = m_worldForward;
+			};
+			t->updateDirection();
+		}
+		e->OnRender(*this);
+	}
+	m_viz->display();
 }
 
 void Application::OnPhysicsStep()
 {
+	for (auto& e : m_currentLevel->m_entities)
+	{
+		e->OnPhysicsStep(*this);
+	}
 }
 
 void Application::AddEntity(const std::string &str)
