@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Application.h"
 #include "Core/Entity.h"
+#include <queue>
 
 static const std::pair<std::string, std::string> textureList[] = {
 	std::pair<std::string, std::string>("Resources\\box.png", "box"),
@@ -8,6 +9,9 @@ static const std::pair<std::string, std::string> textureList[] = {
 	std::pair<std::string, std::string>("Resources\\world.png", "world"),
 	std::pair<std::string, std::string>("Resources\\queen.png", "queen")
 };
+
+class Editor;
+typedef void(Editor::* EntityComponentAddition)(const int&);
 
 class Editor :
 	public Application
@@ -26,7 +30,10 @@ public:
 	std::string m_newLevelName;
 	Entity m_editorCam;
 	Entity *SelectedEntity;
+	std::queue<std::pair<EntityComponentAddition, int>> m_componentsToAdd;
 	bool m_showComponentAddMenu{ false };
+protected:
+	virtual void OnFrameEnd() override;
 };
 
 template<typename T>
@@ -47,8 +54,6 @@ inline void Editor::AddComponent<PointLight>(const int & index)
 		m_currentLevel->m_data.m_pointLights.push_back(m_currentLevel->m_data.m_entities[index]->getComponent<PointLight>());
 	}
 }
-
-typedef void(Editor::*EntityComponentAddition)(const int&);
 
 static const std::unordered_map<std::string, EntityComponentAddition> IncludeComponents{
 	std::pair<std::string, EntityComponentAddition>(std::string("Transform"), &Editor::AddComponent<Transform>), std::pair<std::string, EntityComponentAddition>(std::string("Camera"), &Editor::AddComponent<Camera>),

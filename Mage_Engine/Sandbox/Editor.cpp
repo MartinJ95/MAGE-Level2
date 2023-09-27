@@ -110,13 +110,13 @@ void Editor::OnGUI()
 		m_viz->GUIBegin("Selected Entity");
 		if(m_viz->GUIButton("Remove Entity"))
 		{
-			if (SelectedEntity->m_parent != nullptr)
+			/*if (SelectedEntity->m_parent != nullptr)
 			{
 				for (std::vector<Entity>::iterator it = SelectedEntity->m_parent->m_children.begin(); it != SelectedEntity->m_parent->m_children.end(); it++)
 				{
 					if (&*it == SelectedEntity)
 					{
-						SelectedEntity->m_parent->m_children.erase(it);
+						//SelectedEntity->m_parent->m_children.erase(it);
 						break;
 					}
 				}
@@ -127,12 +127,13 @@ void Editor::OnGUI()
 				{
 					if (*it == SelectedEntity)
 					{
-						delete *it;
-						m_currentLevel->m_data.m_entities.erase(it);
+						//delete *it;
+						//m_currentLevel->m_data.m_entities.erase(it);
 						break;
 					}
 				}
-			}
+			}*/
+			SelectedEntity->m_markedForDeletion = true;
 			SelectedEntity = nullptr;
 			m_viz->GUIEnd();
 		}
@@ -148,7 +149,8 @@ void Editor::OnGUI()
 					{
 						if (m_currentLevel->m_data.m_entities[i] == SelectedEntity) { index = i; break; }
 					}
-					(this->*func)(index);
+					m_componentsToAdd.push(std::pair<EntityComponentAddition, int>(func, index));
+					//(this->*func)(index);
 				}
 			}
 			m_viz->GUIEnd();
@@ -158,6 +160,19 @@ void Editor::OnGUI()
 	m_editorCam.Update(*this);
 }
 
+void Editor::OnFrameEnd()
+{
+	Application::OnFrameEnd();
+
+	while (!m_componentsToAdd.empty())
+	{
+		std::pair<EntityComponentAddition, int> func = m_componentsToAdd.front();
+		m_componentsToAdd.pop();
+		(this->*func.first)(func.second);
+	}
+}
+
 Editor::~Editor()
 {
 }
+

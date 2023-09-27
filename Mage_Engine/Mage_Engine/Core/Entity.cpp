@@ -6,7 +6,8 @@ Entity::Entity(bool active) :
 	m_active(active),
 	m_parent(nullptr),
 	m_children(),
-	m_components()
+	m_components(),
+	m_markedForDeletion(false)
 {
 	m_children.reserve(10);
 }
@@ -15,7 +16,8 @@ Entity::Entity(bool active, Entity &parent) :
 	m_active(active),
 	m_parent(&parent),
 	m_children(),
-	m_components()
+	m_components(),
+	m_markedForDeletion(false)
 {
 	m_children.reserve(10);
 }
@@ -24,7 +26,8 @@ Entity::Entity(const Entity& other) :
 	m_active(other.m_active),
 	m_parent(other.m_parent),
 	m_children(other.m_children),
-	m_name(other.m_name)
+	m_name(other.m_name),
+	m_markedForDeletion(false)
 {
 	for (auto& e : m_children)
 	{
@@ -36,7 +39,8 @@ Entity::Entity(Entity&& other) :
 	m_active(other.m_active),
 	m_parent(other.m_parent),
 	m_children(other.m_children),
-	m_name(other.m_name)
+	m_name(other.m_name),
+	m_markedForDeletion(false)
 {
 	for (auto& e : m_children)
 	{
@@ -206,6 +210,44 @@ void Entity::OnPhysicsStep(Application& app)
 		if (m_components[i]->compType != ComponentType::ePhysicsComponent) { continue; }
 		m_components[i]->Update(app);
 	}
+}
+
+Entity* Entity::Cleanup(Application& app)
+{
+	for (int i = m_components.size()-1; i >= 0; i--)
+	{
+		m_components[i]->Cleanup();
+	}
+	/*for (std::vector<Component*>::reverse_iterator it = m_components.rbegin(); it != m_components.rend(); ++it)
+	{
+		Component* c = *it;
+		c->Cleanup();
+	}*/
+
+	if (!m_markedForDeletion) { return nullptr; }
+
+	if (m_parent != nullptr)
+	{
+		for (int i = m_parent->m_children.size(); i > 0; --i)
+		{
+			if (&m_parent->m_children[i] == this)
+			{
+				m_parent->m_children.erase(m_parent->m_children.begin() + i);
+			}
+		}
+		/*
+		for (std::vector<Entity>::reverse_iterator it = m_parent->m_children.rbegin(); it != m_parent->m_children.rend(); it++)
+		{
+			if (&*it == this)
+			{
+				m_parent->m_children.erase(std::next(it).base());
+				return nullptr;
+			}
+		}
+		*/
+	}
+
+	return this;
 }
 
 void Entity::createChild(bool active)

@@ -72,6 +72,7 @@ public:
 	Entity(bool active, Entity &parent);
 	Entity(const Entity& other);
 	Entity(Entity&& other);
+	friend class Component;
 	template<typename T> T* getComponent()
 	{
 		for (int i = 0; i < m_components.size(); i++)
@@ -151,6 +152,7 @@ public:
 	void OnLoad(Application &app, std::ifstream &stream);
 	void onCollisionEnter(Application &app, collisionData &data);
 	void OnPhysicsStep(Application& app);
+	Entity* Cleanup(Application& app);
 	void createChild(bool active);
 	void DeleteComponent(Component *c);
 	void operator=(const Entity& rhs)
@@ -182,10 +184,11 @@ public:
 	glm::mat4 getTransformMatrix2D(Application &app);
 	glm::mat4 getTransformMatrix3D(Application &app);
 	~Entity();
-	bool m_active;
 	Entity *m_parent;
 	std::vector<Entity> m_children;
 	std::string m_name;
+	bool m_active;
+	bool m_markedForDeletion;
 private:
 	std::vector<Component*> m_components;
 };

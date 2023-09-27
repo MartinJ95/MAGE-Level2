@@ -39,6 +39,7 @@ void Application::Run()
 
 		m_viz->display();
 
+		OnFrameEnd();
 		m_currentLevel->ApplyLoad();
 	}
 }
@@ -69,6 +70,34 @@ void Application::MainLoopEnd()
 		m_runningThreads.top().join();
 		m_runningThreads.pop();
 	}
+}
+
+void Application::OnFrameEnd()
+{
+	if (m_currentLevel->m_data.m_entities.empty()) { return; }
+	for (int i = m_currentLevel->m_data.m_entities.size()-1; i >= 0; i--)
+	{
+		Entity* e = m_currentLevel->m_data.m_entities[i];
+		Entity* r = e->Cleanup(*this);
+		if (r != nullptr)
+		{
+			m_currentLevel->m_data.m_entities.erase(m_currentLevel->m_data.m_entities.begin() + i);
+			delete r;
+		}
+	}
+	/*
+	for (std::vector<Entity*>::reverse_iterator it = m_currentLevel->m_data.m_entities.rbegin(); it != m_currentLevel->m_data.m_entities.rend(); ++it)
+	{
+		Entity* e = nullptr;
+		e = *it;
+		Entity* r = e->Cleanup(*this);
+		if (r != nullptr)
+		{
+			m_currentLevel->m_data.m_entities.erase(std::next(it).base());
+			delete r;
+			if (m_currentLevel->m_data.m_entities.empty()) { break; }
+		}
+	}*/
 }
 
 void Application::OnGUI()

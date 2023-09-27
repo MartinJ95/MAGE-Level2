@@ -23,9 +23,11 @@ public:
 	virtual void OnSave(const Application &app, std::ofstream &stream) const;
 	virtual void OnLoad(Application &app, std::ifstream &stream);
 	virtual void onCollisionEnter(Application &app, collisionData &data);
+	void Cleanup();
 	virtual ~Component();
 public:
 	Entity &m_entity;
 	unsigned int compID;
 	ComponentType compType;
+	bool m_markedForDeletion;
 };

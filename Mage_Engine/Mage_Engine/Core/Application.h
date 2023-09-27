@@ -38,4 +38,5 @@ protected:
 	inline std::mutex& GetLock(int i) { return m_locks[i % 10]; }
 	virtual void MainLoopStart();
 	void MainLoopEnd();
+	virtual void OnFrameEnd();
 };
