@@ -32,6 +32,7 @@ void RigidBody::OnGUI(Application & app)
 
 void RigidBody::OnSave(const Application& app, std::ofstream& stream) const
 {
+	Component::OnSave(app, stream);
 	stream << m_mass << "\n";
 	stream << m_restitution << "\n";
 	m_velocity.Save(stream);

@@ -30,6 +30,7 @@ void PlaneCollider::OnGUI(Application & app)
 
 void PlaneCollider::OnSave(const Application& app, std::ofstream& stream) const
 {
+	Component::OnSave(app, stream);
 	m_normal.Save(stream);
 	m_position.Save(stream);
 }

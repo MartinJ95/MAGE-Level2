@@ -26,6 +26,7 @@ void SphereCollider::OnGUI(Application & app)
 
 void SphereCollider::OnSave(const Application& app, std::ofstream& stream) const
 {
+	Component::OnSave(app, stream);
 	stream << m_radius << "\n";
 	m_center.Save(stream);
 }
