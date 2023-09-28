@@ -31,8 +31,11 @@ Level::Level(std::string &fileName, Application &app) : m_data(), m_levelName(),
 
 void Level::LoadLevel(const std::string &fileName, Application &app, Entity** selectedEntity)
 {
-	if (*selectedEntity != nullptr)
-		*selectedEntity = nullptr;
+	if (selectedEntity != nullptr)
+	{
+		if (*selectedEntity != nullptr)
+			*selectedEntity = nullptr;
+	}
 	m_levelName = fileName;
 	m_newData.m_levelName = fileName;
 	std::ifstream levelFile("Resources/" + m_newData.m_levelName);

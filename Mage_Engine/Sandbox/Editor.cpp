@@ -40,11 +40,27 @@ void Editor::MainLoopStart()
 
 void Editor::OnGUI()
 {
+	if (m_isRunning)
+	{
+		m_viz->GUIBegin("currently playing level");
+		if (m_viz->GUIButton("stop playing")) 
+		{
+			m_isRunning = false;
+		}
+		m_viz->GUIEnd();
+		return;
+	}
+
 	m_viz->GUIBegin("editorCam");
 	m_editorCam.OnGUI(*this);
 	m_viz->GUIEnd();
 
 	m_viz->GUIBegin("Hiearchy");
+	if (m_viz->GUIButton("play level")) 
+	{
+		m_isRunning = true;
+		SelectedEntity = nullptr;
+	}
 	m_viz->GUIVector3("ambient lighting", m_ambientLighting);
 	m_viz->GUIVector3("world up", m_worldUp);
 	m_viz->GUIVector3("world forward", m_worldForward);
