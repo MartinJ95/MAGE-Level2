@@ -144,6 +144,7 @@ public:
 		}
 		return false;
 	}*/
+	void OnStart(Application &app);
 	void Update(Application &app);
 	void fixedUpdate(Application &app);
 	void OnRender(Application &app) const;

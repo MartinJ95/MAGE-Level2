@@ -50,6 +50,19 @@ Entity::Entity(Entity&& other) :
 	other.m_children.clear();
 }
 
+void Entity::OnStart(Application& app)
+{
+	for (int i = 0; i < m_children.size(); i++) 
+	{
+		m_children[i].OnStart(app);
+	}
+
+	for (int i = 0; i < m_components.size(); i++)
+	{
+		m_components[i]->OnStart(app);
+	}
+}
+
 void Entity::Update(Application &app)
 {
 	for (int i = 0; i < m_components.size(); i++)

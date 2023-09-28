@@ -16,6 +16,7 @@ class Component
 {
 public:
 	Component(Entity &entity, unsigned int ID = 0, ComponentType type = ComponentType::eDefaultComponent);
+	virtual void OnStart(Application& app);
 	virtual void Update(Application &app);
 	virtual void FixedUpdate(Application &app);
 	virtual void OnRender(Application &app) const;

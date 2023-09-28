@@ -8,6 +8,10 @@ Component::Component(Entity &entity, unsigned int ID, ComponentType type) :
 {
 }
 
+void Component::OnStart(Application& app)
+{
+}
+
 void Component::Update(Application &app)
 {
 }

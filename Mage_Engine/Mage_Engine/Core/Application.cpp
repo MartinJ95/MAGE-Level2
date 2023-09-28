@@ -1,7 +1,7 @@
 #include "Application.h"
 
 
-Application::Application(bool isEditor) : m_time(), m_open(true), m_isEditor(isEditor), m_isRunning(false)
+Application::Application(bool isEditor) : m_time(), m_open(true), m_isEditor(isEditor), m_isRunning(false), m_lastRunningState(false)
 {
 }
 
@@ -41,6 +41,20 @@ void Application::Run()
 
 		OnFrameEnd();
 		m_currentLevel->ApplyLoad();
+		if (m_isRunning && !m_lastRunningState)
+		{
+			for (int i = 0; i < m_currentLevel->m_data.m_entities.size(); i++)
+			{
+				m_currentLevel->SaveLevel(*this);
+				m_currentLevel->m_data.m_entities[i]->OnStart(*this);
+			}
+			m_lastRunningState = true;
+		}
+		else if (!m_isRunning && m_lastRunningState)
+		{
+			m_currentLevel->LoadLevel(m_currentLevel->m_data.m_levelName, *this);
+			m_lastRunningState = false;
+		}
 	}
 }
 
