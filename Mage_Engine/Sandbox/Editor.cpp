@@ -42,7 +42,7 @@ void Editor::OnGUI()
 {
 	if (m_isRunning)
 	{
-		m_viz->GUIBegin("currently playing level");
+		m_viz->GUIBegin("Hiearchy");
 		if (m_viz->GUIButton("stop playing")) 
 		{
 			m_isRunning = false;

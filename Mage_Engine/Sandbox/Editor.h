@@ -59,5 +59,6 @@ static const std::unordered_map<std::string, EntityComponentAddition> IncludeCom
 	std::pair<std::string, EntityComponentAddition>(std::string("Transform"), &Editor::AddComponent<Transform>), std::pair<std::string, EntityComponentAddition>(std::string("Camera"), &Editor::AddComponent<Camera>),
 	std::pair<std::string, EntityComponentAddition>(std::string("RigidBody"), &Editor::AddComponent<RigidBody>), std::pair<std::string, EntityComponentAddition>(std::string("Mesh"), &Editor::AddComponent<Mesh>),
 	std::pair<std::string, EntityComponentAddition>(std::string("BoxCollider"), &Editor::AddComponent<BoxCollider>), std::pair<std::string, EntityComponentAddition>(std::string("SphereCollider"), &Editor::AddComponent<SphereCollider>),
-	std::pair<std::string, EntityComponentAddition>(std::string("PlaneCollider"), &Editor::AddComponent<PlaneCollider>), std::pair<std::string, EntityComponentAddition>(std::string("PointLight"), &Editor::AddComponent<PointLight>)
+	std::pair<std::string, EntityComponentAddition>(std::string("PlaneCollider"), &Editor::AddComponent<PlaneCollider>), std::pair<std::string, EntityComponentAddition>(std::string("PointLight"), &Editor::AddComponent<PointLight>),
+	std::pair<std::string, EntityComponentAddition>(std::string("Terrain"), &Editor::AddComponent<Terrain>)
 };
