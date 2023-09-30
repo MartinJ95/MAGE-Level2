@@ -341,12 +341,14 @@ void Visualization::generateMesh(const std::vector<Vertex>& vertices, const std:
 {
 	if (m_meshes.find(meshName) != m_meshes.end()) { return; }
 
-	MeshGL *newMesh = new MeshGL(vertices, indices);
-	newMesh->initualize();
+	//MeshGL *newMesh = new MeshGL(vertices, indices);
+	//newMesh->initualize();
+	
 	//std::pair<std::string, MeshGL> meshPair;
 	//meshPair.first = meshName;
 	//meshPair.second = MeshGL(vertices, indices);
-	m_meshes.emplace(meshName, newMesh);
+	m_meshes.emplace(meshName, new MeshGL(vertices, indices));
+	m_meshes.at(meshName)->initualize();
 }
 
 void Visualization::generateSquareMesh(const int & minSize, const int & maxSize, const int & minTexCoord, const int & maxTexCoord, const std::string & meshName)
