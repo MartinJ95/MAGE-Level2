@@ -225,6 +225,14 @@ void Entity::OnPhysicsStep(Application& app)
 	}
 }
 
+void Entity::OnFrameEnd(Application& app)
+{
+	for (int i = 0; i < m_components.size(); i++)
+	{
+		m_components[i]->OnFrameEnd(app);
+	}
+}
+
 Entity* Entity::Cleanup(Application& app)
 {
 	for (int i = m_components.size()-1; i >= 0; i--)

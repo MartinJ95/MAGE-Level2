@@ -4,8 +4,8 @@
 #include "Core/Transform.h"
 
 
-Mesh::Mesh(Entity &entity) :
-	Component(entity, 3, ComponentType::eGraphicsComponent),
+Mesh::Mesh(Entity &entity, unsigned int ID) :
+	Component(entity, ID, ComponentType::eGraphicsComponent),
 	m_is3D(true),
 	m_meshName(),
 	m_textureName(),

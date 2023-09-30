@@ -9,7 +9,7 @@
 #include "Physics/BoxCollider.h"
 #include "Graphics/PointLight.h"
 #include "Graphics/SpotLight.h"
-#include "Mesh.h"
+#include "Terrain.h"
 #include "Network/RemoteClient.h"
 #include "Maths/Matrix.h"
 #include "Maths/Vector.h"
@@ -153,6 +153,7 @@ public:
 	void OnLoad(Application &app, std::ifstream &stream);
 	void onCollisionEnter(Application &app, collisionData &data);
 	void OnPhysicsStep(Application& app);
+	void OnFrameEnd(Application& app);
 	Entity* Cleanup(Application& app);
 	void createChild(bool active);
 	void DeleteComponent(Component *c);
@@ -207,6 +208,8 @@ static std::map<unsigned int, ComponentAddition> componentsAddable{
 	std::pair<unsigned int, ComponentAddition>(6, &Entity::addComponent<PlaneCollider>),
 	std::pair<unsigned int, ComponentAddition>(7, &Entity::addComponent<BoxCollider>),
 	std::pair<unsigned int, ComponentAddition>(8, &Entity::addComponent<SphereCollider>),
-	std::pair<unsigned int, ComponentAddition>(9, &Entity::addComponent<Camera>)};
+	std::pair<unsigned int, ComponentAddition>(9, &Entity::addComponent<Camera>),
+	std::pair<unsigned int, ComponentAddition>(10, &Entity::addComponent<Terrain>)
+};
 
 
