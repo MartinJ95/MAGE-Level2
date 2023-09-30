@@ -45,6 +45,7 @@ public:
 	void GUICheckbox(const std::string &label, bool &value);
 	void GUISliderBox(const std::string &label, float &value, const float &min, const float &max);
 	void GUIEditFloat(const std::string &label, float &value);
+	void GUIEditInt(const std::string& label, int &value);
 	void GUIVector3(const std::string &label, Mage::Maths::Vector3 &vec);
 	void GUIEnd();
 	void generateShader(const std::string &vertexShader, const std::string &fragmentShader, const std::string &shaderName);
@@ -56,6 +57,7 @@ public:
 	void display();
 	void generateTexture(const std::string &textureFilePath, const std::string &textureName);
 	void generateFace(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices, const Mage::Maths::Vector3 &minSize, const Mage::Maths::Vector3 &maxSize, const Mage::Maths::Vector2 &minTexcoord, const Mage::Maths::Vector2 &maxTexcoord, const Mage::Maths::Vector3 &normal, const int &offset);
+	void degenerateMesh(const std::string& meshName);
 	void generateMesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices, const std::string &meshName);
 	void generateSquareMesh(const int &minSize, const int &maxSize, const int &minTexCoord, const int &maxTexCoord, const std::string &meshName);
 	void generateBoxMesh(const int &minSize, const int &maxSize, const int &minTexCoord, const int &maxTexCoord, const std::string &meshName);

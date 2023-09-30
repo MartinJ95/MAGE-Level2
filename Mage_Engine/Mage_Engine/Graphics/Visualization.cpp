@@ -14,7 +14,7 @@ Visualization::Visualization(const int screenWidth, const int screenHeight, cons
 	m_textures(),
 	m_shaderPrograms()
 {
-	
+	m_meshes.reserve(10);
 }
 
 bool Visualization::initialise()
@@ -107,6 +107,11 @@ void Visualization::GUISliderBox(const std::string & label, float & value, const
 void Visualization::GUIEditFloat(const std::string & label, float & value)
 {
 	ImGui::InputFloat(label.c_str(), &value);
+}
+
+void Visualization::GUIEditInt(const std::string& label, int& value)
+{
+	ImGui::InputInt(label.c_str(), &value);
 }
 
 void Visualization::GUIVector3(const std::string & label, Mage::Maths::Vector3 &vec)
@@ -324,8 +329,18 @@ void Visualization::generateFace(std::vector<Vertex>& vertices, std::vector<unsi
 	}*/
 }
 
+void Visualization::degenerateMesh(const std::string& meshName)
+{
+	if (m_meshes.find(meshName) == m_meshes.end()) { return; }
+
+	delete m_meshes.at(meshName);
+	m_meshes.erase(meshName);
+}
+
 void Visualization::generateMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::string & meshName)
 {
+	if (m_meshes.find(meshName) != m_meshes.end()) { return; }
+
 	MeshGL *newMesh = new MeshGL(vertices, indices);
 	newMesh->initualize();
 	//std::pair<std::string, MeshGL> meshPair;
