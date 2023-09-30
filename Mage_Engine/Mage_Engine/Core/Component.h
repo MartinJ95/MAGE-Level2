@@ -24,6 +24,7 @@ public:
 	virtual void OnSave(const Application &app, std::ofstream &stream) const;
 	virtual void OnLoad(Application &app, std::ifstream &stream);
 	virtual void onCollisionEnter(Application &app, collisionData &data);
+	virtual void OnFrameEnd(Application& app);
 	void Cleanup();
 	virtual ~Component();
 public:

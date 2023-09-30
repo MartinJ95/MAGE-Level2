@@ -42,6 +42,10 @@ void Component::onCollisionEnter(Application &app, collisionData & data)
 {
 }
 
+void Component::OnFrameEnd(Application& app)
+{
+}
+
 void Component::Cleanup()
 {
 	if (!m_markedForDeletion) { return; }

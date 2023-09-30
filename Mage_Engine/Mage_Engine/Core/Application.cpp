@@ -89,6 +89,12 @@ void Application::MainLoopEnd()
 void Application::OnFrameEnd()
 {
 	if (m_currentLevel->m_data.m_entities.empty()) { return; }
+
+	for (int i = 0; i < m_currentLevel->m_data.m_entities.size(); i++)
+	{
+		m_currentLevel->m_data.m_entities[i]->OnFrameEnd(*this);
+	}
+
 	for (int i = m_currentLevel->m_data.m_entities.size()-1; i >= 0; i--)
 	{
 		Entity* e = m_currentLevel->m_data.m_entities[i];
