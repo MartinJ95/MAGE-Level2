@@ -81,14 +81,14 @@ void Terrain::GenerateMesh(Application& app)
 			vertices.emplace_back();
 			vertices.back().position = Mage::Maths::Vector3(
 				((static_cast<float>(m_size.first) * (static_cast<float>(j) / static_cast<float>(m_size.first))) - (static_cast<float>(m_size.first) / 2.f)) * static_cast<float>(m_tileSize.first),
-				rand() % 100 - 50,
+				(rand() % 10 - 5) * 0.9f,
 				((static_cast<float>(m_size.second) * (static_cast<float>(i) / static_cast<float>(m_size.second))) - (static_cast<float>(m_size.second) / 2.f)) * static_cast<float>(m_tileSize.second)
 			);
 			vertices.back().normal = Mage::Maths::Vector3(0.f, 1.f, 0.f);
 			vertices.back().color = Mage::Maths::Vector3(0.f, 1.f, 0.f);
 			vertices.back().texCoords = Mage::Maths::Vector2(
-				1 * (static_cast<float>(j) / static_cast<float>(m_size.first-1)),
-				1 * (static_cast<float>(i) / static_cast<float>(m_size.second-1))
+				static_cast<float>(m_size.first) * (static_cast<float>(j) / static_cast<float>(m_size.first-1)),
+				static_cast<float>(m_size.second) * (static_cast<float>(i) / static_cast<float>(m_size.second-1))
 			);
 
 			if (i < m_size.second - 1 && j < m_size.first - 1)
