@@ -62,6 +62,7 @@ public:
 	void generateSquareMesh(const int &minSize, const int &maxSize, const int &minTexCoord, const int &maxTexCoord, const std::string &meshName);
 	void generateBoxMesh(const int &minSize, const int &maxSize, const int &minTexCoord, const int &maxTexCoord, const std::string &meshName);
 	void generateSphereMesh(const Mage::Maths::Vector3 &center, const float &radius, const int &details, const std::string &meshName);
+	MeshGL* GetMesh(const std::string& meshName);
 	void loadObject(const std::string &filePath, const std::string &fileName, const std::string &fileType = ".obj");
 	void LockCursor(bool toggle);
 	~Visualization();

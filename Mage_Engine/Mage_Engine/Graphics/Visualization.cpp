@@ -547,6 +547,14 @@ void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, cons
 	generateMesh(vertices, indices, meshName);
 }
 
+MeshGL* Visualization::GetMesh(const std::string& meshName)
+{
+	if(m_meshes.find(meshName) == m_meshes.end())
+		return nullptr;
+
+	return m_meshes.at(meshName);
+}
+
 void Visualization::loadObject(const std::string &filePath, const std::string & fileName, const std::string &fileType)
 {
 	std::vector<Vertex> vertices;
