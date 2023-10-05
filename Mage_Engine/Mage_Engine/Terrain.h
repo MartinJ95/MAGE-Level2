@@ -11,8 +11,9 @@ public:
 	virtual void OnLoad(Application& app, std::ifstream& stream) override;
 	virtual void OnFrameEnd(Application& app);
 	~Terrain();
-public:
+private:
 	void GenerateMesh(Application& app);
+private:
 	std::pair<int, int> m_size;
 	std::pair<float, float> m_tileSize;
 	float m_randomSeed;
