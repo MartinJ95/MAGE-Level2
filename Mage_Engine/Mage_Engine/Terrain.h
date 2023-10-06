@@ -10,6 +10,7 @@ public:
 	virtual void OnSave(const Application& app, std::ofstream& stream) const override;
 	virtual void OnLoad(Application& app, std::ifstream& stream) override;
 	virtual void OnFrameEnd(Application& app);
+	Mage::Maths::Vector3 GetPointOnTerrain(const Mage::Maths::Vector2 &pos, const Application &app) const;
 	~Terrain();
 private:
 	void GenerateMesh(Application& app);
