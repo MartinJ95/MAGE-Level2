@@ -14,6 +14,7 @@ public:
 	~Terrain();
 private:
 	void GenerateMesh(Application& app);
+	void GenerateFoliage(Application& app);
 private:
 	std::pair<int, int> m_size;
 	std::pair<float, float> m_tileSize;

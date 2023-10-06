@@ -176,3 +176,31 @@ void Terrain::GenerateMesh(Application& app)
 	app.m_viz->degenerateMesh(m_gennedMeshName);
 	app.m_viz->generateMesh(vertices, indices, m_gennedMeshName);
 }
+
+void Terrain::GenerateFoliage(Application& app)
+{
+	//finds the offset for the generated positions as the origin point is in center
+	std::pair<float, float> offsets = std::pair<float, float>(
+		(static_cast<float>(m_size.first) * m_tileSize.first) * 0.5f,
+		(static_cast<float>(m_size.second) * m_tileSize.second) * 0.5f
+		);
+
+	srand(m_randomSeed);
+	for (float i = 0; i < m_size.second * m_tileSize.second; i += rand() % static_cast<int>(m_tileSize.second))
+	{
+		for (float j = 0; j < m_size.first * m_tileSize.first; j += rand() % static_cast<int>(m_tileSize.first))
+		{
+			Mage::Maths::Vector3 gennedPosition = GetPointOnTerrain(Mage::Maths::Vector2((m_tileSize.first * j) - offsets.first, (m_tileSize.second * i) - offsets.second), app);
+			m_entity.m_children.emplace_back(true, m_entity);
+			m_entity.m_children.back().addComponent<Transform>();
+			Transform *t = m_entity.m_children.back().getComponent<Transform>();
+			t->m_position = gennedPosition;
+			m_entity.m_children.back().addComponent<Mesh>();
+			Mesh* m = m_entity.m_children.back().getComponent<Mesh>();
+			m->m_is3D = true;
+			m->m_meshName = "sphere";
+			m->m_shaderName = "default3DShader";
+			m->m_textureName = "grass";
+		}
+	}
+}
