@@ -88,8 +88,8 @@ Mage::Maths::Vector3 Terrain::GetPointOnTerrain(const Mage::Maths::Vector2& pos,
 
 	// finding the grid tile index for the scaled pos to be on
 	std::pair<int, int> currentTile = std::pair<int, int>(
-		static_cast<int>(floorf(scaledPos.x + offset.first)),
-		static_cast<int>(floorf(scaledPos.y + offset.first))
+		static_cast<int>(floorf(scaledPos.x + offset.first)/m_tileSize.first),
+		static_cast<int>(floorf(scaledPos.y + offset.first)/m_tileSize.second)
 		);
 
 	// checks to see if the found tile is valid and on the terrain
@@ -197,7 +197,7 @@ void Terrain::GenerateFoliage(Application& app)
 	srand(m_randomSeed);
 	for (float i = 0; i < m_size.second * m_tileSize.second; i += (rand() % static_cast<int>(m_tileSize.second) + 10.f))
 	{
-		for (float j = 0; j < m_size.first * m_tileSize.first; j += (rand() % static_cast<int>(m_tileSize.first) +10.f))
+		for (float j = 0; j < m_size.first * m_tileSize.first; j += (rand() % static_cast<int>(m_tileSize.first) + 10.f))
 		{
 			Mage::Maths::Vector3 gennedPosition = GetPointOnTerrain(Mage::Maths::Vector2((m_tileSize.first * j) - offsets.first, (m_tileSize.second * i) - offsets.second), app);
 			m_entity->m_children.emplace_back(true, *m_entity);
@@ -210,6 +210,10 @@ void Terrain::GenerateFoliage(Application& app)
 			m->m_meshName = "sphere";
 			m->m_shaderName = "default3DShader";
 			m->m_textureName = "grass";
+			m_entity->m_children.back().addComponent<PointLight>();
+			PointLight* p = m_entity->m_children.back().getComponent<PointLight>();
+			p->m_intensity = Mage::Maths::Vector3(1.f, 1.f, 1.f);
+			p->m_radius = 90.f;
 		}
 	}
 }
