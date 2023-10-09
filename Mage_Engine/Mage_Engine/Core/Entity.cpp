@@ -1,7 +1,6 @@
 #include "Entity.h"
 #include "Core/Application.h"
 
-
 Entity::Entity(bool active) :
 	m_active(active),
 	m_parent(nullptr),
@@ -26,9 +25,14 @@ Entity::Entity(const Entity& other) :
 	m_active(other.m_active),
 	m_parent(other.m_parent),
 	m_children(other.m_children),
+	m_components(other.m_components),
 	m_name(other.m_name),
 	m_markedForDeletion(false)
 {
+	for (auto& c : m_components)
+	{
+		c.get()->m_entity = this;
+	}
 	for (auto& e : m_children)
 	{
 		e.m_parent = this;
@@ -39,15 +43,21 @@ Entity::Entity(Entity&& other) :
 	m_active(other.m_active),
 	m_parent(other.m_parent),
 	m_children(other.m_children),
+	m_components(other.m_components),
 	m_name(other.m_name),
 	m_markedForDeletion(false)
 {
+	for (auto& c : m_components)
+	{
+		c.get()->m_entity = this;
+	}
 	for (auto& e : m_children)
 	{
 		e.m_parent = this;
 	}
 	other.m_parent = nullptr;
 	other.m_children.clear();
+	other.m_components.clear();
 }
 
 void Entity::OnStart(Application& app)
@@ -277,13 +287,13 @@ void Entity::createChild(bool active)
 	m_children.push_back(newChild);
 }
 
-void Entity::DeleteComponent(Component * c)
+void Entity::DeleteComponent(std::weak_ptr<Component> c)
 {
-	for (std::vector<Component*>::iterator it = m_components.begin(); it != m_components.end(); it++)
+	for (std::vector<std::shared_ptr<Component>>::iterator it = m_components.begin(); it != m_components.end(); it++)
 	{
-		if (*it == c)
+		if (*it == c.lock())
 		{
-			delete c;
+			//delete c;
 			m_components.erase(it);
 			break;
 		}
@@ -313,7 +323,7 @@ colliderTypes Entity::getCollider()
 glm::mat4 Entity::getTransformMatrix2D(Application &app)
 {
 
-	Transform *t = getComponent<Transform>();
+	Transform* t = getComponent<Transform>();
 	glm::mat4 transformMatrix = glm::mat4(1.f);
 	float meshSizeX = 1;
 	float meshSizeY = 1;
@@ -332,7 +342,7 @@ glm::mat4 Entity::getTransformMatrix2D(Application &app)
 
 glm::mat4 Entity::getTransformMatrix3D(Application &app)
 {
-	Transform *t = getComponent<Transform>();
+	Transform* t = getComponent<Transform>();
 	glm::mat4 transformMatrix = glm::mat4(1.f);
 	Mage::Maths::Vector3 worldPosition = t->worldPosition();
 	Mage::Maths::Vector3 worldRotation = t->worldRotation();
@@ -361,9 +371,9 @@ Entity::~Entity()
 			delete(m_components[i]);
 		}
 	}*/
-	for (auto c : m_components)
+	/*for (auto c : m_components)
 	{
 		delete(c);
-	}
+	}*/
 	m_components.clear();
 }

@@ -77,21 +77,21 @@ public:
 	{
 		for (int i = 0; i < m_components.size(); i++)
 		{
-			if (dynamic_cast<T*>(m_components[i]) != NULL)
+			if (dynamic_cast<T*>(m_components[i].get()) != NULL)
 			{
-				return static_cast<T*>(m_components[i]);
+				return static_cast<T*>(m_components[i].get());
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 	template<typename T> std::vector<T*> getComponents()
 	{
-		std::vector<T*> componentVector;
+		std::vector<std::shared_ptr<T>> componentVector;
 		for (int i = 0; i < m_components.size(); i++)
 		{
-			if (dynamic_cast<T*>(m_components[i]) != NULL)
+			if (dynamic_cast<T*>(m_components[i].get()) != NULL)
 			{
-				componentVector.emplace_back(static_cast<T*>(m_components[i]));
+				componentVector.emplace_back(static_cast<T*>(m_components[i].get()));
 			}
 		}
 		return componentVector;
@@ -100,8 +100,8 @@ public:
 	{
 		if (std::is_base_of<Component, T>::value == true)
 		{
-			T *newComponent = new T(*this);
-			m_components.emplace_back(newComponent);
+			//std::shared_ptr<T> newComponent = std::make_shared<T>(*this);
+			m_components.emplace_back(std::make_shared<T>(*this));
 		}
 	}
 	/*template<typename T> static bool updateComponent(Component *component, World &world)
@@ -156,13 +156,20 @@ public:
 	void OnFrameEnd(Application& app);
 	Entity* Cleanup(Application& app);
 	void createChild(bool active);
-	void DeleteComponent(Component *c);
+	void DeleteComponent(std::weak_ptr<Component> c);
 	void operator=(const Entity& rhs)
 	{
 		m_active = rhs.m_active;
 		m_parent = rhs.m_parent;
-		m_children = rhs.m_children;
+		if(rhs.m_children.size() > 0)
+			m_children = rhs.m_children;
 		m_name = rhs.m_name;
+		if(rhs.m_components.size() > 0)
+			m_components = rhs.m_components;
+		for (auto& c : m_components)
+		{
+			c.get()->m_entity = this;
+		}
 		for (auto& e : m_children)
 		{
 			e.m_parent = this;
@@ -172,9 +179,15 @@ public:
 	{
 		m_active = rhs.m_active;
 		m_parent = rhs.m_parent;
-		m_children = rhs.m_children;
+		if(rhs.m_children.size() > 0)
+			m_children = std::move(rhs.m_children);
 		m_name = rhs.m_name;
-
+		if(rhs.m_components.size() > 0)
+			m_components = std::move(rhs.m_components);
+		for (auto& c : m_components)
+		{
+			c.get()->m_entity = this;
+		}
 		for (auto& e : m_children)
 		{
 			e.m_parent = this;
@@ -192,7 +205,7 @@ public:
 	bool m_active;
 	bool m_markedForDeletion;
 private:
-	std::vector<Component*> m_components;
+	std::vector<std::shared_ptr<Component>> m_components;
 };
 
 
