@@ -3,7 +3,7 @@
 #include "Entity.h"
 
 
-Component::Component(Entity &entity, unsigned int ID, ComponentType type) :
+Component::Component(Entity *entity, unsigned int ID, ComponentType type) :
 	m_entity(entity), compID(ID), compType(type), m_markedForDeletion(false)
 {
 }
@@ -50,11 +50,11 @@ void Component::Cleanup()
 {
 	if (!m_markedForDeletion) { return; }
 
-	for (int i = m_entity.m_components.size()-1; i >= 0; i--)
+	for (int i = m_entity->m_components.size()-1; i >= 0; i--)
 	{
-		if (m_entity.m_components[i] == this)
+		if (m_entity->m_components[i] == std::shared_ptr<Component>(this))
 		{
-			m_entity.m_components.erase(m_entity.m_components.begin() + i);
+			m_entity->m_components.erase(m_entity->m_components.begin() + i);
 		}
 	}
 	

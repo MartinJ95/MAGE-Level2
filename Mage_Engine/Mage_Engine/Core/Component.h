@@ -15,7 +15,7 @@ enum class ComponentType
 class Component
 {
 public:
-	Component(Entity &entity, unsigned int ID = 0, ComponentType type = ComponentType::eDefaultComponent);
+	Component(Entity *entity, unsigned int ID = 0, ComponentType type = ComponentType::eDefaultComponent);
 	virtual void OnStart(Application& app);
 	virtual void Update(Application &app);
 	virtual void FixedUpdate(Application &app);
@@ -28,7 +28,7 @@ public:
 	void Cleanup();
 	virtual ~Component();
 public:
-	Entity &m_entity;
+	Entity *m_entity;
 	unsigned int compID;
 	ComponentType compType;
 	bool m_markedForDeletion;
