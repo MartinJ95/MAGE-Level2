@@ -8,7 +8,7 @@ void MouseMoveInputRotation::OnNotify(Mage::Maths::Vector3& vector)
 	if (m_owner == nullptr)
 		return;
 
-	Transform* t = m_owner->m_entity.getComponent<Transform>();
+	Transform* t = m_owner->m_entity->getComponent<Transform>();
 
 	if (t == nullptr || m_app == nullptr)
 		return;
@@ -85,7 +85,7 @@ void EditorCam::Update(Application& app)
 	glfwGetCursorPos(window, &x, &y);
 	m_mouseMoveDetection.Notify(Mage::Maths::Vector3(y, x, 0));
 
-	Transform* t = m_entity.getComponent<Transform>();
+	Transform* t = m_entity->getComponent<Transform>();
 
 	if (t == nullptr)
 		return;

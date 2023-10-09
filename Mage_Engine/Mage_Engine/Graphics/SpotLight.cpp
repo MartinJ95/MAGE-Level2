@@ -3,7 +3,7 @@
 
 
 SpotLight::SpotLight(Entity &entity) :
-	Component(entity, 5, ComponentType::eGraphicsComponent),
+	Component(&entity, 5, ComponentType::eGraphicsComponent),
 	m_intensity(),
 	m_position(),
 	m_fieldOfView(),

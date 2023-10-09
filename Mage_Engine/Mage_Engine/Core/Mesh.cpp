@@ -5,7 +5,7 @@
 
 
 Mesh::Mesh(Entity &entity, unsigned int ID) :
-	Component(entity, ID, ComponentType::eGraphicsComponent),
+	Component(&entity, ID, ComponentType::eGraphicsComponent),
 	m_is3D(true),
 	m_meshName(),
 	m_textureName(),
@@ -27,11 +27,11 @@ void Mesh::OnRender(Application & app) const
 {
 	if (!m_is3D)
 	{
-		app.m_viz->render2D(m_meshName, m_textureName, m_shaderName, m_entity.getTransformMatrix2D(app));
+		app.m_viz->render2D(m_meshName, m_textureName, m_shaderName, m_entity->getTransformMatrix2D(app));
 	}
 	else
 	{
-		app.m_viz->render3D(m_meshName, m_textureName, m_shaderName, m_entity.getTransformMatrix3D(app), *app.m_currentLevel->m_data.m_mainCamera, app.m_worldUp, app);
+		app.m_viz->render3D(m_meshName, m_textureName, m_shaderName, m_entity->getTransformMatrix3D(app), *app.m_currentLevel->m_data.m_mainCamera, app.m_worldUp, app);
 	}
 }
 

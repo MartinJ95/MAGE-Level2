@@ -32,7 +32,7 @@ const int ButtonInput::GetButton() const
 }
 
 InputComponent::InputComponent(Entity& entity)
-	: Component(entity), InputObserver(), m_mouseMoveDetection(),
+	: Component(&entity), InputObserver(), m_mouseMoveDetection(),
 	m_mouseButtonInputs(),m_keyboardButtonInputs(), m_axisInputs(),
 	m_MovementVector(0.f, 0.f, 0.f), m_locked(false)
 {}

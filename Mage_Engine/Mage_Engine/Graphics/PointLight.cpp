@@ -3,7 +3,7 @@
 
 
 PointLight::PointLight(Entity & entity) :
-	Component(entity, 4, ComponentType::eGraphicsComponent),
+	Component(&entity, 4, ComponentType::eGraphicsComponent),
 	m_intensity(),
 	m_position(),
 	m_radius()

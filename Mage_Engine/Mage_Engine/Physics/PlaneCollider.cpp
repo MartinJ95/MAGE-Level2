@@ -6,7 +6,7 @@
 
 
 PlaneCollider::PlaneCollider(Entity &entity) :
-	Component(entity, 6, ComponentType::ePhysicsComponent),
+	Component(&entity, 6, ComponentType::ePhysicsComponent),
 	m_normal(Mage::Maths::Vector3(1, 0, 0)),
 	m_position(Mage::Maths::Vector3(0, 0, 0))
 {

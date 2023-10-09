@@ -16,7 +16,7 @@ void Physics::applyForces(const Application & app, RigidBody & body)
 	body.m_velocity += (body.m_force + body.m_impulseForce + app.m_worldUp * -m_gravity) / body.m_mass;
 	body.m_impulseForce = Mage::Maths::Vector3(0, 0, 0);
 	body.m_velocity *= m_velocityDropoff;
-	body.m_entity.getComponent<Transform>()->m_position += body.m_velocity;
+	body.m_entity->getComponent<Transform>()->m_position += body.m_velocity;
 }
 
 void Physics::handleCollisions(Entity & entity, Application & app)
@@ -107,11 +107,11 @@ collisionData Physics::detectCollision(Entity & entity, Application &app)
 
 collisionData Physics::detectCollisions(SphereCollider &collider1, SphereCollider &collider2)
 {
-	Mage::Maths::Vector3 vectorBetween = ((collider1.m_entity.getComponent<Transform>()->m_position + collider1.m_center) - (collider2.m_entity.getComponent<Transform>()->m_position + collider2.m_center));
+	Mage::Maths::Vector3 vectorBetween = ((collider1.m_entity->getComponent<Transform>()->m_position + collider1.m_center) - (collider2.m_entity->getComponent<Transform>()->m_position + collider2.m_center));
 	Mage::Maths::Vector3 collisionNormal = Mage::Maths::Vector3(0, 0, 0);
 	if (vectorBetween.Length() < collider1.m_radius + collider2.m_radius)
 	{
-		collisionNormal = (collider1.m_entity.getComponent<Transform>()->m_position - collider2.m_entity.getComponent<Transform>()->m_position).Normalized();
+		collisionNormal = (collider1.m_entity->getComponent<Transform>()->m_position - collider2.m_entity->getComponent<Transform>()->m_position).Normalized();
 		return collisionData(true, (collider1.m_radius + collider2.m_radius) - vectorBetween.Length(), collisionNormal);
 	}
 	else
@@ -122,7 +122,7 @@ collisionData Physics::detectCollisions(SphereCollider &collider1, SphereCollide
 
 collisionData Physics::detectCollisions(SphereCollider &collider1, PlaneCollider &collider2)
 {
-	Mage::Maths::Vector3 vectorBetween = ((collider1.m_entity.getComponent<Transform>()->m_position + collider1.m_center) - (collider2.m_entity.getComponent<Transform>()->m_position + collider2.m_position));
+	Mage::Maths::Vector3 vectorBetween = ((collider1.m_entity->getComponent<Transform>()->m_position + collider1.m_center) - (collider2.m_entity->getComponent<Transform>()->m_position + collider2.m_position));
 	Mage::Maths::Vector3 collisionNormal = collider2.m_normal;
 	if (vectorBetween.Dot(collisionNormal) < collider1.m_radius)
 	{
@@ -173,8 +173,8 @@ void Physics::detectClosestEdgeBox(int &closestEdgeIndex, float &penetrationDept
 
 collisionData Physics::detectCollisions(SphereCollider & collider1, BoxCollider & collider2, bool inverted)
 {
-	Transform *t1 = collider1.m_entity.getComponent<Transform>();
-	Transform *t2 = collider2.m_entity.getComponent<Transform>();
+	std::shared_ptr<Transform> t1 = std::shared_ptr<Transform>(collider1.m_entity->getComponent<Transform>());
+	std::shared_ptr<Transform> t2 = std::shared_ptr<Transform>(collider2.m_entity->getComponent<Transform>());
 
 	Mage::Maths::Vector3 &minDimensions = collider2.m_minDimensions;
 	Mage::Maths::Vector3 &maxDimensions = collider2.m_maxDimensions;
@@ -220,7 +220,7 @@ collisionData Physics::detectCollisions(SphereCollider & collider1, BoxCollider 
 				int closestEdgeIndex;
 				float penetrationDepth;
 				detectClosestEdgeBox(closestEdgeIndex, penetrationDepth, closestPoint, collider2);
-				return collisionData(true, penetrationDepth, inverted ? (t2->m_position - t1->m_position).Normalized() : compass[closestEdgeIndex], &collider2.m_entity);
+				return collisionData(true, penetrationDepth, inverted ? (t2->m_position - t1->m_position).Normalized() : compass[closestEdgeIndex], &*collider2.m_entity);
 			}
 			return collisionData(false, 0, Mage::Maths::Vector3(0, 0, 0));
 		}
@@ -238,7 +238,7 @@ collisionData Physics::detectCollisions(BoxCollider &collider1, BoxCollider &col
 	once this is true in all dimensions a collision has occured
 	*/
 	
-	Mage::Maths::Vector3 vectorBetween = collider1.m_entity.getComponent<Transform>()->m_position - collider2.m_entity.getComponent<Transform>()->m_position;
+	Mage::Maths::Vector3 vectorBetween = collider1.m_entity->getComponent<Transform>()->m_position - collider2.m_entity->getComponent<Transform>()->m_position;
 	Mage::Maths::Vector3 minDimensions = collider1.m_minDimensions + vectorBetween;
 	Mage::Maths::Vector3 maxDimensions = collider1.m_maxDimensions + vectorBetween;
 	Mage::Maths::Vector3 min(
@@ -269,7 +269,7 @@ collisionData Physics::detectCollisions(BoxCollider &collider1, BoxCollider &col
 			std::fminf(maxDimensions.z, collider2.m_maxDimensions.z));
 		Mage::Maths::Vector3 collisionPoint = minCollisionPoint + ((maxCollisionPoint - minCollisionPoint) / 2);
 		//maxCollisionPoint = maxCollisionPoint - collider2.m_entity.getComponent<Transform>()->m_position;
-		Mage::Maths::Vector3 vectorBetweenCollisionPoint = collisionPoint - collider2.m_entity.getComponent<Transform>()->m_position;
+		Mage::Maths::Vector3 vectorBetweenCollisionPoint = collisionPoint - collider2.m_entity->getComponent<Transform>()->m_position;
 		//std::cout << "x: " << std::to_string(vectorBetweenCollisionPoint.x) << " y: " << std::to_string(vectorBetweenCollisionPoint.y) << " z: " << std::to_string(vectorBetweenCollisionPoint.z) << std::endl;
 		int closestEdgeIndex;
 		float penetrationDepth;
@@ -295,7 +295,7 @@ collisionData Physics::detectCollisions(BoxCollider &collider1, BoxCollider &col
 		}
 
 		//std::cout << std::to_string(penetrationDepth) << std::endl;
-		return collisionData(true, (penetrationDepth >= 0) ? penetrationDepth : -penetrationDepth, compass[closestEdgeIndex], &collider2.m_entity);
+		return collisionData(true, (penetrationDepth >= 0) ? penetrationDepth : -penetrationDepth, compass[closestEdgeIndex], &*collider2.m_entity);
 	}
 	return collisionData(false, 0, Mage::Maths::Vector3(0, 0, 0));
 }
@@ -327,7 +327,7 @@ collisionData Physics::detectCollisions(BoxCollider & collider1, PlaneCollider &
 	e.addComponent<Transform>();
 	SphereCollider sphere(e);
 	Mage::Maths::Vector3 extense = (collider1.m_maxDimensions - collider1.m_minDimensions) / 2.f;
-	sphere.m_center = (collider1.m_entity.getComponent<Transform>()->m_position + collider1.m_minDimensions) + extense;
+	sphere.m_center = (collider1.m_entity->getComponent<Transform>()->m_position + collider1.m_minDimensions) + extense;
 	sphere.m_radius = abs(collider2.m_normal.x*extense.x) + abs(collider2.m_normal.y*extense.y) + abs(collider2.m_normal.z*extense.z);
 	return detectCollisions(sphere, collider2);
 }
@@ -338,7 +338,7 @@ void Physics::collisionResponse(RigidBody & object1, RigidBody & object2, collis
 
 void Physics::collisionResponse(RigidBody & object, collisionData & data)
 {
-	Transform *t = object.m_entity.getComponent<Transform>();
+	std::shared_ptr<Transform> t = std::shared_ptr<Transform>(object.m_entity->getComponent<Transform>());
 	t->m_position = t->m_position + (data.m_collisionNormal * data.m_penetrationDepth);
 	object.m_velocity = object.m_velocity.Reflect(data.m_collisionNormal) * object.m_restitution;
 	//temp

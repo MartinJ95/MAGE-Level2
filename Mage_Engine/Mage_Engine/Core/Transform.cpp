@@ -3,7 +3,7 @@
 #include "Core/Application.h"
 
 Transform::Transform(Entity& entity) :
-	Component(entity, 2),
+	Component(&entity, 2),
 	m_forward(0, 0, 1),
 	m_position(0, 0, 0),
 	m_scale(1, 1, 1),
@@ -136,9 +136,9 @@ Mage::Maths::Vector3 Transform::worldForward()
 
 Mage::Maths::Vector3 Transform::worldPosition()
 {
-	if (m_entity.m_parent != nullptr)
+	if (m_entity->m_parent != nullptr)
 	{
-		return m_position + m_entity.m_parent->getComponent<Transform>()->worldPosition();
+		return m_position + m_entity->m_parent->getComponent<Transform>()->worldPosition();
 	}
 	else
 	{
@@ -148,9 +148,9 @@ Mage::Maths::Vector3 Transform::worldPosition()
 
 Mage::Maths::Vector3 Transform::worldScale()
 {
-	if (m_entity.m_parent != nullptr)
+	if (m_entity->m_parent != nullptr)
 	{
-		return m_scale + m_entity.m_parent->getComponent<Transform>()->worldScale();
+		return m_scale + m_entity->m_parent->getComponent<Transform>()->worldScale();
 	}
 	else
 	{
@@ -160,9 +160,9 @@ Mage::Maths::Vector3 Transform::worldScale()
 
 Mage::Maths::Vector3 Transform::worldRotation()
 {
-	if (m_entity.m_parent != nullptr)
+	if (m_entity->m_parent != nullptr)
 	{
-		return m_rotation + m_entity.m_parent->getComponent<Transform>()->worldRotation();
+		return m_rotation + m_entity->m_parent->getComponent<Transform>()->worldRotation();
 	}
 	else
 	{
@@ -172,9 +172,9 @@ Mage::Maths::Vector3 Transform::worldRotation()
 
 Mage::Maths::Quaternion Transform::worldRotationQuat()
 {
-	if (m_entity.m_parent != nullptr)
+	if (m_entity->m_parent != nullptr)
 	{
-		return m_quatRotation * m_entity.m_parent->getComponent<Transform>()->worldRotationQuat();
+		return m_quatRotation * m_entity->m_parent->getComponent<Transform>()->worldRotationQuat();
 	}
 	else
 	{
