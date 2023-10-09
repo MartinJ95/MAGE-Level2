@@ -22,6 +22,10 @@ void Terrain::OnGUI(Application& app)
 	{
 		m_isToGenerate = true;
 	}
+	if (app.m_viz->GUIButton("generate foliage"))
+	{
+		m_isToGenerateFoliage = true;
+	}
 }
 
 void Terrain::OnSave(const Application& app, std::ofstream& stream) const
@@ -54,12 +58,17 @@ void Terrain::OnFrameEnd(Application& app)
 		m_isToGenerate = false;
 		GenerateMesh(app);
 	}
+	if (m_isToGenerateFoliage)
+	{
+		m_isToGenerateFoliage = false;
+		GenerateFoliage(app);
+	}
 }
 
 //gets a point on the generated terrain with the given points pos[x, y] == [transform.position.x, transform.position.z]
 Mage::Maths::Vector3 Terrain::GetPointOnTerrain(const Mage::Maths::Vector2& pos, const Application& app) const
 {
-	Transform* t = m_entity.getComponent<Transform>();
+	Transform* t = m_entity->getComponent<Transform>();
 	MeshGL* mesh = app.m_viz->GetMesh(m_gennedMeshName);
 
 	//returns zero vector if the genned mesh was not found
@@ -186,17 +195,17 @@ void Terrain::GenerateFoliage(Application& app)
 		);
 
 	srand(m_randomSeed);
-	for (float i = 0; i < m_size.second * m_tileSize.second; i += rand() % static_cast<int>(m_tileSize.second))
+	for (float i = 0; i < m_size.second * m_tileSize.second; i += (rand() % static_cast<int>(m_tileSize.second) + 10.f))
 	{
-		for (float j = 0; j < m_size.first * m_tileSize.first; j += rand() % static_cast<int>(m_tileSize.first))
+		for (float j = 0; j < m_size.first * m_tileSize.first; j += (rand() % static_cast<int>(m_tileSize.first) +10.f))
 		{
 			Mage::Maths::Vector3 gennedPosition = GetPointOnTerrain(Mage::Maths::Vector2((m_tileSize.first * j) - offsets.first, (m_tileSize.second * i) - offsets.second), app);
-			m_entity.m_children.emplace_back(true, m_entity);
-			m_entity.m_children.back().addComponent<Transform>();
-			Transform *t = m_entity.m_children.back().getComponent<Transform>();
+			m_entity->m_children.emplace_back(true, *m_entity);
+			m_entity->m_children.back().addComponent<Transform>();
+			Transform* t = m_entity->m_children.back().getComponent<Transform>();
 			t->m_position = gennedPosition;
-			m_entity.m_children.back().addComponent<Mesh>();
-			Mesh* m = m_entity.m_children.back().getComponent<Mesh>();
+			m_entity->m_children.back().addComponent<Mesh>();
+			Mesh* m = m_entity->m_children.back().getComponent<Mesh>();
 			m->m_is3D = true;
 			m->m_meshName = "sphere";
 			m->m_shaderName = "default3DShader";
