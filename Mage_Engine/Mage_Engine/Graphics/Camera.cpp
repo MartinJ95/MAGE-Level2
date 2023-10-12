@@ -21,7 +21,7 @@ void Camera::OnGUI(Application & app)
 {
 	app.m_viz->GUIText("Camera");
 	app.m_viz->GUIEditFloat("field of view", m_fieldOfView);
-	if (app.m_viz->GUIButton("set as main cam")) { app.m_currentLevel->m_data.m_mainCamera = std::shared_ptr<Camera>(this); }
+	if (app.m_viz->GUIButton("set as main cam")) { app.m_currentLevel->m_data.m_mainCamera = this; }
 }
 
 void Camera::OnSave(const Application& app, std::ofstream& stream) const

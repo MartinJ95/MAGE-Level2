@@ -14,7 +14,7 @@ void Editor::Initialization()
 	m_editorCam.addComponent<Camera>();
 	m_editorCam.addComponent<EditorCam>();
 	m_editorCam.getComponent<EditorCam>()->Initialize(*this);
-	m_currentLevel->m_data.m_mainCamera = std::shared_ptr<Camera>(m_editorCam.getComponent<Camera>());
+	m_currentLevel->m_data.m_mainCamera = m_editorCam.getComponent<Camera>();
 
 	for (auto &t : textureList)
 	{

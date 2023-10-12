@@ -200,6 +200,7 @@ void Terrain::GenerateFoliage(Application& app)
 		for (float j = 0; j < m_size.first * m_tileSize.first; j += (rand() % static_cast<int>(m_tileSize.first) + 10.f))
 		{
 			Mage::Maths::Vector3 gennedPosition = GetPointOnTerrain(Mage::Maths::Vector2((m_tileSize.first * j) - offsets.first, (m_tileSize.second * i) - offsets.second), app);
+			gennedPosition += Mage::Maths::Vector3(0.f, 1.f, 0.f);
 			m_entity->m_children.emplace_back(true, *m_entity);
 			m_entity->m_children.back().addComponent<Transform>();
 			Transform* t = m_entity->m_children.back().getComponent<Transform>();
@@ -214,6 +215,7 @@ void Terrain::GenerateFoliage(Application& app)
 			PointLight* p = m_entity->m_children.back().getComponent<PointLight>();
 			p->m_intensity = Mage::Maths::Vector3(1.f, 1.f, 1.f);
 			p->m_radius = 90.f;
+			app.m_currentLevel->m_data.m_pointLights.emplace_back(m_entity->m_children.back().getComponent<PointLight>());
 		}
 	}
 }

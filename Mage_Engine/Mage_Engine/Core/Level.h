@@ -37,9 +37,9 @@ struct LevelData
 	std::string m_levelName;
 	std::vector<Entity*> m_entities;
 	std::vector<Camera*> m_cameras;
-	std::vector<std::shared_ptr<PointLight>> m_pointLights;
-	std::vector<std::shared_ptr<SpotLight>> m_spotLights;
-	std::shared_ptr<Camera> m_mainCamera;
+	std::vector<PointLight*> m_pointLights;
+	std::vector<SpotLight*> m_spotLights;
+	Camera* m_mainCamera;
 };
 
 class Level

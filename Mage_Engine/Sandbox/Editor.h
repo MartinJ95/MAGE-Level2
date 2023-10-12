@@ -52,7 +52,7 @@ inline void Editor::AddComponent<PointLight>(const int & index)
 	if (m_currentLevel->m_data.m_entities[index]->getComponent<PointLight>() == nullptr)
 	{
 		m_currentLevel->m_data.m_entities[index]->addComponent<PointLight>();
-		m_currentLevel->m_data.m_pointLights.push_back(std::shared_ptr<PointLight>(m_currentLevel->m_data.m_entities[index]->getComponent<PointLight>()));
+		m_currentLevel->m_data.m_pointLights.emplace_back(m_currentLevel->m_data.m_entities[index]->getComponent<PointLight>());
 	}
 }
 

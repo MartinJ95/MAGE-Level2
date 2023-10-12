@@ -4,7 +4,7 @@
 
 
 Component::Component(Entity *entity, unsigned int ID, ComponentType type) :
-	m_entity(entity), compID(ID), compType(type), m_markedForDeletion(false)
+	m_entity(&*entity), compID(ID), compType(type), m_markedForDeletion(false)
 {
 }
 

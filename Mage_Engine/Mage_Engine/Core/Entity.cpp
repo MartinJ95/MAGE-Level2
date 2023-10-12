@@ -6,6 +6,7 @@ Entity::Entity(bool active) :
 	m_parent(nullptr),
 	m_children(),
 	m_components(),
+	m_name(""),
 	m_markedForDeletion(false)
 {
 	m_children.reserve(10);
@@ -16,6 +17,7 @@ Entity::Entity(bool active, Entity &parent) :
 	m_parent(&parent),
 	m_children(),
 	m_components(),
+	m_name(""),
 	m_markedForDeletion(false)
 {
 	m_children.reserve(10);
@@ -29,9 +31,24 @@ Entity::Entity(const Entity& other) :
 	m_name(other.m_name),
 	m_markedForDeletion(false)
 {
+	std::cout << "test" << std::endl;
 	for (auto& c : m_components)
 	{
 		c.get()->m_entity = this;
+		if (c->compType == ComponentType::eGraphicsComponent)
+		{
+			//todo
+			// when the service locator is running update the level data pointers to correct new component memory location
+
+			/*bool endReached = false;
+			std::vector<Camera*>::iterator camIterator;
+			std::vector<PointLight*>::iterator pLightIterator;
+			std::vector<SpotLight*>::iterator sLightIterator;
+			while (!endReached)
+			{
+
+			}*/
+		}
 	}
 	for (auto& e : m_children)
 	{
