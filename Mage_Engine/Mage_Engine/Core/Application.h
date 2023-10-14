@@ -7,6 +7,50 @@
 #include <thread>
 #include <mutex>
 
+class MainService
+{
+
+};
+
+class GraphicsService
+{
+
+};
+
+class PhyscicsService
+{
+
+};
+
+class ServiceLocator
+{
+public:
+	static void Initialize(Application& app)
+	{
+		m_app = &app;
+		m_viz = app.m_viz;
+		m_physics = app.m_physics;
+	}
+	static Application* GetMainService()
+	{
+		return m_app;
+	}
+	static Visualization* GetGraphicsService()
+	{
+		return m_viz;
+	}
+	static Physics* GetPhysicsService()
+	{
+		return m_physics;
+	}
+
+
+private:
+	static Application* m_app;
+	static Visualization* m_viz;
+	static Physics* m_physics;
+};
+
 class Application
 {
 public:

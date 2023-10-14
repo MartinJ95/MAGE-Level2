@@ -13,6 +13,7 @@ void Application::Run()
 	m_viz->InitialiseGUI();
 	m_physics = new Physics();
 	m_currentLevel = new Level();
+	ServiceLocator::Initialize(*this);
 	//m_currentLevel->m_entities.reserve(10);
 	m_viz->generateShader("Resources\\default2DShader.vs", "Resources\\default2DShader.fs", "default2DShader");
 	m_viz->generateShader("Resources\\default3DShader.vs", "Resources\\default3DShader.fs", "default3DShader");
