@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include "Core/Application.h"
+#include "Graphics/Camera.h"
 
 Entity::Entity(bool active) :
 	m_active(active),
@@ -35,19 +36,61 @@ Entity::Entity(const Entity& other) :
 	for (auto& c : m_components)
 	{
 		c.get()->m_entity = this;
+	}
+	for (int i = 0; i < other.m_components.size(); i++)
+	{
+		auto& c = other.m_components[i];
 		if (c->compType == ComponentType::eGraphicsComponent)
 		{
 			//todo
 			// when the service locator is running update the level data pointers to correct new component memory location
 
-			/*bool endReached = false;
-			std::vector<Camera*>::iterator camIterator;
-			std::vector<PointLight*>::iterator pLightIterator;
-			std::vector<SpotLight*>::iterator sLightIterator;
+			bool endReached = false;
+			Application* app = ServiceLocator::GetMainService();
+			std::vector<Camera*>::iterator camIterator = app->m_currentLevel->m_data.m_cameras.begin();
+			std::vector<PointLight*>::iterator pLightIterator = app->m_currentLevel->m_data.m_pointLights.begin();
+			std::vector<SpotLight*>::iterator sLightIterator = app->m_currentLevel->m_data.m_spotLights.begin();
 			while (!endReached)
 			{
-
-			}*/
+				bool test = false;
+				if (camIterator != app->m_currentLevel->m_data.m_cameras.end())
+				{
+					Camera* cam = *camIterator;
+					if (cam == c.get())
+					{
+						*camIterator = static_cast<Camera*>(m_components[i].get());
+						endReached = true;
+						continue;
+					}
+					camIterator++;
+					test = true;
+				}
+				if (pLightIterator != app->m_currentLevel->m_data.m_pointLights.end())
+				{
+					PointLight* pLight = *pLightIterator;
+					if (pLight == c.get())
+					{
+						*pLightIterator = static_cast<PointLight*>(m_components[i].get());
+						endReached = true;
+						continue;
+					}
+					pLightIterator++;
+					test = true;
+				}
+				if (sLightIterator != app->m_currentLevel->m_data.m_spotLights.end())
+				{
+					SpotLight* sLight = *sLightIterator;
+					if (sLight == c.get())
+					{
+						*sLightIterator = static_cast<SpotLight*>(m_components[i].get());
+						endReached = true;
+						continue;
+					}
+					sLightIterator++;
+					test = true;
+				}
+				if (test == false) { break; }
+			}
 		}
 	}
 	for (auto& e : m_children)
