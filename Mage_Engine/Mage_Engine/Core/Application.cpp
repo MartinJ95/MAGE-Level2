@@ -1,5 +1,15 @@
 #include "Application.h"
 
+Application* ServiceLocator::m_app = nullptr;
+Visualization* ServiceLocator::m_viz = nullptr;
+Physics* ServiceLocator::m_physics = nullptr;
+
+void ServiceLocator::Initialize(Application& app)
+{
+	m_app = &app;
+	m_viz = app.m_viz;
+	m_physics = app.m_physics;
+}
 
 Application::Application(bool isEditor) : m_time(), m_open(true), m_isEditor(isEditor), m_isRunning(false), m_lastRunningState(false)
 {

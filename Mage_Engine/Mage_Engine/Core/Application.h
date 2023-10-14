@@ -22,15 +22,12 @@ class PhyscicsService
 
 };
 
+class Application;
+
 class ServiceLocator
 {
 public:
-	static void Initialize(Application& app)
-	{
-		m_app = &app;
-		m_viz = app.m_viz;
-		m_physics = app.m_physics;
-	}
+	static void Initialize(Application& app);
 	static Application* GetMainService()
 	{
 		return m_app;
