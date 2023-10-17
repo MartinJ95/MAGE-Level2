@@ -104,10 +104,10 @@ Mage::Maths::Vector3 Terrain::GetPointOnTerrain(const Mage::Maths::Vector2& pos,
 		mesh->m_vertices.at((currentTile.first + 1) + m_size.first * (currentTile.second + 1)).position
 	};
 
-	Mage::Maths::Vector3 cornerToPos = Mage::Maths::Vector3(scaledPos.x, 0, scaledPos.y) - vertexPos[0];
+	Mage::Maths::Vector3 cornerToPos = Mage::Maths::Vector3(scaledPos.x, 0, scaledPos.y) - (vertexPos[0]*Mage::Maths::Vector3(1.f, 0.f, 1.f));
 
-	float percentagex = cornerToPos.Dot((vertexPos[1] - vertexPos[0])) / m_tileSize.first;
-	float percentagey = cornerToPos.Dot((vertexPos[2] - vertexPos[0])) / m_tileSize.second;
+	float percentagex = cornerToPos.Dot(((vertexPos[1] - vertexPos[0])*Mage::Maths::Vector3(1.f, 0.f, 1.f)).Normalized()) / m_tileSize.first;
+	float percentagey = cornerToPos.Dot(((vertexPos[2] - vertexPos[0])*Mage::Maths::Vector3(1.f, 0.f, 1.f)).Normalized()) / m_tileSize.second;
 
 	bool isMoreTopLeft =
 		(percentagey
