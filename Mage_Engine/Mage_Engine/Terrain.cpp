@@ -93,8 +93,8 @@ Mage::Maths::Vector3 Terrain::GetPointOnTerrain(const Mage::Maths::Vector2& pos,
 		);
 
 	// checks to see if the found tile is valid and on the terrain
-	if (currentTile.first < 0 || currentTile.first >= m_size.first ||
-		currentTile.second < 0 || currentTile.second >= m_size.second)
+	if (currentTile.first < 0 || currentTile.first >= m_size.first-1 ||
+		currentTile.second < 0 || currentTile.second >= m_size.second-1)
 		return Mage::Maths::Vector3(0.f, 0.f, 0.f);
 
 	Mage::Maths::Vector3 vertexPos[4]{
