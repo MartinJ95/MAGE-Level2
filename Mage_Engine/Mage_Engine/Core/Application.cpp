@@ -187,7 +187,6 @@ void Application::RemoveEntity(const int & index)
 	m_currentLevel->RemoveEntity(index);
 }
 
-
 Application::~Application()
 {
 	delete m_viz;
