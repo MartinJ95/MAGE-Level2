@@ -88,8 +88,8 @@ Mage::Maths::Vector3 Terrain::GetPointOnTerrain(const Mage::Maths::Vector2& pos,
 
 	// finding the grid tile index for the scaled pos to be on
 	std::pair<int, int> currentTile = std::pair<int, int>(
-		static_cast<int>(floorf(scaledPos.x + offset.first)/m_tileSize.first),
-		static_cast<int>(floorf(scaledPos.y + offset.second)/m_tileSize.second)
+		static_cast<int>(floorf((scaledPos.x + offset.first)/m_tileSize.first)),
+		static_cast<int>(floorf((scaledPos.y + offset.second)/m_tileSize.second))
 		);
 
 	// checks to see if the found tile is valid and on the terrain
