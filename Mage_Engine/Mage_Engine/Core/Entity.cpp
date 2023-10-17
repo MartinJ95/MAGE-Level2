@@ -243,6 +243,10 @@ void Entity::OnRender(Application & app) const
 		if (c->compType != ComponentType::eGraphicsComponent) { continue; }
 		c->OnRender(app);
 	}
+	for (auto& e : m_children)
+	{
+		e.OnRender(app);
+	}
 }
 
 void Entity::OnGUI(Application & app)
