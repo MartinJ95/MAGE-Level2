@@ -31,8 +31,21 @@ Entity::Entity(const Entity& other) :
 	m_components(other.m_components),
 	m_name(other.m_name),
 	m_markedForDeletion(false)
+{	
+	for (auto& e : m_children)
+	{
+		e.m_parent = this;
+	}
+}
+
+Entity::Entity(Entity&& other) :
+	m_active(other.m_active),
+	m_parent(other.m_parent),
+	m_children(other.m_children),
+	m_components(other.m_components),
+	m_name(other.m_name),
+	m_markedForDeletion(false)
 {
-	std::cout << "test" << std::endl;
 	for (auto& c : m_components)
 	{
 		c.get()->m_entity = this;
@@ -92,24 +105,6 @@ Entity::Entity(const Entity& other) :
 				if (test == false) { break; }
 			}
 		}
-	}
-	for (auto& e : m_children)
-	{
-		e.m_parent = this;
-	}
-}
-
-Entity::Entity(Entity&& other) :
-	m_active(other.m_active),
-	m_parent(other.m_parent),
-	m_children(other.m_children),
-	m_components(other.m_components),
-	m_name(other.m_name),
-	m_markedForDeletion(false)
-{
-	for (auto& c : m_components)
-	{
-		c.get()->m_entity = this;
 	}
 	for (auto& e : m_children)
 	{
