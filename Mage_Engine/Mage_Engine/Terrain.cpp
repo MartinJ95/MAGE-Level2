@@ -106,13 +106,13 @@ Mage::Maths::Vector3 Terrain::GetPointOnTerrain(const Mage::Maths::Vector2& pos,
 
 	Mage::Maths::Vector3 cornerToPos = Mage::Maths::Vector3(scaledPos.x, 0, scaledPos.y) - vertexPos[0];
 
-	float percentagex = cornerToPos.Dot((vertexPos[0] - vertexPos[1])) / m_tileSize.first;
-	float percentagey = cornerToPos.Dot((vertexPos[0] - vertexPos[2])) / m_tileSize.second;
+	float percentagex = cornerToPos.Dot((vertexPos[1] - vertexPos[0])) / m_tileSize.first;
+	float percentagey = cornerToPos.Dot((vertexPos[2] - vertexPos[0])) / m_tileSize.second;
 
 	bool isMoreTopLeft =
-		percentagey
-		*
-		1.f - percentagex
+		(percentagey
+		+
+		percentagex) * 0.5f
 		< 0.5f ? true : false;
 
 	//completes the forth point in the relevant parrelelogram based on which triangle the position is on
@@ -200,6 +200,10 @@ void Terrain::GenerateFoliage(Application& app)
 		for (float j = -offsets.first; j < (m_size.first * m_tileSize.first)-offsets.first; j += (rand() % static_cast<int>(m_tileSize.first) + 10.f))
 		{
 			Mage::Maths::Vector3 gennedPosition = GetPointOnTerrain(Mage::Maths::Vector2(j, i), app);
+			if (gennedPosition == Mage::Maths::Vector3(0.f, 0.f, 0.f))
+			{
+				continue;
+			}
 			gennedPosition += Mage::Maths::Vector3(0.f, 1.f, 0.f);
 			m_entity->m_children.emplace_back(true, *m_entity);
 			m_entity->m_children.back().addComponent<Transform>();
