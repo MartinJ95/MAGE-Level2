@@ -204,21 +204,38 @@ void Terrain::GenerateFoliage(Application& app)
 			{
 				continue;
 			}
-			gennedPosition += Mage::Maths::Vector3(0.f, 1.f, 0.f);
+
+			//gennedPosition += Mage::Maths::Vector3(0.f, 1.f, 0.f);
 			m_entity->m_children.emplace_back(true, *m_entity);
 			m_entity->m_children.back().addComponent<Transform>();
 			Transform* t = m_entity->m_children.back().getComponent<Transform>();
-			t->m_position = gennedPosition;
+			t->m_scale = Mage::Maths::Vector3(0.25f, rand() % 2 + 2, 0.25f);
+			t->m_position = gennedPosition + Mage::Maths::Vector3(0.f, t->m_scale.y/2, 0.f);
 			m_entity->m_children.back().addComponent<Mesh>();
 			Mesh* m = m_entity->m_children.back().getComponent<Mesh>();
 			m->m_is3D = true;
-			m->m_meshName = "sphere";
+			m->m_meshName = "box";
 			m->m_shaderName = "default3DShader";
-			m->m_textureName = "grass";
+			m->m_textureName = "wood";
+
+			m_entity->m_children.back().m_children.emplace_back(true, m_entity->m_children.back());
+			m_entity->m_children.back().m_children.back().addComponent<Transform>();
+			Transform* t2 = m_entity->m_children.back().m_children.back().getComponent<Transform>();
+			t2->m_position = Mage::Maths::Vector3(0.f, t->m_scale.y, 0.f);
+			m_entity->m_children.back().m_children.back().addComponent<Mesh>();
+			Mesh* m2 = m_entity->m_children.back().m_children.back().getComponent<Mesh>();
+			m2->m_is3D = true;
+			m2->m_meshName = "sphere";
+			m2->m_shaderName = "default3DShader";
+			m2->m_textureName = "grass";
+			t2->m_entity = &m_entity->m_children.back().m_children.back();
+			m2->m_entity = &m_entity->m_children.back().m_children.back();
+
 			m_entity->m_children.back().addComponent<PointLight>();
 			PointLight* p = m_entity->m_children.back().getComponent<PointLight>();
-			p->m_intensity = Mage::Maths::Vector3(1.f, 1.f, 1.f);
-			p->m_radius = 90.f;
+			p->m_intensity = Mage::Maths::Vector3(0.6f, 0.6f, 0.6f);
+			p->m_radius = 20.f;
+			p->m_position = gennedPosition + Mage::Maths::Vector3(0.f, 1.f, 0.f);
 			app.m_currentLevel->m_data.m_pointLights.emplace_back(m_entity->m_children.back().getComponent<PointLight>());
 		}
 	}

@@ -70,7 +70,7 @@ class Entity
 public:
 	Entity(bool active);
 	Entity(bool active, Entity &parent);
-	Entity(const Entity& other);
+	Entity(Entity& other);
 	Entity(Entity&& other);
 	friend class Component;
 	template<typename T> T* getComponent()

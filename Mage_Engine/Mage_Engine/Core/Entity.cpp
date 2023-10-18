@@ -24,7 +24,7 @@ Entity::Entity(bool active, Entity &parent) :
 	m_children.reserve(10);
 }
 
-Entity::Entity(const Entity& other) :
+Entity::Entity(Entity& other) :
 	m_active(other.m_active),
 	m_parent(other.m_parent),
 	m_children(other.m_children),
@@ -32,9 +32,70 @@ Entity::Entity(const Entity& other) :
 	m_name(other.m_name),
 	m_markedForDeletion(false)
 {	
+	std::cout << "copy" << std::endl;
+	for (int i = 0; i < other.m_components.size(); i++)
+	{
+		auto& c = other.m_components[i];
+		if (c->compType == ComponentType::eGraphicsComponent)
+		{
+			//todo
+			// when the service locator is running update the level data pointers to correct new component memory location
+
+			bool endReached = false;
+			Application* app = ServiceLocator::GetMainService();
+			std::vector<Camera*>::iterator camIterator = app->m_currentLevel->m_data.m_cameras.begin();
+			std::vector<PointLight*>::iterator pLightIterator = app->m_currentLevel->m_data.m_pointLights.begin();
+			std::vector<SpotLight*>::iterator sLightIterator = app->m_currentLevel->m_data.m_spotLights.begin();
+			while (!endReached)
+			{
+				bool test = false;
+				if (camIterator != app->m_currentLevel->m_data.m_cameras.end())
+				{
+					Camera* cam = *camIterator;
+					if (cam == c.get())
+					{
+						*camIterator = static_cast<Camera*>(m_components[i].get());
+						endReached = true;
+						continue;
+					}
+					camIterator++;
+					test = true;
+				}
+				if (pLightIterator != app->m_currentLevel->m_data.m_pointLights.end())
+				{
+					PointLight* pLight = *pLightIterator;
+					if (pLight == c.get())
+					{
+						*pLightIterator = static_cast<PointLight*>(m_components[i].get());
+						endReached = true;
+						continue;
+					}
+					pLightIterator++;
+					test = true;
+				}
+				if (sLightIterator != app->m_currentLevel->m_data.m_spotLights.end())
+				{
+					SpotLight* sLight = *sLightIterator;
+					if (sLight == c.get())
+					{
+						*sLightIterator = static_cast<SpotLight*>(m_components[i].get());
+						endReached = true;
+						continue;
+					}
+					sLightIterator++;
+					test = true;
+				}
+				if (test == false) { break; }
+			}
+		}
+	}
 	for (auto& e : m_children)
 	{
 		e.m_parent = this;
+	}
+	for (auto& c : m_components)
+	{
+		c->m_entity = this;
 	}
 }
 
@@ -46,6 +107,7 @@ Entity::Entity(Entity&& other) :
 	m_name(other.m_name),
 	m_markedForDeletion(false)
 {
+	std::cout << "move" << std::endl;
 	for (auto& c : m_components)
 	{
 		c.get()->m_entity = this;
@@ -109,6 +171,10 @@ Entity::Entity(Entity&& other) :
 	for (auto& e : m_children)
 	{
 		e.m_parent = this;
+	}
+	for (auto& c : m_components)
+	{
+		c->m_entity = this;
 	}
 	other.m_parent = nullptr;
 	other.m_children.clear();
@@ -255,14 +321,14 @@ void Entity::OnGUI(Application & app)
 	app.m_viz->GUICheckbox("Active", m_active);
 	app.m_viz->GUIText("Children");
 	int GUIIDIteration = 0;
-	for (auto c : m_children)
+	for (auto &c : m_children)
 	{
 		GUIIDIteration++;
 		app.m_viz->GUIText(c.m_name + "##" + std::to_string(GUIIDIteration));
 	}
 	GUIIDIteration = 0;
 	if (app.m_viz->GUIButton("Add Child")) { createChild(true); }
-	for (auto c : m_components)
+	for (auto &c : m_components)
 	{
 		GUIIDIteration++;
 		c->OnGUI(app);
@@ -419,8 +485,8 @@ Entity* Entity::Cleanup(Application& app)
 
 void Entity::createChild(bool active)
 {
-	Entity newChild(active, *this);
-	m_children.push_back(newChild);
+	//Entity newChild(active, *this);
+	m_children.emplace_back(active, *this);
 }
 
 void Entity::DeleteComponent(std::weak_ptr<Component> c)
