@@ -21,9 +21,9 @@ in vec3 Position;
 in vec3 Normal;
 
 uniform sampler2D Texture;
-uniform pointLight pointLights[25];
+uniform pointLight pointLights[100];
 uniform int numPointLights;
-uniform spotLight spotLights[25];
+uniform spotLight spotLights[100];
 uniform int numSpotLights;
 uniform vec3 cameraPosition;
 uniform vec3 ambientLighting;
