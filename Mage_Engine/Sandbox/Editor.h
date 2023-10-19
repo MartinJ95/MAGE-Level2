@@ -8,7 +8,8 @@ static const std::pair<std::string, std::string> textureList[] = {
 	std::pair<std::string, std::string>("Resources\\floor.png", "floor"),
 	std::pair<std::string, std::string>("Resources\\world.png", "world"),
 	std::pair<std::string, std::string>("Resources\\queen.png", "queen"),
-	std::pair<std::string, std::string>("Resources\\grass.png", "grass")
+	std::pair<std::string, std::string>("Resources\\grass.png", "grass"),
+	std::pair<std::string, std::string>("Resources\\treeWood.png", "wood")
 };
 
 class Editor;
