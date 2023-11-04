@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "Core/Entity.h"
 #include "Core/Application.h"
+#include <queue>
 
 Visualization::Visualization(const int screenWidth, const int screenHeight, const std::string &windowName) :
 	m_screenWidth(screenWidth),
@@ -485,7 +486,7 @@ void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, cons
 			}
 			StackDebugging::GetInstance()->PopFunction();
 		};
-
+		std::stack<std::thread> columnThreads;
 		StackDebugging::GetInstance()->LogFunction("visualization::generateSphere::genVertices");
 		float thetaChange = (360 / (details + 1)) * (PI / 180);
 		theta1 = (180 / (details + 1)) * (PI / 180);
@@ -495,8 +496,15 @@ void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, cons
 
 			cs = cos(theta);
 			sn = sin(theta);
-
-			GenerateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn);
+			/*
+			std::thread(GenerateSphereColumn, std::ref(vertices), std::ref(center),
+				std::ref(details), std::ref(newPos), std::ref(theta), std::ref(theta1),
+				std::ref(cs), std::ref(sn));
+				*/
+			columnThreads.emplace(GenerateSphereColumn, std::ref(vertices), std::ref(center),
+				std::ref(details), std::ref(newPos), std::ref(theta), std::ref(theta1),
+				std::ref(cs), std::ref(sn));
+			//GenerateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn);
 
 			if (i == details - 1)
 			{
@@ -504,10 +512,18 @@ void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, cons
 				cs = cos(theta);
 				sn = sin(theta);
 
-				GenerateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn);
+				columnThreads.emplace(GenerateSphereColumn, std::ref(vertices), std::ref(center),
+					std::ref(details), std::ref(newPos), std::ref(theta), std::ref(theta1),
+					std::ref(cs), std::ref(sn));
+				//GenerateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn);
 				//generateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn);
 			}
 		};
+		while (!columnThreads.empty())
+		{
+			columnThreads.top().join();
+			columnThreads.pop();
+		}
 		StackDebugging::GetInstance()->PopFunction();
 		return;
 	};
