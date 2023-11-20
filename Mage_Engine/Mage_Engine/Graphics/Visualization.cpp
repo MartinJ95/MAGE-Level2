@@ -459,9 +459,9 @@ void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, cons
 		}
 	};
 
-	auto GenerateSphereVertices = [](std::vector<Vertex>& vertices, const Mage::Maths::Vector3& center, const int details, Mage::Maths::Vector3& newPos, float& theta, float& theta1, float& cs, float& sn)
+	auto GenerateSphereVertices = [](std::vector<Vertex>& vertices, const Mage::Maths::Vector3& center, const int details, Mage::Maths::Vector3 newPos, float& theta, float& theta1, float& cs, float& sn)
 	{
-		auto GenerateSphereColumn = [](std::vector<Vertex>& vertices, const Mage::Maths::Vector3& center, const int details, Mage::Maths::Vector3& newPos, float theta, float theta1, float cs, float sn)
+		auto GenerateSphereColumn = [](std::vector<Vertex>& vertices, const Mage::Maths::Vector3& center, const int details, Mage::Maths::Vector3 newPos, float theta, float theta1, float cs, float sn, int offset, std::mutex &lock)
 		{
 			StackDebugging::GetInstance()->LogFunction("visualization::generateSphere::genVertices::genColumn");
 			float xTexCoord = (theta * (180 / PI) / 360);
@@ -482,11 +482,21 @@ void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, cons
 				v.normal = (v.position - center).Normalized();
 				v.texCoords = Mage::Maths::Vector2(xTexCoord, (Mage::Maths::Vector3(0, 1, 0).Dot(v.position.Normalized()) + 1) / 2);
 				std::cout << v.texCoords.x << std::endl;
-				vertices.emplace_back(std::move(v));
+				//vertices.emplace_back(std::move(v));
+				std::lock_guard<std::mutex> l(lock);
+				size_t vertexPos = (2 + ((details * offset) + j));
+				if (vertexPos > vertices.size())
+				{
+					std::cout << "here ye bugger" << "/n";
+				}
+				vertices.at(vertexPos) = std::move(v);
+				//vertices[vertices.begin() + (2 + ((details * offset) + j)] = std::move(v);
+				//vertices.emplace(vertices.begin() + (2 + ((details * offset) + j)), std::move(v));
 			}
 			StackDebugging::GetInstance()->PopFunction();
 		};
 		std::stack<std::thread> columnThreads;
+		std::mutex mutex;
 		StackDebugging::GetInstance()->LogFunction("visualization::generateSphere::genVertices");
 		float thetaChange = (360 / (details + 1)) * (PI / 180);
 		theta1 = (180 / (details + 1)) * (PI / 180);
@@ -496,27 +506,54 @@ void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, cons
 
 			cs = cos(theta);
 			sn = sin(theta);
-			/*
-			std::thread(GenerateSphereColumn, std::ref(vertices), std::ref(center),
+			
+			/*std::thread(GenerateSphereColumn, std::ref(vertices), std::ref(center),
 				std::ref(details), std::ref(newPos), std::ref(theta), std::ref(theta1),
 				std::ref(cs), std::ref(sn));
 				*/
+			/*
 			columnThreads.emplace(GenerateSphereColumn, std::ref(vertices), std::ref(center),
 				std::ref(details), std::ref(newPos), std::ref(theta), std::ref(theta1),
-				std::ref(cs), std::ref(sn));
-			//GenerateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn);
+				std::ref(cs), std::ref(sn), std::ref(i), std::ref(mutex));
+				*/
+			/*
+			std::thread t(GenerateSphereColumn, vertices, center, details,
+				newPos, theta, theta1, cs, sn, i, mutex);
+				*/
+			/*std::thread t([](std::function<void>(
+				std::vector<Vertex>&, const Mage::Maths::Vector3&,
+				const Mage::Maths::Vector3&, int, Mage::Maths::Vector3,
+				float, float, float, float, int, std::mutex&)
+			{
+				
+			}*/
+
+			//columnThreads.push(std::move(t));
+				
+				
+			GenerateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn, i, mutex);
 
 			if (i == details - 1)
 			{
 				theta = 360 * (PI / 180);
 				cs = cos(theta);
 				sn = sin(theta);
+				/*
+				std::thread t(GenerateSphereColumn, vertices, center, details,
+					newPos, theta, theta1, cs, sn, i, mutex);
 
+				columnThreads.push(std::move(t));
+				*/
+				/*
 				columnThreads.emplace(GenerateSphereColumn, std::ref(vertices), std::ref(center),
 					std::ref(details), std::ref(newPos), std::ref(theta), std::ref(theta1),
-					std::ref(cs), std::ref(sn));
-				//GenerateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn);
-				//generateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn);
+					std::ref(cs), std::ref(sn), std::ref(i), std::ref(mutex));
+					*/
+					
+				
+				//GenerateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn, mutex);
+				
+				GenerateSphereColumn(vertices, center, details, newPos, theta, theta1, cs, sn, i, mutex);
 			}
 		};
 		while (!columnThreads.empty())
@@ -530,6 +567,7 @@ void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, cons
 
 	std::vector<Vertex> vertices;
 	vertices.reserve(2 + (details * details));
+	vertices.resize(2 + (details * details));
 	std::vector<unsigned int> indices;
 
 	vertices.emplace_back();

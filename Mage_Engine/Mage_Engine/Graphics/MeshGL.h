@@ -14,6 +14,13 @@ public:
 	{}
 	Vertex(Vertex&& other) : position(other.position), color(other.color), normal(other.normal), texCoords(other.texCoords)
 	{}
+	void operator=(const Vertex& rhs)
+	{
+		position = rhs.position;
+		color = rhs.color;
+		normal = rhs.normal;
+		texCoords = rhs.texCoords;
+	}
 public:
 	Mage::Maths::Vector3 position;
 	Mage::Maths::Vector3 color;
