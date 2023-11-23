@@ -489,9 +489,11 @@ void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, cons
 				{
 					std::cout << "here ye bugger" << "/n";
 				}
-				vertices.at(vertexPos) = std::move(v);
 				//vertices[vertices.begin() + (2 + ((details * offset) + j)] = std::move(v);
 				//vertices.emplace(vertices.begin() + (2 + ((details * offset) + j)), std::move(v));
+				//todo this beneath one
+				//vertices.at(vertexPos) = std::move(v);
+				vertices.emplace_back(v);
 			}
 			StackDebugging::GetInstance()->PopFunction();
 		};
@@ -566,9 +568,12 @@ void Visualization::generateSphereMesh(const Mage::Maths::Vector3 & center, cons
 	};
 
 	std::vector<Vertex> vertices;
+	/*
 	vertices.reserve(2 + (details * details));
 	vertices.resize(2 + (details * details));
+	*/
 	std::vector<unsigned int> indices;
+	
 
 	vertices.emplace_back();
 	vertices.emplace_back();
