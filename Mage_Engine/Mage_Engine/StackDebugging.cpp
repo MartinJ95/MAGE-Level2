@@ -4,8 +4,9 @@ StackFunctionLog::StackFunctionLog(std::string functionName) : m_beginTime(clock
 {
 }
 
-StackDebugging::StackDebugging() : m_LogFile("Logger.txt", std::fstream::in | std::fstream::out), m_loggedFunctions()
+StackDebugging::StackDebugging() : m_LogFile("Logger.txt", std::fstream::in | std::fstream::out | std::fstream::trunc), m_loggedFunctions()
 {
+	//m_LogFile.open("Logger.txt", std::fstream::in | std::fstream::out | std::fstream::trunc);
 	if (!m_LogFile.is_open())
 	{
 		std::cout << "debbugger failed" << std::endl;
