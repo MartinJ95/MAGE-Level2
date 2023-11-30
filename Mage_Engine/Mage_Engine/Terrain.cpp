@@ -69,7 +69,7 @@ void Terrain::OnFrameEnd(Application& app)
 Mage::Maths::Vector3 Terrain::GetPointOnTerrain(const Mage::Maths::Vector2& pos, const Application& app) const
 {
 	Transform* t = m_entity->getComponent<Transform>();
-	MeshGL* mesh = app.m_viz->GetMesh(m_gennedMeshName);
+	MeshGL* mesh = app.m_viz->GetMeshGeneration().GetMesh(m_gennedMeshName);
 
 	//returns zero vector if the genned mesh was not found
 	if (mesh == nullptr)
@@ -149,41 +149,42 @@ void Terrain::GenerateMesh(Application& app)
 
 	m_gennedMeshName = m_meshName;
 
-	std::vector<Vertex> vertices;
-	std::vector<unsigned int> indices;
+	//std::vector<Vertex> vertices;
+	//std::vector<unsigned int> indices;
+	VertexData vData;
 
 	for (int i = 0; i < m_size.second; i++)
 	{
 		for (int j = 0; j < m_size.first; j++)
 		{
-			vertices.emplace_back();
-			vertices.back().position = Mage::Maths::Vector3(
+			vData.vertices.emplace_back();
+			vData.vertices.back().position = Mage::Maths::Vector3(
 				((static_cast<float>(m_size.first) * (static_cast<float>(j) / static_cast<float>(m_size.first))) - (static_cast<float>(m_size.first) / 2.f)) * static_cast<float>(m_tileSize.first),
 				(rand() % 10 - 5) * 0.9f,
 				((static_cast<float>(m_size.second) * (static_cast<float>(i) / static_cast<float>(m_size.second))) - (static_cast<float>(m_size.second) / 2.f)) * static_cast<float>(m_tileSize.second)
 			);
-			vertices.back().normal = Mage::Maths::Vector3(0.f, 1.f, 0.f);
-			vertices.back().color = Mage::Maths::Vector3(0.f, 1.f, 0.f);
-			vertices.back().texCoords = Mage::Maths::Vector2(
+			vData.vertices.back().normal = Mage::Maths::Vector3(0.f, 1.f, 0.f);
+			vData.vertices.back().color = Mage::Maths::Vector3(0.f, 1.f, 0.f);
+			vData.vertices.back().texCoords = Mage::Maths::Vector2(
 				static_cast<float>(m_size.first) * (static_cast<float>(j) / static_cast<float>(m_size.first-1)),
 				static_cast<float>(m_size.second) * (static_cast<float>(i) / static_cast<float>(m_size.second-1))
 			);
 
 			if (i < m_size.second - 1 && j < m_size.first - 1)
 			{
-				indices.emplace_back(j + (i * m_size.second));
-				indices.emplace_back((j + 1) + (i * m_size.second));
-				indices.emplace_back(j + ((i + 1) * m_size.second));
-
-				indices.emplace_back((j + 1) + (i * m_size.second));
-				indices.emplace_back((j + 1) + ((i + 1) * m_size.second));
-				indices.emplace_back(j + ((i + 1) * m_size.second));
+				vData.indices.emplace_back(j + (i * m_size.second));
+				vData.indices.emplace_back((j + 1) + (i * m_size.second));
+				vData.indices.emplace_back(j + ((i + 1) * m_size.second));
+				
+				vData.indices.emplace_back((j + 1) + (i * m_size.second));
+				vData.indices.emplace_back((j + 1) + ((i + 1) * m_size.second));
+				vData.indices.emplace_back(j + ((i + 1) * m_size.second));
 			}
 		}
 	}
 
-	app.m_viz->degenerateMesh(m_gennedMeshName);
-	app.m_viz->generateMesh(vertices, indices, m_gennedMeshName);
+	app.m_viz->GetMeshGeneration().DegenerateMesh(m_gennedMeshName);
+	app.m_viz->GetMeshGeneration().GenerateMesh(vData, m_gennedMeshName);
 }
 
 void Terrain::GenerateFoliage(Application& app)

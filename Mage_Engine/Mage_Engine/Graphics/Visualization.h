@@ -17,6 +17,7 @@
 #include <math.h>
 #include <cctype>
 #include <functional>
+#include "MeshGeneration.h"
 
 #define PI 3.14159265
 
@@ -56,14 +57,7 @@ public:
 	void render3D(const std::string &meshName, const std::string &textureName, const std::string &shaderName, const glm::mat4 transformMatrix, Camera &camera, Mage::Maths::Vector3 &worldUp, Application &app);
 	void display();
 	void generateTexture(const std::string &textureFilePath, const std::string &textureName);
-	void generateFace(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices, const Mage::Maths::Vector3 &minSize, const Mage::Maths::Vector3 &maxSize, const Mage::Maths::Vector2 &minTexcoord, const Mage::Maths::Vector2 &maxTexcoord, const Mage::Maths::Vector3 &normal, const int &offset);
-	void degenerateMesh(const std::string& meshName);
-	void generateMesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices, const std::string &meshName);
-	void generateSquareMesh(const int &minSize, const int &maxSize, const int &minTexCoord, const int &maxTexCoord, const std::string &meshName);
-	void generateBoxMesh(const int &minSize, const int &maxSize, const int &minTexCoord, const int &maxTexCoord, const std::string &meshName);
-	void generateSphereMesh(const Mage::Maths::Vector3 &center, const float &radius, const int &details, const std::string &meshName);
-	MeshGL* GetMesh(const std::string& meshName);
-	void loadObject(const std::string &filePath, const std::string &fileName, const std::string &fileType = ".obj");
+	MeshGeneration& GetMeshGeneration() { return m_meshGeneration; }
 	void LockCursor(bool toggle);
 	~Visualization();
 	int m_screenWidth, m_screenHeight;
@@ -78,7 +72,7 @@ private:
 	GLuint compileShader(const std::string &shaderType, const std::string &shaderFileName);
 	GLFWwindow* m_window;
 	std::string m_windowName;
-	std::unordered_map <std::string, MeshGL*> m_meshes;
+	MeshGeneration m_meshGeneration;
 	std::unordered_map <std::string, GLuint> m_textures;
 	std::unordered_map <std::string, GLuint> m_shaderPrograms;
 };
