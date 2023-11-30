@@ -23,9 +23,9 @@ void PlaneCollider::FixedUpdate(Application & app)
 
 void PlaneCollider::OnGUI(Application & app)
 {
-	app.m_viz->GUIText("PlaneCollider");
-	app.m_viz->GUIVector3("Normal", m_normal);
-	app.m_viz->GUIVector3("Position", m_position);
+	app.m_viz->GetGUI().GUIText("PlaneCollider");
+	app.m_viz->GetGUI().GUIVector3("Normal", m_normal);
+	app.m_viz->GetGUI().GUIVector3("Position", m_position);
 }
 
 void PlaneCollider::OnSave(const Application& app, std::ofstream& stream) const

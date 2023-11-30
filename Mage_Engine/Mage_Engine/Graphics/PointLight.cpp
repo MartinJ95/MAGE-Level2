@@ -12,10 +12,10 @@ PointLight::PointLight(Entity & entity) :
 
 void PointLight::OnGUI(Application & app)
 {
-	app.m_viz->GUIText("Point Light");
-	app.m_viz->GUIVector3("light intensity", m_intensity);
-	app.m_viz->GUIVector3("lightPosition", m_position);
-	app.m_viz->GUIEditFloat("radius", m_radius);
+	app.m_viz->GetGUI().GUIText("Point Light");
+	app.m_viz->GetGUI().GUIVector3("light intensity", m_intensity);
+	app.m_viz->GetGUI().GUIVector3("lightPosition", m_position);
+	app.m_viz->GetGUI().GUIEditFloat("radius", m_radius);
 }
 
 void PointLight::OnSave(const Application& app, std::ofstream& stream) const

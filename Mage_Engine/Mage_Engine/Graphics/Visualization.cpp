@@ -51,78 +51,9 @@ bool Visualization::initialise()
 	return true;
 }
 
-bool Visualization::InitialiseGUI()
+VizGUI& Visualization::GetGUI()
 {
-	ImGui::CreateContext();
-	ImGui_ImplGlfw_InitForOpenGL(m_window, true);
-	ImGui_ImplOpenGL3_Init("#version 130");
-	ImGui::StyleColorsDark();
-	return true;
-}
-
-void Visualization::GUIBegin(const std::string & windowLabel)
-{
-	ImGui::Begin(windowLabel.c_str());
-}
-
-void Visualization::GUIText(const std::string & text)
-{
-	ImGui::Text(text.c_str());
-}
-
-void Visualization::GUIEditText(const std::string &label, std::string &str)
-{
-	ImGui::InputText(label.c_str(), &str);
-}
-
-bool Visualization::GUIButton(const std::string & label)
-{
-	return ImGui::Button(label.c_str());
-}
-
-void Visualization::GUIButton(const std::string & label, VoidFunctionCallback callback, Application *app)
-{
-	if (ImGui::Button(label.c_str())) { (app->*callback)();}
-}
-
-void Visualization::GUIButton(const std::string & label, VoidFunctionCallbackString callback, std::string &str, Application *app)
-{
-	if (ImGui::Button(label.c_str())) { (app->*callback)(str); }
-}
-
-void Visualization::GUIButton(const std::string & label, VoidFunctionCallbackInt callback, int &value, Application *app)
-{
-	if (ImGui::Button(label.c_str())) { (app->*callback)(value); }
-}
-
-void Visualization::GUICheckbox(const std::string & label, bool & value)
-{
-	ImGui::Checkbox(label.c_str(), &value);
-}
-
-void Visualization::GUISliderBox(const std::string & label, float & value, const float & min, const float & max)
-{
-	ImGui::SliderFloat(label.c_str(), &value, min, max);
-}
-
-void Visualization::GUIEditFloat(const std::string & label, float & value)
-{
-	ImGui::InputFloat(label.c_str(), &value);
-}
-
-void Visualization::GUIEditInt(const std::string& label, int& value)
-{
-	ImGui::InputInt(label.c_str(), &value);
-}
-
-void Visualization::GUIVector3(const std::string & label, Mage::Maths::Vector3 &vec)
-{
-	ImGui::InputFloat3(label.c_str(), (float*)&vec);
-}
-
-void Visualization::GUIEnd()
-{
-	ImGui::End();
+	return m_vizGUI;
 }
 
 void Visualization::generateShader(const std::string &vertexShader, const std::string &fragmentShader, const std::string &shaderName)

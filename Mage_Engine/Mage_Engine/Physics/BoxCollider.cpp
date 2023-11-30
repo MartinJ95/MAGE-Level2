@@ -17,10 +17,10 @@ void BoxCollider::FixedUpdate(Application & app)
 
 void BoxCollider::OnGUI(Application & app)
 {
-	app.m_viz->GUIText("Box Collider");
-	app.m_viz->GUIVector3("Center", m_center);
-	app.m_viz->GUIVector3("Min", m_minDimensions);
-	app.m_viz->GUIVector3("Max", m_maxDimensions);
+	app.m_viz->GetGUI().GUIText("Box Collider");
+	app.m_viz->GetGUI().GUIVector3("Center", m_center);
+	app.m_viz->GetGUI().GUIVector3("Min", m_minDimensions);
+	app.m_viz->GetGUI().GUIVector3("Max", m_maxDimensions);
 }
 
 void BoxCollider::OnSave(const Application& app, std::ofstream& stream) const

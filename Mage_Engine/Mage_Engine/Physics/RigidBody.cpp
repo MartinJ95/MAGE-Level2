@@ -25,9 +25,9 @@ void RigidBody::FixedUpdate(Application &app)
 
 void RigidBody::OnGUI(Application & app)
 {
-	app.m_viz->GUIText("Rigid Body");
-	app.m_viz->GUIEditFloat("Mass", m_mass);
-	app.m_viz->GUIEditFloat("Restitution", m_restitution);
+	app.m_viz->GetGUI().GUIText("Rigid Body");
+	app.m_viz->GetGUI().GUIEditFloat("Mass", m_mass);
+	app.m_viz->GetGUI().GUIEditFloat("Restitution", m_restitution);
 }
 
 void RigidBody::OnSave(const Application& app, std::ofstream& stream) const

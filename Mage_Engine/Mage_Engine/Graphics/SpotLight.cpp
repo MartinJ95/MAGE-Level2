@@ -13,9 +13,9 @@ SpotLight::SpotLight(Entity &entity) :
 
 void SpotLight::OnGUI(Application & app)
 {
-	app.m_viz->GUIText("Spot Light");
-	app.m_viz->GUIEditFloat("Field Of View", m_fieldOfView);
-	app.m_viz->GUIEditFloat("Range", m_range);
+	app.m_viz->GetGUI().GUIText("Spot Light");
+	app.m_viz->GetGUI().GUIEditFloat("Field Of View", m_fieldOfView);
+	app.m_viz->GetGUI().GUIEditFloat("Range", m_range);
 }
 
 void SpotLight::OnSave(const Application& app, std::ofstream& stream) const

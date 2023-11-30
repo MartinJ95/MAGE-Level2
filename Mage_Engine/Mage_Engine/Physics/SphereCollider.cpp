@@ -19,9 +19,9 @@ void SphereCollider::FixedUpdate(Application & app)
 
 void SphereCollider::OnGUI(Application & app)
 {
-	app.m_viz->GUIText("Sphere Collider");
-	app.m_viz->GUIEditFloat("Radius", m_radius);
-	app.m_viz->GUIVector3("m_center", m_center);
+	app.m_viz->GetGUI().GUIText("Sphere Collider");
+	app.m_viz->GetGUI().GUIEditFloat("Radius", m_radius);
+	app.m_viz->GetGUI().GUIVector3("m_center", m_center);
 }
 
 void SphereCollider::OnSave(const Application& app, std::ofstream& stream) const

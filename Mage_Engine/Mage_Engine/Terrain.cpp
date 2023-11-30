@@ -13,16 +13,16 @@ void Terrain::OnStart(Application& app)
 void Terrain::OnGUI(Application& app)
 {
 	Mesh::OnGUI(app);
-	app.m_viz->GUIEditInt("size x", m_size.first);
-	app.m_viz->GUIEditInt("size.y", m_size.second);
-	app.m_viz->GUIEditFloat("tileSize.x", m_tileSize.first);
-	app.m_viz->GUIEditFloat("tileSize.Y", m_tileSize.second);
-	app.m_viz->GUIEditFloat("randomSeed", m_randomSeed);
-	if (app.m_viz->GUIButton("generate mesh"))
+	app.m_viz->GetGUI().GUIEditInt("size x", m_size.first);
+	app.m_viz->GetGUI().GUIEditInt("size.y", m_size.second);
+	app.m_viz->GetGUI().GUIEditFloat("tileSize.x", m_tileSize.first);
+	app.m_viz->GetGUI().GUIEditFloat("tileSize.Y", m_tileSize.second);
+	app.m_viz->GetGUI().GUIEditFloat("randomSeed", m_randomSeed);
+	if (app.m_viz->GetGUI().GUIButton("generate mesh"))
 	{
 		m_isToGenerate = true;
 	}
-	if (app.m_viz->GUIButton("generate foliage"))
+	if (app.m_viz->GetGUI().GUIButton("generate foliage"))
 	{
 		m_isToGenerateFoliage = true;
 	}
