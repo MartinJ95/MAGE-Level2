@@ -43,7 +43,9 @@ namespace Mage
 		{
 		public:
 			Vector3();
+			Vector3(float s);
 			Vector3(float x, float y, float z);
+			Vector3(const Vector3& other);
 			float Length() const;
 			Vector3 Normalized() const;
 			void NormalizeInPlace();
