@@ -1,4 +1,5 @@
 #include "VizGUI.h"
+#include "Core/Application.h"
 
 VizGUI::VizGUI()
 {}

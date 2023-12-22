@@ -16,13 +16,6 @@
 
 #define PI 3.14159265
 
-class Camera;
-class Application;
-
-typedef void(Application::*VoidFunctionCallback)(void);
-typedef void(Application::*VoidFunctionCallbackString)(const std::string&);
-typedef void(Application::*VoidFunctionCallbackInt)(const int&);
-
 void frameBufferSizeCallback(GLFWwindow *window, int screenWidth, int screenHeight);
 
 class Visualization

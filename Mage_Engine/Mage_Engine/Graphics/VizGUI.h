@@ -10,6 +10,7 @@
 
 class Visualization;
 class Application;
+class Camera;
 
 typedef void(Application::* VoidFunctionCallback)(void);
 typedef void(Application::* VoidFunctionCallbackString)(const std::string&);

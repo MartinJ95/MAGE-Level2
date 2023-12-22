@@ -3,7 +3,6 @@
 #include "stb-master/stb_image.h"
 #include "Camera.h"
 #include "Core/Entity.h"
-#include "Core/Application.h"
 #include <queue>
 
 Visualization::Visualization(const int screenWidth, const int screenHeight, const std::string &windowName) :
