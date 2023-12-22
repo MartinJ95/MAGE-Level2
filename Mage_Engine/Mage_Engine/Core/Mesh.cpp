@@ -37,10 +37,10 @@ void Mesh::OnRender(Application & app) const
 
 void Mesh::OnGUI(Application & app)
 {
-	app.m_viz->GUICheckbox("is 3d", m_is3D);
-	app.m_viz->GUIEditText("mesh name", m_meshName);
-	app.m_viz->GUIEditText("texture name", m_textureName);
-	app.m_viz->GUIEditText("shaderName", m_shaderName);
+	app.m_viz->GetGUI().GUICheckbox("is 3d", m_is3D);
+	app.m_viz->GetGUI().GUIEditText("mesh name", m_meshName);
+	app.m_viz->GetGUI().GUIEditText("texture name", m_textureName);
+	app.m_viz->GetGUI().GUIEditText("shaderName", m_shaderName);
 }
 
 void Mesh::OnSave(const Application& app, std::ofstream& stream) const

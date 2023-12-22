@@ -22,11 +22,11 @@ void Transform::FixedUpdate(Application & app)
 
 void Transform::OnGUI(Application & app)
 {
-	app.m_viz->GUIText("Transform");
-	app.m_viz->GUIVector3("position", m_position);
-	app.m_viz->GUIVector3("rotation", m_rotation);
-	app.m_viz->GUIVector3("scale", m_scale);
-	app.m_viz->GUIVector3("forward", m_forward);
+	app.m_viz->GetGUI().GUIText("Transform");
+	app.m_viz->GetGUI().GUIVector3("position", m_position);
+	app.m_viz->GetGUI().GUIVector3("rotation", m_rotation);
+	app.m_viz->GetGUI().GUIVector3("scale", m_scale);
+	app.m_viz->GetGUI().GUIVector3("forward", m_forward);
 }
 
 void Transform::OnSave(const Application& app, std::ofstream& stream) const

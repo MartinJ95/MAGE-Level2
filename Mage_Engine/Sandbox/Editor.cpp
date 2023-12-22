@@ -42,36 +42,36 @@ void Editor::OnGUI()
 {
 	if (m_isRunning)
 	{
-		m_viz->GUIBegin("Hiearchy");
-		if (m_viz->GUIButton("stop playing")) 
+		m_viz->GetGUI().GUIBegin("Hiearchy");
+		if (m_viz->GetGUI().GUIButton("stop playing"))
 		{
 			m_isRunning = false;
 		}
-		m_viz->GUIEnd();
+		m_viz->GetGUI().GUIEnd();
 		return;
 	}
 
-	m_viz->GUIBegin("editorCam");
+	m_viz->GetGUI().GUIBegin("editorCam");
 	m_editorCam.OnGUI(*this);
-	m_viz->GUIEnd();
+	m_viz->GetGUI().GUIEnd();
 
-	m_viz->GUIBegin("Hiearchy");
-	if (m_viz->GUIButton("play level")) 
+	m_viz->GetGUI().GUIBegin("Hiearchy");
+	if (m_viz->GetGUI().GUIButton("play level"))
 	{
 		m_isRunning = true;
 		SelectedEntity = nullptr;
 	}
-	m_viz->GUIVector3("ambient lighting", m_ambientLighting);
-	m_viz->GUIVector3("world up", m_worldUp);
-	m_viz->GUIVector3("world forward", m_worldForward);
-	m_viz->GUIText("Current Level");
-	m_viz->GUIText(m_currentLevel->m_levelName);
-	m_viz->GUIEditText("level edit name", m_newLevelName);
-	if (m_viz->GUIButton("Save Level")) { m_currentLevel->SaveLevel(*this); }
-	if (m_viz->GUIButton("Load Level")) { m_currentLevel->LoadLevel(m_newLevelName, *this, &SelectedEntity); }
-	m_viz->GUIEditText("name for new entity", m_newEntityName);
+	m_viz->GetGUI().GUIVector3("ambient lighting", m_ambientLighting);
+	m_viz->GetGUI().GUIVector3("world up", m_worldUp);
+	m_viz->GetGUI().GUIVector3("world forward", m_worldForward);
+	m_viz->GetGUI().GUIText("Current Level");
+	m_viz->GetGUI().GUIText(m_currentLevel->m_levelName);
+	m_viz->GetGUI().GUIEditText("level edit name", m_newLevelName);
+	if (m_viz->GetGUI().GUIButton("Save Level")) { m_currentLevel->SaveLevel(*this); }
+	if (m_viz->GetGUI().GUIButton("Load Level")) { m_currentLevel->LoadLevel(m_newLevelName, *this, &SelectedEntity); }
+	m_viz->GetGUI().GUIEditText("name for new entity", m_newEntityName);
 	VoidFunctionCallbackString func = &Application::AddEntity;
-	m_viz->GUIButton("Add New Entity", func, m_newEntityName, this);
+	m_viz->GetGUI().GUIButton("Add New Entity", func, m_newEntityName, this);
 	int entityDepth = 0;
 	int entityIndex = 0;
 	std::vector<std::pair<Entity*, int>> sortedEntities;
@@ -117,14 +117,14 @@ void Editor::OnGUI()
 		{
 			s += "->";
 		}
-		if (m_viz->GUIButton(s + se.first->m_name + "##" + std::to_string(GUIIDIteration))) { SelectedEntity = se.first; }
+		if (m_viz->GetGUI().GUIButton(s + se.first->m_name + "##" + std::to_string(GUIIDIteration))) { SelectedEntity = se.first; }
 	}
 	GUIIDIteration = 0;
-	m_viz->GUIEnd();
+	m_viz->GetGUI().GUIEnd();
 	if (SelectedEntity != NULL)
 	{
-		m_viz->GUIBegin("Selected Entity");
-		if(m_viz->GUIButton("Remove Entity"))
+		m_viz->GetGUI().GUIBegin("Selected Entity");
+		if(m_viz->GetGUI().GUIButton("Remove Entity"))
 		{
 			/*if (SelectedEntity->m_parent != nullptr)
 			{
@@ -151,7 +151,7 @@ void Editor::OnGUI()
 			}*/
 			SelectedEntity->m_markedForDeletion = true;
 			SelectedEntity = nullptr;
-			m_viz->GUIEnd();
+			m_viz->GetGUI().GUIEnd();
 		}
 		else
 		{
@@ -159,7 +159,7 @@ void Editor::OnGUI()
 			int index = 0;
 			for (auto it : IncludeComponents)
 			{
-				if (m_viz->GUIButton("Add Component-" + it.first)) {
+				if (m_viz->GetGUI().GUIButton("Add Component-" + it.first)) {
 					EntityComponentAddition func = it.second;
 					for (int i = 0; i < m_currentLevel->m_data.m_entities.size(); i++)
 					{
@@ -169,7 +169,7 @@ void Editor::OnGUI()
 					//(this->*func)(index);
 				}
 			}
-			m_viz->GUIEnd();
+			m_viz->GetGUI().GUIEnd();
 		}
 	}
 

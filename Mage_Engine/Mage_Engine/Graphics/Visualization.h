@@ -31,7 +31,6 @@ public:
 	Visualization(const int screenWidth, const int screenHeight, const std::string &windowName);
 	bool initialise();
 	VizGUI& GetGUI();
-	bool InitialiseGUI();
 	void generateShader(const std::string &vertexShader, const std::string &fragmentShader, const std::string &shaderName);
 	bool isOpen() const;
 	GLFWwindow* getWindow() const;

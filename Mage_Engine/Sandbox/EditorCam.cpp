@@ -153,8 +153,8 @@ void EditorCam::Update(Application& app)
 
 void EditorCam::OnGUI(Application& app)
 {
-	app.m_viz->GUIVector3("movementVector", m_MovementVector);
-	app.m_viz->GUICheckbox("isCamLocked", m_locked);
+	app.m_viz->GetGUI().GUIVector3("movementVector", m_MovementVector);
+	app.m_viz->GetGUI().GUICheckbox("isCamLocked", m_locked);
 }
 
 void EditorCam::Initialize(Application& app)

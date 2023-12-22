@@ -317,22 +317,22 @@ void Entity::OnRender(Application & app) const
 
 void Entity::OnGUI(Application & app)
 {
-	app.m_viz->GUIEditText("Entity Name", m_name);
-	app.m_viz->GUICheckbox("Active", m_active);
-	app.m_viz->GUIText("Children");
+	app.m_viz->GetGUI().GUIEditText("Entity Name", m_name);
+	app.m_viz->GetGUI().GUICheckbox("Active", m_active);
+	app.m_viz->GetGUI().GUIText("Children");
 	int GUIIDIteration = 0;
 	for (auto &c : m_children)
 	{
 		GUIIDIteration++;
-		app.m_viz->GUIText(c.m_name + "##" + std::to_string(GUIIDIteration));
+		app.m_viz->GetGUI().GUIText(c.m_name + "##" + std::to_string(GUIIDIteration));
 	}
 	GUIIDIteration = 0;
-	if (app.m_viz->GUIButton("Add Child")) { createChild(true); }
+	if (app.m_viz->GetGUI().GUIButton("Add Child")) { createChild(true); }
 	for (auto &c : m_components)
 	{
 		GUIIDIteration++;
 		c->OnGUI(app);
-		if (app.m_viz->GUIButton("Remove Component" + std::string("##") + std::to_string(GUIIDIteration)))
+		if (app.m_viz->GetGUI().GUIButton("Remove Component" + std::string("##") + std::to_string(GUIIDIteration)))
 		{
 			DeleteComponent(c);
 			break;
