@@ -43,5 +43,16 @@ class AIController : public Component
 public:
 	AIController(Entity* entity, unsigned int ID = 0, ComponentType type = ComponentType::eDefaultComponent);
 	~AIController();
+	BehaviourTree m_behaviourTree;
 };
 
+class DemoAIController : public AIController
+{
+public:
+	DemoAIController(Entity* entity, unsigned int ID = 0, ComponentType type = ComponentType::eDefaultComponent);
+	virtual void Update(Application& app) override;
+	virtual void OnGUI(Application& app) override;
+	virtual void OnSave(const Application& app, std::ofstream &stream) const override;
+	virtual void OnLoad(Application& app, std::ifstream &stream) override;
+	virtual void onCollisionEnter(Application& app, collisionData& data);
+};
