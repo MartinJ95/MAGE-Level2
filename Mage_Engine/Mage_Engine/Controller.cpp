@@ -1,6 +1,7 @@
 #include "Controller.h"
 #include "Core/Entity.h"
 #include "Core/Application.h"
+#include "Terrain.h"
 
 Controller::Controller(Entity* entity, unsigned int ID, ComponentType type) : Component(entity, ID, type)
 {
@@ -86,5 +87,37 @@ BTStatus AIWaitNode::Evaluate(Entity* e) {
         waitTime += rand() % 5 + 5.f;
         return BTStatus::eSuccess;
     }
+    return BTStatus::eFailure;
+}
+
+BTStatus AIMoveNode::Evaluate(Entity* e)
+{
+    Transform* t = e->getComponent<Transform>();
+
+    if (t == nullptr)
+        return BTStatus::eSuccess;
+
+    Mage::Maths::Vector3 vec(targetPos - t->m_position);
+
+    if (vec.Length() < 10.f)
+        return BTStatus::eSuccess;
+
+    t->m_position += vec.Normalized() * 2.f;
+
+    Terrain* ter = e->getComponent<Terrain>();
+    Application* app = ServiceLocator::GetMainService();
+
+    if (ter == nullptr || app == nullptr)
+        return BTStatus::eFailure;
+
+    Mage::Maths::Vector3 pointOnTerrain = ter->GetPointOnTerrain(
+        Mage::Maths::Vector2(t->m_position.x, t->m_position.y),
+        *app);
+
+    if (pointOnTerrain != Mage::Maths::Vector3(0.f, 0.f, 0.f))
+    {
+        t->m_position.y = fmaxf(t->m_position.y, pointOnTerrain.y);
+    }
+
     return BTStatus::eFailure;
 }
