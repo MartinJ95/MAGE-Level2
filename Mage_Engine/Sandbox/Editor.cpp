@@ -160,12 +160,12 @@ void Editor::OnGUI()
 			for (auto it : IncludeComponents)
 			{
 				if (m_viz->GetGUI().GUIButton("Add Component-" + it.first)) {
-					EntityComponentAddition func = it.second;
+					EntityComponentAddition func2 = it.second;
 					for (int i = 0; i < m_currentLevel->m_data.m_entities.size(); i++)
 					{
 						if (m_currentLevel->m_data.m_entities[i] == SelectedEntity) { index = i; break; }
 					}
-					m_componentsToAdd.push(std::pair<EntityComponentAddition, int>(func, index));
+					m_componentsToAdd.push(std::pair<EntityComponentAddition, int>(func2, index));
 					//(this->*func)(index);
 				}
 			}
