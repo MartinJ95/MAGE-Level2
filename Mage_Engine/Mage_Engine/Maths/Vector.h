@@ -73,6 +73,7 @@ namespace Mage
 			void operator*=(const Vector3 &other) { x = x * other.x; y = y * other.y; z = z * other.z; }
 			void operator+=(const Vector3 &other) { x = x + other.x; y = y + other.y; z = z + other.z; }
 			void operator-=(const Vector3 &other) { x = x - other.x; y = y - other.y; z = z - other.z; }
+			bool operator!=(const Vector3& other) { return (x != other.x && y != other.y && z != other.z); }
 			bool operator==(const Vector3 &other) const { if (x == other.x &&y == other.y&&z == other.z) { return true; }return false; }
 			bool operator>(const Vector3 &other) const { if (x > other.x && y > other.y && z > other.z) { return true; }return false; }
 			bool operator<(const Vector3 &other) const { if (x < other.x || y < other.y && z < other.z) { return true; }return false; }
