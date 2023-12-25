@@ -1,4 +1,6 @@
 #include "Controller.h"
+#include "Core/Entity.h"
+#include "Core/Application.h"
 
 Controller::Controller(Entity* entity, unsigned int ID, ComponentType type) : Component(entity, ID, type)
 {
@@ -17,7 +19,7 @@ AIController::~AIController()
 {
 }
 
-BTStatus BTSelectorNode::Evaluate(Entity* e) const
+BTStatus BTSelectorNode::Evaluate(Entity* e)
 {
     for (auto& n : m_children)
     {
@@ -29,7 +31,7 @@ BTStatus BTSelectorNode::Evaluate(Entity* e) const
     return BTStatus::eFailure;
 }
 
-BTStatus BTSequenceNode::Evaluate(Entity* e) const
+BTStatus BTSequenceNode::Evaluate(Entity* e)
 {
     for (auto& n : m_children)
     {
@@ -41,7 +43,7 @@ BTStatus BTSequenceNode::Evaluate(Entity* e) const
     return BTStatus::eSuccess;
 }
 
-BTStatus BehaviourTree::Evaluate(Entity* e) const
+BTStatus BehaviourTree::Evaluate(Entity* e)
 {
     return m_root.Evaluate(e);
 }
@@ -69,4 +71,20 @@ void DemoAIController::OnLoad(Application& app, std::ifstream& stream)
 
 void DemoAIController::onCollisionEnter(Application& app, collisionData& data)
 {
+}
+
+BTStatus AIWaitNode::Evaluate(Entity* e) {
+    Application* app = ServiceLocator::GetMainService();
+
+    if (app == nullptr)
+        return BTStatus::eFailure;
+
+    waitTime -= app->m_deltaTime;
+
+    if (waitTime < 0.f)
+    {
+        waitTime += rand() % 5 + 5.f;
+        return BTStatus::eSuccess;
+    }
+    return BTStatus::eFailure;
 }
