@@ -3,7 +3,7 @@
 #include "Core/Application.h"
 #include "Terrain.h"
 
-Controller::Controller(Entity* entity, unsigned int ID, ComponentType type) : Component(entity, ID, type)
+Controller::Controller(Entity& entity, unsigned int ID, ComponentType type) : Component(&entity, ID, type)
 {
 }
 
@@ -11,8 +11,8 @@ Controller::~Controller()
 {
 }
 
-AIController::AIController(Entity* entity, unsigned int ID, ComponentType type) :
-    Component(entity, ID, type), m_behaviourTree()
+AIController::AIController(Entity& entity, unsigned int ID, ComponentType type) :
+    Controller(entity, ID, type), m_behaviourTree()
 {
 }
 
@@ -24,7 +24,7 @@ BTStatus BTSelectorNode::Evaluate(Entity* e)
 {
     for (auto& n : m_children)
     {
-        if (n.Evaluate(e) == BTStatus::eSuccess)
+        if (n->Evaluate(e) == BTStatus::eSuccess)
         {
             return BTStatus::eSuccess;
         }
@@ -36,7 +36,7 @@ BTStatus BTSequenceNode::Evaluate(Entity* e)
 {
     for (auto& n : m_children)
     {
-        if (n.Evaluate(e) != BTStatus::eSuccess)
+        if (n->Evaluate(e) != BTStatus::eSuccess)
         {
             return BTStatus::eFailure;
         }
@@ -49,13 +49,18 @@ BTStatus BehaviourTree::Evaluate(Entity* e)
     return m_root.Evaluate(e);
 }
 
-DemoAIController::DemoAIController(Entity* entity, unsigned int ID, ComponentType type) :
+DemoAIController::DemoAIController(Entity& entity, unsigned int ID, ComponentType type) :
     AIController(entity, ID, type)
 {
+    m_behaviourTree.m_root.m_children.emplace_back(new BTSequenceNode());
+    BTSequenceNode* s = static_cast<BTSequenceNode*>(m_behaviourTree.m_root.m_children[0]);
+    s->m_children.emplace_back(new AIMoveNode());
+    s->m_children.emplace_back(new AIWaitNode());
 }
 
 void DemoAIController::Update(Application& app)
 {
+    m_behaviourTree.Evaluate(m_entity);
 }
 
 void DemoAIController::OnGUI(Application& app)
@@ -85,6 +90,18 @@ BTStatus AIWaitNode::Evaluate(Entity* e) {
     if (waitTime < 0.f)
     {
         waitTime += rand() % 5 + 5.f;
+
+        DemoAIController* c = e->getComponent<DemoAIController>();
+
+        if (c != nullptr)
+        {
+            AIMoveNode *n = static_cast<AIMoveNode*>(static_cast<BTSequenceNode*>(c->m_behaviourTree.m_root.m_children[0])->m_children[0]);
+            if (n != nullptr)
+            {
+                n->targetPos = Mage::Maths::Vector3((float)(rand() % 100 - 50), 0.f, (float)(rand() % 100 - 50));
+            }
+        }
+
         return BTStatus::eSuccess;
     }
     return BTStatus::eFailure;
