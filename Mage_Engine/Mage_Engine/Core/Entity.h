@@ -9,6 +9,7 @@
 #include "Physics/BoxCollider.h"
 #include "Graphics/PointLight.h"
 #include "Graphics/SpotLight.h"
+#include "Controller.h"
 #include "Terrain.h"
 #include "Network/RemoteClient.h"
 #include "Maths/Matrix.h"

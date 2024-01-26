@@ -376,6 +376,11 @@ void Entity::OnSave(const Application &app, std::ofstream &stream)
 	{
 		m_components[i]->OnSave(app, stream);
 	}
+	if (getComponent<Terrain>() != nullptr)
+	{
+		stream << "end" << "\n";
+		return;
+	}
 	for (int i = 0; i < m_children.size(); i++)
 	{
 		m_children[i].OnSave(app, stream);
