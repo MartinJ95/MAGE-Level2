@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\Entity.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Dependencies\include\imgui_internal.h" />
     <ClInclude Include="Dependencies\include\imgui_stdlib.h" />
     <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Graphics\MeshGeneration.h" />
     <ClInclude Include="Graphics\MeshGL.h" />
     <ClInclude Include="Graphics\PointLight.h" />
     <ClInclude Include="Graphics\SpotLight.h" />
@@ -204,8 +206,11 @@
     <ClInclude Include="Physics\RigidBody.h" />
     <ClInclude Include="Physics\SphereCollider.h" />
     <ClInclude Include="StackDebugging.h" />
+    <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Graphics\VizGUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\Entity.cpp" />
@@ -225,6 +230,7 @@
     <ClCompile Include="Dependencies\include\imgui_tables.cpp" />
     <ClCompile Include="Dependencies\include\imgui_widgets.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Graphics\MeshGeneration.cpp" />
     <ClCompile Include="Graphics\MeshGL.cpp" />
     <ClCompile Include="Graphics\PointLight.cpp" />
     <ClCompile Include="Graphics\SpotLight.cpp" />
@@ -247,6 +253,8 @@
     <ClCompile Include="Physics\RigidBody.cpp" />
     <ClCompile Include="Physics\SphereCollider.cpp" />
     <ClCompile Include="StackDebugging.cpp" />
+    <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Graphics\VizGUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\default2DShader.fs" />
