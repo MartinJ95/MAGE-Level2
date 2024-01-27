@@ -1,4 +1,5 @@
 #include "Visualization.h"
+#include "Core/Application.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb-master/stb_image.h"
 #include "Camera.h"
