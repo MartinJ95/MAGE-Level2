@@ -153,6 +153,8 @@ void Terrain::GenerateMesh(Application& app)
 	//std::vector<unsigned int> indices;
 	VertexData vData;
 
+	vData.vertices.reserve(m_size.first * m_size.second);
+
 	for (int i = 0; i < m_size.second; i++)
 	{
 		for (int j = 0; j < m_size.first; j++)
@@ -194,7 +196,7 @@ void Terrain::GenerateFoliage(Application& app)
 		(static_cast<float>(m_size.first) * m_tileSize.first) * 0.5f,
 		(static_cast<float>(m_size.second) * m_tileSize.second) * 0.5f
 		);
-
+	m_entity->m_children.reserve(m_size.first * m_size.second);
 	srand(m_randomSeed);
 	for (float i = -offsets.second; i < (m_size.second * m_tileSize.second)-offsets.second; i += (rand() % static_cast<int>(m_tileSize.second) + 10.f))
 	{
